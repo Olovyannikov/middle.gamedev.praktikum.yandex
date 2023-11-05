@@ -10,7 +10,12 @@
     "test": "lerna run test",
     "lint": "lerna run lint",
     "format": "lerna run format",
-    "preview": "lerna run preview"
+    "preview": "lerna run preview",
+    "lint:ts": "eslint \"**/*.{ts,tsx}\"",
+    "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
+    "lint:css": "npx stylelint \"**/*.{css,scss}\"",
+    "lint:css:fix": "npx stylelint \"**/*.{css,scss}\" --fix",
+    "unit": "jest --config ./config/jest/jest.config.ts"
   },
   "license": "MIT",
   "workspaces": [
