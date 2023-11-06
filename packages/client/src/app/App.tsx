@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import './assets/styles/index.scss';
+import { IndexPage } from '@/pages/IndexPage';
 
 export const App = () => {
     useEffect(() => {
@@ -11,5 +13,5 @@ export const App = () => {
 
         fetchServerData();
     }, []);
-    return <div className="App">Вот тут будет жить ваше приложение :)</div>;
+    return <IndexPage />;
 };

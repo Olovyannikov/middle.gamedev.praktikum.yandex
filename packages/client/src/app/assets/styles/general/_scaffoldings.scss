@@ -1,0 +1,43 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+html {
+    box-sizing: inherit;
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    font-size: var(--size-md);
+    line-height: 1.1;
+    font-family: -apple-system, Inter, sans-serif;
+    color: var(--neutral-700);
+    background-color: var(--neutral-100);
+}
+
+.btn-reset {
+    @include btn-reset;
+}
+
+.list-reset {
+    @include list-reset;
+}
+
+a {
+    color: var(--semantic-blue);
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+        color: var(--accent-blue);
+    }
+}
+
+img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: cover;
+}

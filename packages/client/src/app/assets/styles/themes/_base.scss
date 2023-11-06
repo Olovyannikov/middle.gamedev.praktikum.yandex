@@ -1,0 +1,81 @@
+/* Fonts */
+// TBD
+
+/* Sizes */
+:root {
+    --size-xxs: 4px;
+    --size-xs: 8px;
+    --size-sm: 12px;
+    --size-md: 16px;
+    --size-lg: 20px;
+    --size-xl: 24px;
+    --size-2xl: 28px;
+    --size-3xl: 32px;
+    --size-4xl: 36px;
+    --size-5xl: 40px;
+}
+
+/* Colors */
+
+// neutral
+:root {
+    --neutral-700: #18191b;
+    --neutral-600: #313845;
+    --neutral-500: #6e798b;
+    --neutral-400: #b1bac9;
+    --neutral-300: #d3d8e7;
+    --neutral-200: #ebecf2;
+    --neutral-100: #f4f5f7;
+    --white: #ffffff;
+}
+
+// primary
+:root {
+    --purple-800: #472eb5;
+    --purple-700: #5d3eca;
+    --purple-600: #7b56e2;
+    --purple-500: #8f75e7;
+    --purple-400: #c8bdff;
+    --purple-300: #eae6ff;
+    --purple-200: #f2f1ff;
+    --purple-100: #fafafc;
+}
+
+// accent
+:root {
+    --accent-blue: #4a3aff;
+    --semantic-blue: #06f;
+}
+
+// system
+:root {
+    --blue-400: #2d5bff;
+    --blue-300: #93aafd;
+    --blue-200: #c6d2fd;
+    --blue-100: #f3f6ff;
+
+    --green-400: #00974e;
+    --green-300: #7fe47e;
+    --green-200: #bcefbd;
+    --green-100: #eefef0;
+
+    --yellow-400: #edab02;
+    --yellow-300: #fbd34d;
+    --yellow-200: #fde689;
+    --yellow-100: #fff5ca;
+
+    --red-400: #d91a1a;
+    --red-300: #ffb5b5;
+    --red-200: #fecbca;
+    --red-100: #ffedeb;
+}
+
+/* Shadows */
+:root {
+    --shadow-1: 0 4px 10px 0 #4032940a;
+    --shadow-2: 0 4px 12px 0 #0d0a2c0f;
+    --shadow-3: 0 2px 16px 0 #0d0a2c1f;
+    --shadow-4: 0 2px 12px -4px #4032940f;
+    --shadow-5: 0 2px 12px 0 #18274b1f;
+    --shadow-6: 0 4px 16px 0 #18274b29;
+}

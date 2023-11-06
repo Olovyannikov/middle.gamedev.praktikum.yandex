@@ -20,11 +20,15 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "plugins": [
+      {"name": "typescript-plugin-css-modules"}
+    ]
   },
   "include": [
     "src",
-    "client.d.ts"
+    "client.d.ts",
+    "src/app/types/css.d.ts"
   ],
   "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
