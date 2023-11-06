@@ -84,6 +84,7 @@
     "order/properties-alphabetical-order": null,
     "order/properties-order": [
       [
+        "composes",
         "all",
         "print-color-adjust",
         "appearance",
@@ -624,7 +625,8 @@
     "property-no-unknown": [
       true,
       {
-        "checkPrefixed": true
+        "checkPrefixed": true,
+        "ignoreProperties": ["composes"]
       }
     ],
     "property-no-vendor-prefix": null,

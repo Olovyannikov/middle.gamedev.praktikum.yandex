@@ -1,0 +1,98 @@
+.rings {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ring {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 13px solid #ececec;
+    border-radius: 50%;
+    box-shadow: -10px -10px 15px rgb(255 255 255 / 30%),
+        10px 10px 15px rgb(70 70 70 / 15%),
+        inset -10px -10px 15px rgb(255 255 255 / 30%),
+        inset 10px 10px 15px rgb(70 70 70 / 15%);
+}
+
+.ring1 {
+    width: 28rem;
+    height: 28rem;
+    animation: glow1 2.5s infinite;
+}
+
+@keyframes glow1 {
+    60% {
+        background-color: #ececec;
+    }
+
+    80% {
+        background-color: var(--primary);
+    }
+
+    100% {
+        background-color: var(--primary);
+    }
+}
+
+.ring2 {
+    width: 20rem;
+    height: 20rem;
+    animation: glow2 2.5s infinite;
+}
+
+@keyframes glow2 {
+    40% {
+        background-color: #ececec;
+    }
+
+    60% {
+        background-color: var(--primary);
+    }
+
+    100% {
+        background-color: var(--primary);
+    }
+}
+
+.ring3 {
+    width: 12rem;
+    height: 12rem;
+    animation: glow3 2.5s infinite;
+}
+
+@keyframes glow3 {
+    20% {
+        background-color: #ececec;
+    }
+
+    40% {
+        background-color: var(--primary);
+    }
+
+    100% {
+        background-color: var(--primary);
+    }
+}
+
+.ring4 {
+    width: 5rem;
+    height: 5rem;
+    animation: glow4 2.5s infinite;
+}
+
+@keyframes glow4 {
+    0% {
+        background-color: #ececec;
+    }
+
+    20% {
+        background-color: var(--primary);
+    }
+
+    100% {
+        background-color: var(--primary);
+    }
+}

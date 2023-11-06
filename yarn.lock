@@ -1935,6 +1935,11 @@
     node-addon-api "^3.2.1"
     node-gyp-build "^4.3.0"
 
+"@phosphor-icons/react@^2.0.14":
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/@phosphor-icons/react/-/react-2.0.14.tgz#3c8977cc81cc376d0c6afda46882eb5dc9b8b54d"
+  integrity sha512-VaZ7/JEQ7dW+Up23l7t6lqJ3dPJupM03916Pat+ZOLX1vex9OeX9t8RZLJWt0oVrdc/GcrAyRD5FESDeP+M4tQ==
+
 "@remix-run/router@1.11.0":
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.11.0.tgz#e0e45ac3fff9d8a126916f166809825537e9f955"

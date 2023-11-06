@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import { AppRouter } from '@/app/providers/AppRouter';
+
 import './assets/styles/index.scss';
-import { IndexPage } from '@/pages/IndexPage';
 
 export const App = () => {
     useEffect(() => {
@@ -13,5 +14,9 @@ export const App = () => {
 
         fetchServerData();
     }, []);
-    return <IndexPage />;
+    return (
+        <Suspense fallback="Loading translations...">
+            <AppRouter />
+        </Suspense>
+    );
 };

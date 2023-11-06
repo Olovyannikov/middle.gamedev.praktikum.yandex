@@ -1,0 +1,36 @@
+.avatar {
+    --avatar-bg-color: var(--accent-blue);
+    --avatar-text-color: var(--white);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+    color: var(--avatar-text-color);
+    background: var(--avatar-bg-color);
+    user-select: none;
+}
+
+.avatar.rounded {
+    border-radius: var(--size-xs);
+}
+
+.avatar.square {
+    border-radius: 0;
+}
+
+.avatar.small {
+    width: var(--size-xl);
+    height: var(--size-xl);
+}
+
+.avatar.medium {
+    width: var(--size-5xl);
+    height: var(--size-5xl);
+}
+
+.avatar.large {
+    width: 48px;
+    height: 48px;
+}
