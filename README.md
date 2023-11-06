@@ -1,10 +1,58 @@
+### Требования к именам коммитов
+- Названия коммитов должны быть согласно [гайдлайну](https://www.conventionalcommits.org/en/v1.0.0/)
+- Тип коммита должен быть только в нижнием регистре (`feat`, `fix`, `refactor`, `docs` и т.д.)
+- Должен использоваться present tense ("add feature" not "added feature")
+- Должен использоваться imperative mood ("move cursor to..." not "moves cursor to...")
+
+#### Шаблон коммит-месседжа
+`$type($scope): $message ($task)`
+
+- `$type` - `feat`,`fix`,`doc`,`init`,`refactor`;
+- `$scope` - `admin panel`, `user profile`, etc;
+- `$message` - `add primary button`, `fix header sticky behavior`;
+- `$task` - `GAM-10`, `GAM-22`, etc;
+
+### Примеры имен коммитов
+- `init:` - используется для начала проекта/таска. Примеры:
+```
+init: start youtube-task
+init(client): start mentor-dashboard task (GAM-10)
+```
+- `feat:` - это реализованная новая функциональность из технического задания (добавил поддержку зумирования, добавил footer, добавил карточку продукта). Примеры:
+```
+feat: add basic page layout
+feat(admin): implement swipe for horizontal list
+feat(user profile): add additional navigation button (GAM-10)
+feat: add banner (GAM-11)
+feat(footer): add social links (GAM-12)
+```
+- `fix:` - исправил ошибку в ранее реализованной функциональности. Примеры:
+```
+fix: implement correct loading data from youtube
+fix(store page): change layout for video items to fix bugs
+fix: relayout header for firefox (GAM-1)
+fix(header): adjust social links for mobile (GAM-2)
+```
+- `refactor:` - новой функциональности не добавлял / поведения не менял. Файлы в другие места положил, удалил, добавил. Изменил форматирование кода (white-space, formatting, missing semi-colons, etc). Улучшил алгоритм, без изменения функциональности. Примеры:
+```
+refactor: change structure of the project
+refactor: rename vars for better readability (GAM-3)
+refactor(infra): apply eslint
+refactor(lint): apply prettier (GAM-4)
+```
+- `docs:` - используется при работе с документацией/readme проекта. Примеры:
+```
+docs: update readme with additional information
+docs: update description of run() method
+```
+
 ### Как запускать?
 
 1. Убедитесь что у вас установлен `node` и `docker`
 2. Выполните команду `yarn bootstrap` - это обязательный шаг, без него ничего работать не будет :)
 3. Выполните команду `yarn dev`
-3. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
-4. Выполните команду `yarn dev --scope=server` чтобы запустить только server
+4. Выполните команду `yarn dev --scope=client` чтобы запустить только клиент
+5. Выполните команду `yarn dev --scope=server` чтобы запустить только server
 
 
 ### Как добавить зависимости?
