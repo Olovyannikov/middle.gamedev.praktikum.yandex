@@ -1,0 +1,15 @@
+.flex {
+    display: flex;
+}
+
+.small {
+    gap: var(--size-xxs);
+}
+
+.middle {
+    gap: var(--size-md);
+}
+
+.large {
+    gap: var(--size-xl);
+}
