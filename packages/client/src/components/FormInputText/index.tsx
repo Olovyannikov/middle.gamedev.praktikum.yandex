@@ -8,7 +8,7 @@ interface FormInputTextProps {
     setValue?: unknown;
 }
 
-export function FormInputText({ name, control, label }: FormInputTextProps) {
+export const FormInputText = ({ name, control, label }: FormInputTextProps) => {
     return (
         <Controller
             name={name}
@@ -26,4 +26,4 @@ export function FormInputText({ name, control, label }: FormInputTextProps) {
             )}
         />
     );
-}
+};
