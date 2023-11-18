@@ -30,6 +30,7 @@ export default function LoginPage() {
                         justifyContent="center"
                         alignItems="center"
                         spacing={2}
+                        className={s.formStack}
                     >
                         <Typography variant="h4">Войти</Typography>
                         <FormInputText
@@ -45,8 +46,9 @@ export default function LoginPage() {
                         <Button
                             onClick={handleSubmit(onSubmit)}
                             variant={'contained'}
+                            className={s.formButton}
                         >
-                            Submit
+                            Войти
                         </Button>
                     </Stack>
                 </Paper>
