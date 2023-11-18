@@ -1,10 +1,10 @@
 import { RootLayout } from '@/layouts/RootLayout';
-import { StartScreen } from '@/entities';
+import { Game } from '@/widgets/Game';
 
 export default function GamePage() {
     return (
         <RootLayout>
-            <StartScreen />
+            <Game />
         </RootLayout>
     );
 }
