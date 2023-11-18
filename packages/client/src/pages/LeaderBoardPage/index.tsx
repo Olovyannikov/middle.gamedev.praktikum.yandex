@@ -8,7 +8,7 @@ export default function LeaderBoardPage() {
                 container
                 direction="column"
                 alignItems="center"
-                justifyContent="center"
+                justifyContent="flex-start"
                 style={{ minHeight: '90vh' }}
             >
                 <h1>Hello Leaderboard!</h1>

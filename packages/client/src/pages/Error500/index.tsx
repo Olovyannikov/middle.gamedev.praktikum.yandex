@@ -14,9 +14,9 @@ export default function Error500() {
                 style={{ minHeight: '90vh' }}
             >
                 <Grid item xs={3}>
-                    <h1 style={{ textAlign: 'center' }}>Ошибка 500</h1>
+                    <h1 style={{ textAlign: 'center' }}>Error 500</h1>
                     <p style={{ textAlign: 'center' }}>
-                        Попробуйте вернуться <Link to="/">на главную</Link>
+                        Try return to <Link to="/">mainpage</Link>
                     </p>
                     <Icon style={{ width: 400, height: 400 }}>
                         <img src={ErrorVector} />
