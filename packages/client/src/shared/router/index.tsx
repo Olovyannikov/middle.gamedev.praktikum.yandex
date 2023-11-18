@@ -7,6 +7,7 @@ import {
     ForumPageLazy,
     GamePageLazy,
     LeaderBoardPageLazy,
+    Error500PageLazy,
 } from '@/pages/pages.lazy';
 
 export const AppRoutes = {
@@ -17,6 +18,7 @@ export const AppRoutes = {
     GAME: 'game',
     LEADERBOARD: 'leaderboard',
     FORUM: 'forum',
+    Error500: 'Error500',
 } as const;
 
 type AppRoutesKeys = keyof typeof AppRoutes;
@@ -30,6 +32,7 @@ export const RouterPaths: Record<AppRoutesValues, string> = {
     [AppRoutes.GAME]: '/game',
     [AppRoutes.LEADERBOARD]: '/leaderboard',
     [AppRoutes.FORUM]: '/forum',
+    [AppRoutes.Error500]: '/505',
 };
 
 export const router: Record<AppRoutesValues, RouteProps> = {
@@ -60,5 +63,9 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     [AppRoutes.FORUM]: {
         path: RouterPaths.forum,
         element: <ForumPageLazy />,
+    },
+    [AppRoutes.Error500]: {
+        path: RouterPaths.Error500,
+        element: <Error500PageLazy />,
     },
 };
