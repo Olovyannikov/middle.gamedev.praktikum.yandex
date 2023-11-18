@@ -1,5 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
+import s from './FormInputText.module.scss';
 
 interface FormInputTextProps {
     name: string;
@@ -22,6 +23,7 @@ export const FormInputText = ({ name, label }: FormInputTextProps) => {
                     variant={'standard'}
                     value={value}
                     label={label}
+                    className={s.textField}
                     fullWidth
                 />
             )}
