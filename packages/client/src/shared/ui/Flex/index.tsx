@@ -43,10 +43,10 @@ export const Flex = <T extends ElementType = 'div'>({
             style={
                 {
                     gap: isNumber() && gap,
-                    'align-items': align,
-                    'justify-content': justify,
-                    'flex-wrap': wrap,
-                    'flex-direction': column ? 'column' : 'row',
+                    alignItems: align,
+                    justifyContent: justify,
+                    flexWrap: wrap,
+                    flexDirection: column ? 'column' : 'row',
                 } as CSSProperties
             }
             {...props}
