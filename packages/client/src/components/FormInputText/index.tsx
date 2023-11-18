@@ -1,18 +1,19 @@
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, useFormContext } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
 
 interface FormInputTextProps {
     name: string;
-    control: Control | unknown;
     label: string;
     setValue?: unknown;
 }
 
-export const FormInputText = ({ name, control, label }: FormInputTextProps) => {
+export const FormInputText = ({ name, label }: FormInputTextProps) => {
+    const { control } = useFormContext();
+
     return (
         <Controller
             name={name}
-            control={control as Control}
+            control={control}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
                 <TextField
                     helperText={error ? error.message : null}

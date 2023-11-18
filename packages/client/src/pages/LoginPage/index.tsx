@@ -1,6 +1,6 @@
 import { RootLayout } from '@/layouts/RootLayout';
 import { Container, Button, Typography } from '@mui/material';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import s from './LoginPage.module.scss';
@@ -11,7 +11,7 @@ interface LoginParams {
 }
 
 export default function LoginPage() {
-    const { handleSubmit, control } = useForm<LoginParams>({
+    const methods = useForm<LoginParams>({
         defaultValues: {
             login: '',
             password: '',
@@ -27,23 +27,22 @@ export default function LoginPage() {
             <Container>
                 <FormPaperWrapper>
                     <Typography variant="h4">Войти</Typography>
-                    <FormInputText
-                        control={control}
-                        label="Логин"
-                        name={'login'}
-                    />
-                    <FormInputText
-                        control={control}
-                        label="Пароль"
-                        name={'password'}
-                    />
-                    <Button
-                        onClick={handleSubmit(onSubmit)}
-                        variant={'contained'}
-                        className={s.formButton}
-                    >
-                        Войти
-                    </Button>
+                    <FormProvider {...methods}>
+                        <form
+                            onSubmit={methods.handleSubmit(onSubmit)}
+                            className={s.form}
+                        >
+                            <FormInputText label="Логин" name={'login'} />
+                            <FormInputText label="Пароль" name={'password'} />
+                            <Button
+                                type={'submit'}
+                                variant={'contained'}
+                                className={s.formButton}
+                            >
+                                Войти
+                            </Button>
+                        </form>
+                    </FormProvider>
                 </FormPaperWrapper>
             </Container>
         </RootLayout>
