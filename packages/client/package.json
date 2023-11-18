@@ -46,17 +46,21 @@
     "vite": "^3.2.7"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.2",
     "react-hook-form": "^7.48.2",
     "zod": "^3.22.4",
+=======
+    "@emotion/styled": "^11.11.0",
+>>>>>>> e8d0b3f (feat/gam-14)
     "@mui/material": "^5.14.18",
     "@mui/styled-engine-sc": "^6.0.0-alpha.6",
     "@phosphor-icons/react": "^2.0.14",
-    "react-router-dom": "^6.18.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-components": "^6.1.1" 
+    "react-router-dom": "^6.18.0",
+    "styled-components": "^6.1.1"
   }
 }
