@@ -3,6 +3,7 @@ import { Container, Button, Typography } from '@mui/material';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
+import { Form } from '@/components/Form';
 import s from './RegistrationPage.module.scss';
 
 interface RegistrationParams {
@@ -36,10 +37,7 @@ export default function RegistrationPage() {
                 <FormPaperWrapper>
                     <Typography variant="h4">Зарегистрироваться</Typography>
                     <FormProvider {...methods}>
-                        <form
-                            onSubmit={methods.handleSubmit(onSubmit)}
-                            className={s.form}
-                        >
+                        <Form onSubmit={methods.handleSubmit(onSubmit)}>
                             <FormInputText label="Логин" name={'login'} />
                             <FormInputText label="Имя" name={'first_name'} />
                             <FormInputText
@@ -60,7 +58,7 @@ export default function RegistrationPage() {
                             >
                                 Зарегистрироваться
                             </Button>
-                        </form>
+                        </Form>
                     </FormProvider>
                 </FormPaperWrapper>
             </Container>
