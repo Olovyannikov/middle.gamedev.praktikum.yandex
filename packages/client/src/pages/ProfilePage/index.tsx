@@ -3,10 +3,9 @@ import { RootLayout } from '@/layouts/RootLayout';
 import { ChangeEvent, useRef, useState } from 'react';
 import s from './profile.module.scss';
 import { Button } from '@/shared/ui/Button';
-import imgAvatar from './avatar_default.svg';
-import backgroundMain from './bg.svg';
+import imgAvatar from '@/app/assets/img/avatar_default.svg';
+import backgroundMain from '@/app/assets/img/bg.svg';
 import { Container } from '@/shared/ui';
-import { updateAvatar, updatePassword } from './api';
 
 export default function ProfilePage() {
     const [username, setUsername] = useState('John Doe');
@@ -36,7 +35,6 @@ export default function ProfilePage() {
         // Например, проверка на минимальную длину пароля и другие условия
 
         // Отправка запроса на смену пароля
-        updatePassword({ oldPassword, newPassword });
 
         setOldPassword('');
         setNewPassword('');
@@ -50,7 +48,6 @@ export default function ProfilePage() {
         e.preventDefault();
         setIsModalOpen(false);
         setAvatarUrl(previewAvatar);
-        updateAvatar(previewAvatar);
     };
 
     const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
