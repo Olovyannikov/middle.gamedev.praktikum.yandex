@@ -114,26 +114,3 @@ span:has(.button:disabled, .button[aria-disabled='true']) {
 .dark.outlined {
     border-color: var(--text-color);
 }
-
-.t-1 {
-    --btn-height: 62px;
-
-    border-width: 2px;
-    border-radius: 0;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 0.45em;
-    text-transform: uppercase;
-    color: #000;
-    transition-property: color, background-color, border-color;
-
-    &:hover,
-    &:focus-visible {
-        background-color: #000;
-        border-color: #000;
-        color: #fff;
-    }
-
-    &:active {
-    }
-}

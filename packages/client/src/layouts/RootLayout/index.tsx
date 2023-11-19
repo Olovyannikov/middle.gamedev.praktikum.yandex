@@ -2,9 +2,9 @@ import type { PropsWithChildren } from 'react';
 import { Header } from './Header';
 import { Main } from './Main';
 
-type RootLayoutProps = {
+interface RootLayoutProps {
     hasHeader?: boolean;
-};
+}
 
 export const RootLayout = ({
     hasHeader = true,

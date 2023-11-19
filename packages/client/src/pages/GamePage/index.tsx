@@ -1,27 +1,15 @@
 import { RootLayout } from '@/layouts/RootLayout';
 import { Banner } from '../../shared/ui/Banner';
 import { Stack } from '@mui/material';
-import { AppLink } from '@/shared/ui';
+import { AppLink } from '@/shared/ui/AppLink';
+import { TITLE, DESCRIPTION } from '../../../config';
 
-import btnStyle from '../../shared/ui/Button/Button.module.scss';
+import s from './GamePage.module.scss';
 
 export default function GamePage() {
-    const title = 'The Snake';
-    const description = `
-        The snake game is a classic video game where the player controls a snake 
-        that moves around a grid or screen. The objective of the game is to eat food items 
-        that appear randomly on the grid, which causes the snake to grow longer
-    `;
-
-    const btnClassName = [
-        btnStyle.button,
-        btnStyle.bordered,
-        btnStyle['t-1'],
-    ].join(' ');
-
     return (
         <RootLayout hasHeader={false}>
-            <Banner title={title} description={description} />
+            <Banner title={TITLE} description={DESCRIPTION} />
             <Stack
                 sx={{
                     maxWidth: '275px',
@@ -29,16 +17,16 @@ export default function GamePage() {
                 }}
                 spacing={3.2}
             >
-                <AppLink className={btnClassName} to="#">
+                <AppLink className={s.button} to="#">
                     Start
                 </AppLink>
-                <AppLink className={btnClassName} to="/me">
+                <AppLink className={s.button} to="/me">
                     Profile
                 </AppLink>
-                <AppLink className={btnClassName} to="/forum">
+                <AppLink className={s.button} to="/forum">
                     Forum
                 </AppLink>
-                <AppLink className={btnClassName} to="/leaderboard">
+                <AppLink className={s.button} to="/leaderboard">
                     Leaderboard
                 </AppLink>
             </Stack>

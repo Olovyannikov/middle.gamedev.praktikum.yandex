@@ -13,11 +13,11 @@
     .title {
         margin-bottom: 55px;
         font-size: 96px;
-        font-family: 'Monofett', sans-serif;
+        font-family: var(--font-heading);
         color: #000;
     }
 
     .description {
-        font: 700 18px/1.78 'Roboto Mono', monospace;
+        font: 700 18px/1.78 var(--font-main);
     }
 }
