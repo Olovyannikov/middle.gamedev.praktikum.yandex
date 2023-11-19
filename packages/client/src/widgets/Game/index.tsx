@@ -26,7 +26,8 @@ export const Game = () => {
         draw({ ctx, body: snakeBody, food: foodPos });
 
     return (
-        <button className={s.root} tabIndex={0} onKeyDown={onSnakeMove}>
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex,jsx-a11y/no-static-element-interactions
+        <div className={s.root} tabIndex={0} onKeyDown={onSnakeMove}>
             <StartScreen gameState={gameState} setGameState={setGameState} />
             {(gameState === GAME_STATE.RUNNING ||
                 gameState === GAME_STATE.PAUSED) && (
@@ -45,6 +46,6 @@ export const Game = () => {
                     </Button>
                 </>
             )}
-        </button>
+        </div>
     );
 };

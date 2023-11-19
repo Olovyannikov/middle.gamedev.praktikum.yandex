@@ -7,7 +7,7 @@ import {
     willSnakeHitTheFood,
 } from '@/widgets/Game/lib';
 import { DIRECTIONS, GAME_STATE, SEGMENT_SIZE } from '@/widgets/Game/constants';
-import { useInterval } from 'usehooks-ts';
+import { useInterval, useLockedBody } from 'usehooks-ts';
 
 const MOVE_SPEED = 100;
 
@@ -26,6 +26,7 @@ export const useGame = ({
     gameState,
     setGameState,
 }: UseGameProps) => {
+    const [bodyLocked, setBodyLocked] = useLockedBody(false);
     const [dir, setDir] = useState<Dir>();
     const [snakeBody, setSnakeBody] = useState<Position[] | undefined>([
         {
@@ -210,6 +211,22 @@ export const useGame = ({
             },
         ]);
     }, [width, height]);
+
+    useEffect(() => {
+        if (gameState === GAME_STATE.RUNNING) {
+            return setBodyLocked(true);
+        }
+
+        return setBodyLocked(false);
+    }, [gameState]);
+
+    useEffect(() => {
+        if (bodyLocked) {
+            document.body.style.overflowY = 'hidden';
+        } else {
+            document.body.style.overflowY = 'auto';
+        }
+    }, [bodyLocked]);
 
     return {
         foodPos,
