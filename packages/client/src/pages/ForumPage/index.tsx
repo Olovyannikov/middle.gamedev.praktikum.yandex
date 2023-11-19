@@ -1,47 +1,71 @@
 import { RootLayout } from '@/layouts/RootLayout';
-import { Alert, Container } from '@/shared/ui';
-import { Flex } from '@/shared/ui/Flex';
+import { Grid } from '@mui/material';
+import { Link } from 'react-router-dom';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Button } from '@/shared/ui';
 
 export default function ForumPage() {
     return (
         <RootLayout>
-            <section>
-                <Container>
-                    <Flex gap="middle">
-                        <Alert>Hello Forum!</Alert>
-                        <Alert type="success">Hello Forum!</Alert>
-                        <Alert type="warning">Hello Forum!</Alert>
-                        <Alert type="error">Hello Forum!</Alert>
-                        <Alert rounded>Hello Forum!</Alert>
-                        <Alert border="left">Hello Forum!</Alert>
-                        <Alert rounded border="top">
-                            Hello Forum!
-                        </Alert>
-                        <Alert elevation={1}>Hello Forum!</Alert>
-                        <Alert elevation={2}>Hello Forum!</Alert>
-                        <Alert elevation={3}>Hello Forum!</Alert>
-                        <Alert elevation={4}>Hello Forum!</Alert>
-                        <Alert elevation={5}>Hello Forum!</Alert>
-                        <Alert rounded closeable>
-                            Hello Forum!
-                        </Alert>
+            <Grid
+                container
+                alignItems="center"
+                justifyContent="center"
+                direction="column"
+                sx={{ minWidth: '100%', padding: 1 }}
+            >
+                <h1>Snake's forum page</h1>
+                <Grid
+                    alignItems="center"
+                    justifyContent="center"
+                    sx={{ width: '90%' }}
+                >
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Название топика</TableCell>
+                                    <TableCell>Автор</TableCell>
+                                    <TableCell>Дата создания</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow
+                                    sx={{
+                                        '&:last-child td, &:last-child th': {
+                                            border: 0,
+                                        },
+                                    }}
+                                >
+                                    <TableCell>
+                                        <Link to="/topic/1">
+                                            Как не умереть за первые 10 секунд
+                                        </Link>
+                                    </TableCell>
+                                    <TableCell>jxSolo</TableCell>
+                                    <TableCell>02.03.2023</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
-                        <Alert outlined>Hello Forum!</Alert>
-                        <Alert outlined type="success">
-                            Hello Forum!
-                        </Alert>
-                        <Alert outlined type="error">
-                            Hello Forum!
-                        </Alert>
-                        <Alert outlined type="warning">
-                            Hello Forum!
-                        </Alert>
-                        <Alert dense>Hello Forum!</Alert>
-                        <Alert flat>Hello Forum!</Alert>
-                        <Alert inset>Hello Forum!</Alert>
-                    </Flex>
-                </Container>
-            </section>
+                    <Grid
+                        container
+                        alignItems="flex-end"
+                        justifyContent="flex-end"
+                    >
+                        <Button>
+                            <Link to="/create/topic">Create topic</Link>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Grid>
         </RootLayout>
     );
 }

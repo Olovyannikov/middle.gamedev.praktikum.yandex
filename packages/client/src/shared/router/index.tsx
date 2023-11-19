@@ -7,6 +7,8 @@ import {
     ForumPageLazy,
     GamePageLazy,
     LeaderBoardPageLazy,
+    ForumTopicPageLazy,
+    ForumTopicCreatePageLazy,
 } from '@/pages/pages.lazy';
 
 export const AppRoutes = {
@@ -17,6 +19,9 @@ export const AppRoutes = {
     GAME: 'game',
     LEADERBOARD: 'leaderboard',
     FORUM: 'forum',
+    TOPICS: 'topics',
+    TOPIC: 'topic',
+    CREATE_TOPIC: 'createTopic',
 } as const;
 
 type AppRoutesKeys = keyof typeof AppRoutes;
@@ -30,6 +35,9 @@ export const RouterPaths: Record<AppRoutesValues, string> = {
     [AppRoutes.GAME]: '/game',
     [AppRoutes.LEADERBOARD]: '/leaderboard',
     [AppRoutes.FORUM]: '/forum',
+    [AppRoutes.TOPICS]: '/topic/:id',
+    [AppRoutes.TOPIC]: '/topic',
+    [AppRoutes.CREATE_TOPIC]: '/create/topic',
 };
 
 export const router: Record<AppRoutesValues, RouteProps> = {
@@ -60,5 +68,17 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     [AppRoutes.FORUM]: {
         path: RouterPaths.forum,
         element: <ForumPageLazy />,
+    },
+    [AppRoutes.TOPICS]: {
+        path: RouterPaths.topics,
+        element: <ForumTopicPageLazy />,
+    },
+    [AppRoutes.TOPIC]: {
+        path: RouterPaths.topic,
+        element: <ForumTopicPageLazy />,
+    },
+    [AppRoutes.CREATE_TOPIC]: {
+        path: RouterPaths.createTopic,
+        element: <ForumTopicCreatePageLazy />,
     },
 };
