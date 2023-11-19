@@ -1,5 +1,5 @@
 import { Button, Typography } from '@mui/material';
-import s from './StartScreen.module.scss';
+import s from './GameEndScreen.module.scss';
 import { GameState } from '@/shared/types/models/Game';
 import { GAME_STATE } from '@/shared/types/models/Game';
 

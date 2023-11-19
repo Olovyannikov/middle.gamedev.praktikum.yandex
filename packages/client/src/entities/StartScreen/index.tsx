@@ -6,7 +6,7 @@ import { Card, Container, Flex, Typography } from '@/shared/ui';
 import type { GameState } from '@/widgets/Game/types';
 import { GAME_STATE } from '@/widgets/Game/constants';
 import s from './StartScreen.module.scss';
-import { GameEndScreen } from '../GameEndScreen/GameEndScreen';
+import { GameEndScreen } from '../GameEndScreen';
 
 export const StartScreen = ({
     gameState,
