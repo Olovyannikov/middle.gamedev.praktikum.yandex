@@ -1,31 +1,17 @@
 import { RootLayout } from '@/layouts/RootLayout';
-import { Container } from '@/shared/ui';
-import { Avatar } from '@/shared/ui/Avatar';
-import { Flex } from '@/shared/ui/Flex';
+import { Banner } from '../../shared/ui/Banner';
 
 export default function GamePage() {
+    const title = 'The Snake';
+    const description = `
+        The snake game is a classic video game where the player controls a snake 
+        that moves around a grid or screen. The objective of the game is to eat food items 
+        that appear randomly on the grid, which causes the snake to grow longer
+    `;
+
     return (
-        <RootLayout>
-            <section>
-                <Container>
-                    <Flex gap="middle" align="center">
-                        <Avatar size="small" />
-                        <Avatar size="medium" />
-                        <Avatar size="large" />
-                        <Avatar size={60} />
-                        <Avatar>Larry King</Avatar>
-                        <Avatar bgColor="var(--purple-500)">BB King</Avatar>
-                        <Avatar square>Garry Moore</Avatar>
-                        <Avatar
-                            size="large"
-                            src="https://m.media-amazon.com/images/I/7190zRsNnZL._UF1000,1000_QL80_.jpg"
-                        >
-                            Eric Clapton
-                        </Avatar>
-                        <Avatar rounded />
-                    </Flex>
-                </Container>
-            </section>
+        <RootLayout hasHeader={false}>
+            <Banner title={title} description={description} />
         </RootLayout>
     );
 }
