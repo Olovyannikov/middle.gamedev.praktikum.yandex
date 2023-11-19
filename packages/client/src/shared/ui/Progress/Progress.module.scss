@@ -1,0 +1,169 @@
+.linear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: inherit;
+    box-shadow: var(--box-shadow-inset);
+    box-sizing: border-box;
+    background: var(--bg-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.linear.bordered {
+    border: 1px solid var(--border-color);
+}
+
+.linear,
+.circular {
+    --bg-color: var(--light-bg);
+    --border-color: var(--light-bg-dark-shadow);
+    --selector-bg: var(--g-text-color-secondary-light);
+    --box-shadow-inset-dense: inset -1px -1px 3px var(--light-bg-light-shadow),
+        inset 1px 1px 3px var(--light-bg-dark-shadow);
+    --box-shadow-dense: -1px -1px 3px var(--light-bg-light-shadow),
+        1px 1px 3px var(--light-bg-dark-shadow);
+}
+
+.wrapper {
+    overflow: hidden;
+    width: calc(100% - 4px);
+}
+
+.wrapper.filled {
+    width: 100%;
+}
+
+.bg {
+    overflow: hidden;
+    width: 100%;
+    background: var(--selector-bg);
+    transition: all 0.2s ease-in-out;
+}
+
+.striped {
+    background: linear-gradient(
+            135deg,
+            rgb(255 255 255 / 40%) 25%,
+            transparent 0,
+            transparent 50%,
+            rgb(255 255 255 / 40%) 0,
+            rgb(255 255 255 / 40%) 75%,
+            transparent 0,
+            transparent
+        )
+        var(--selector-bg) !important;
+}
+
+.indeterminate {
+    animation: indeterminate-progress 1.25s ease infinite;
+}
+
+@keyframes indeterminate-progress {
+    0% {
+        transform: translateX(-200%);
+    }
+
+    100% {
+        width: 100%;
+        transform: translateX(100%);
+    }
+}
+
+/* circular */
+.circular {
+    position: relative;
+
+    &.inner,
+    &.outer,
+    &.label &.svg {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 100%;
+        background: var(--bg-color);
+        transform: translate3d(-50%, -50%, 0);
+    }
+}
+
+.inner {
+    z-index: 2;
+}
+
+.outer {
+    z-index: 1;
+}
+
+.not-elevated .inner {
+    box-shadow: var(--box-shadow-dense);
+}
+
+.not-elevated .outer {
+    box-shadow: var(--box-shadow-inset-dense);
+}
+
+.elevated .inner {
+    box-shadow: var(--box-shadow-inset-dense);
+}
+
+.elevated .outer {
+    box-shadow: var(--box-shadow-dense);
+}
+
+.flat .outer,
+.flat .inner {
+    box-shadow: none !important;
+}
+
+.svg {
+    z-index: 2;
+}
+
+.circular .label {
+    z-index: 3;
+    color: var(--selector-bg);
+}
+
+.circle {
+    z-index: 3;
+    fill: transparent;
+    stroke: var(--selector-bg);
+    transition: all 0.3s ease-in-out;
+}
+
+.circular .indeterminate {
+    animation: svg-animation 2s linear infinite;
+}
+
+.indeterminate circle {
+    stroke-linecap: round;
+    transform-origin: bottom right;
+    animation: dash-animate 1.4s ease-in-out infinite both;
+}
+
+@keyframes svg-animation {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+@keyframes dash-animate {
+    0% {
+        stroke-dashoffset: 0;
+        transform: rotate(0);
+    }
+
+    50% {
+        stroke-dashoffset: 100;
+        transform: rotate(45deg);
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        transform: rotate(360deg);
+    }
+}
