@@ -7,6 +7,7 @@ import type { GameState } from '@/shared/types/models/Game';
 import { GAME_STATE } from '@/shared/types/models/Game';
 
 import s from './StartScreen.module.scss';
+import { GameEndScreen } from '../GameEndScreen/GameEndScreen';
 
 export const StartScreen = ({
     gameState,
@@ -46,19 +47,7 @@ export const StartScreen = ({
                                 </CountdownCircleTimer>
                             )}
                             {gameState === GAME_STATE.GAME_OVER && (
-                                <>
-                                    <Typography variant="h1">Snake</Typography>
-                                    <Typography variant="h1">🐍</Typography>
-                                    <div className={s.controls}>
-                                        <Button
-                                            onClick={() =>
-                                                setGameState(GAME_STATE.PREPARE)
-                                            }
-                                        >
-                                            Start
-                                        </Button>
-                                    </div>
-                                </>
+                                <GameEndScreen setGameState={setGameState} />
                             )}
                         </main>
                     </Card>
