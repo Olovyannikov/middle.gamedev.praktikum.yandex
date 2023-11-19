@@ -32,7 +32,7 @@ export const Avatar = ({
     return (
         <div
             className={cn(s.avatar, className, {
-                [s[size]]: size,
+                [s[size as Size]]: size,
                 [s.rounded]: rounded,
                 [s.square]: square,
             })}
