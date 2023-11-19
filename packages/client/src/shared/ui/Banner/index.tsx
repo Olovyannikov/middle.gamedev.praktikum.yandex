@@ -1,19 +1,26 @@
 import { Container } from '../Container';
+import { Typography } from '@mui/material';
 
 import s from './Banner.module.scss';
 
-type BannerProps = {
+interface BannerProps {
     title?: string;
     description?: string;
-};
+}
 
 export const Banner = ({ title, description }: BannerProps) => {
     return (
         <section className={s.banner}>
-            <Container className={s.banner__inner}>
-                {title ? <h1 className={s.banner__title}>{title}</h1> : null}
+            <Container className={s.content}>
+                {title ? (
+                    <Typography variant="h1" className={s.title}>
+                        {title}
+                    </Typography>
+                ) : null}
                 {description ? (
-                    <p className={s.banner__description}>{description}</p>
+                    <Typography className={s.description}>
+                        {description}
+                    </Typography>
                 ) : null}
             </Container>
         </section>

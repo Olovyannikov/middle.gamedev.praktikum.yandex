@@ -1,19 +1,23 @@
 .banner {
-    $block-name: &;
-
     padding-top: 85px;
     padding-bottom: 118px;
     min-height: 512px;
+    background: url('/img/bg.jpg') center/cover no-repeat;
 
-    &__inner {
+    .content {
+        margin: 0 auto;
+        max-width: 700px;
+        text-align: center;
     }
 
-    &__title {
+    .title {
         margin-bottom: 55px;
         font-size: 96px;
+        font-family: 'Monofett', sans-serif;
+        color: #000;
     }
 
-    &__description {
-        font-size: 18px;
+    .description {
+        font: 700 18px/1.78 'Roboto Mono', monospace;
     }
 }
