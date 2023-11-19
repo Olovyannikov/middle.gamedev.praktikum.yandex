@@ -7,7 +7,7 @@ import type { GameState } from '@/shared/types/models/Game';
 import { GAME_STATE } from '@/shared/types/models/Game';
 
 import s from './StartScreen.module.scss';
-import { GameEndScreen } from '../GameEndScreen/GameEndScreen';
+import { GameEndScreen } from '../GameEndScreen';
 
 export const StartScreen = ({
     gameState,
