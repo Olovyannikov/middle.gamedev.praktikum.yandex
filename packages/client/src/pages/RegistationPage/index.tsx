@@ -4,19 +4,15 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import { Form } from '@/components/Form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+    RegistrationSchema,
+    RegistrationSchemaType,
+} from '@/shared/validators/UserValidation';
 import s from './RegistrationPage.module.scss';
 
-interface RegistrationParams {
-    login: string;
-    password: string;
-    first_name: string;
-    second_name: string;
-    phone: string;
-    email: string;
-}
-
 export default function RegistrationPage() {
-    const methods = useForm<RegistrationParams>({
+    const methods = useForm<RegistrationSchemaType>({
         defaultValues: {
             login: '',
             password: '',
@@ -25,9 +21,11 @@ export default function RegistrationPage() {
             phone: '',
             email: '',
         },
+        mode: 'onChange',
+        resolver: zodResolver(RegistrationSchema),
     });
 
-    const onSubmit: SubmitHandler<RegistrationParams> = (data) => {
+    const onSubmit: SubmitHandler<RegistrationSchemaType> = (data) => {
         console.log(data);
     };
 
@@ -49,7 +47,7 @@ export default function RegistrationPage() {
                             <FormInputText label="Пароль" name={'password'} />
                             <FormInputText
                                 label="Повторите пароль"
-                                name={'repeatPassword'}
+                                name={'confirmPassword'}
                             />
                             <Button
                                 type={'submit'}
