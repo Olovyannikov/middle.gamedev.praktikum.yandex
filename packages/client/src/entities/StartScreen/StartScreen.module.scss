@@ -1,0 +1,30 @@
+.root {
+    width: 100%;
+}
+
+.container {
+    height: calc(100vh - 64px);
+}
+
+.start {
+    height: 100%;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    max-width: 590px;
+    max-height: 420px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+    height: 100%;
+}
+
+.controls {
+    margin-top: auto;
+}
