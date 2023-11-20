@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 const loginFields = ['login', 'password'];
+
 const registrationFields = [
     'login',
     'password',
@@ -21,12 +22,14 @@ const passwordRules = z
     .regex(/\d/, {
         message: 'Должен содержать хотя бы одну заглавную букву и цифру',
     });
+
 const nameRules = z
     .string()
     .regex(/^[A-ZЁА-Я][a-zа-яё]*(-[A-ZЁА-Яa-zа-яё]*)?$/, {
         message:
             'Начинать нужно с заглавной буквы, из спецсимволов допустим только дефис',
     });
+
 const loginRules = z
     .string()
     .min(3, { message: 'Не менее 3 символов' })
@@ -38,6 +41,7 @@ const loginRules = z
     .regex(/\D/, {
         message: 'Не может состоять только из цифр',
     });
+
 const phoneRules = z
     .string()
     .min(10, { message: 'Не менее 10 символов' })
@@ -45,6 +49,7 @@ const phoneRules = z
     .regex(/^\+?\d+$/, {
         message: 'Должен состоять только из цифр и может начинаться с плюса',
     });
+
 const emailRules = z.string().regex(/^[\w-]+@[\w-]+\.[A-Za-z]{2,}/, {
     message: 'Заполнено неверно',
 });
@@ -69,6 +74,7 @@ function getValidatorsByFields(fieldsList: string[]) {
 }
 
 export const LoginSchema = z.object(getValidatorsByFields(loginFields));
+
 export const RegistrationSchema = z
     .object(getValidatorsByFields(registrationFields))
     .refine((data) => data.password === data.confirmPassword, {
@@ -77,4 +83,5 @@ export const RegistrationSchema = z
     });
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
+
 export type RegistrationSchemaType = z.infer<typeof RegistrationSchema>;
