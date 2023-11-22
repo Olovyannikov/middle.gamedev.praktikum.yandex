@@ -1,4 +1,9 @@
 /* Fonts */
+:root {
+    --font-heading: 'Monofett', sans-serif;
+    --font-main: 'Roboto Mono', monospace;
+}
+
 // TBD
 
 /* Sizes */
@@ -82,4 +87,9 @@
     --light-bg-light-shadow: #fff;
     --dark-bg-dark-shadow: #363636;
     --dark-bg-light-shadow: #525252;
+}
+
+// transition
+:root {
+    --t-duration-1: 0.25s;
 }
