@@ -1,8 +1,9 @@
 import { forwardRef, useEffect } from 'react';
 import type { DetailedHTMLProps, HTMLAttributes, RefObject } from 'react';
 
-import s from './Canvas.module.scss';
 import { Card } from '@/shared/ui';
+
+import s from './Canvas.module.scss';
 
 interface CanvasProps
     extends DetailedHTMLProps<
