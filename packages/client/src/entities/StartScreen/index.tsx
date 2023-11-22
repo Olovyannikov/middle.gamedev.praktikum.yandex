@@ -3,10 +3,10 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
 import { Card, Container, Flex, Typography } from '@/shared/ui';
 
-import type { GameState } from '@/shared/types/models/Game';
-import { GAME_STATE } from '@/shared/types/models/Game';
-
+import type { GameState } from '@/widgets/Game/types';
+import { GAME_STATE } from '@/widgets/Game/constants';
 import s from './StartScreen.module.scss';
+import { GameEndScreen } from '../GameEndScreen';
 
 export const StartScreen = ({
     gameState,
@@ -45,20 +45,9 @@ export const StartScreen = ({
                                     {({ remainingTime }) => remainingTime}
                                 </CountdownCircleTimer>
                             )}
+                            {/* TODO: Тут должен быть экран конца игры */}
                             {gameState === GAME_STATE.GAME_OVER && (
-                                <>
-                                    <Typography variant="h1">Snake</Typography>
-                                    <Typography variant="h1">🐍</Typography>
-                                    <div className={s.controls}>
-                                        <Button
-                                            onClick={() =>
-                                                setGameState(GAME_STATE.PREPARE)
-                                            }
-                                        >
-                                            Start
-                                        </Button>
-                                    </div>
-                                </>
+                                <GameEndScreen setGameState={setGameState} />
                             )}
                         </main>
                     </Card>
