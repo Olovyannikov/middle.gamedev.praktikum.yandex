@@ -3,6 +3,7 @@ import { Container, Button, Typography } from '@mui/material';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
+import { Form } from '@/components/Form';
 import s from './LoginPage.module.scss';
 
 interface LoginParams {
@@ -28,10 +29,7 @@ export default function LoginPage() {
                 <FormPaperWrapper>
                     <Typography variant="h4">Войти</Typography>
                     <FormProvider {...methods}>
-                        <form
-                            onSubmit={methods.handleSubmit(onSubmit)}
-                            className={s.form}
-                        >
+                        <Form onSubmit={methods.handleSubmit(onSubmit)}>
                             <FormInputText label="Логин" name={'login'} />
                             <FormInputText label="Пароль" name={'password'} />
                             <Button
@@ -41,7 +39,7 @@ export default function LoginPage() {
                             >
                                 Войти
                             </Button>
-                        </form>
+                        </Form>
                     </FormProvider>
                 </FormPaperWrapper>
             </Container>
