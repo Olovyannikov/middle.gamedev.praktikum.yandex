@@ -6,6 +6,7 @@ export const defaultValues = {
     registration: {
         login: '',
         password: '',
+        confirmPassword: '',
         first_name: '',
         second_name: '',
         phone: '',
