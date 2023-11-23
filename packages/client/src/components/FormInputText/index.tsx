@@ -9,12 +9,12 @@ interface FormInputTextProps {
 }
 
 export const FormInputText = ({ name, label }: FormInputTextProps) => {
-    const { control, register } = useFormContext();
+    const { control } = useFormContext();
 
     return (
         <Controller
             control={control}
-            {...register(name)}
+            name={name}
             render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <TextField
                     helperText={error ? error.message : null}
