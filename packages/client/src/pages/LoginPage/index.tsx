@@ -9,14 +9,12 @@ import {
     LoginSchemaType,
 } from '@/shared/validators/UserValidation';
 import { Form } from '@/components/Form';
+import { defaultValues } from '@/shared/constants/forms';
 import s from './LoginPage.module.scss';
 
 export default function LoginPage() {
     const methods = useForm<LoginSchemaType>({
-        defaultValues: {
-            login: '',
-            password: '',
-        },
+        defaultValues: defaultValues.login,
         mode: 'onChange',
         resolver: zodResolver(LoginSchema),
     });

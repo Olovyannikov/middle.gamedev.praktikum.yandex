@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { RegExps } from '@/shared/constants/validators';
 
 const loginFields = ['login', 'password'];
 
@@ -16,29 +17,27 @@ const passwordRules = z
     .string()
     .min(8, { message: 'Не менее 8 символов' })
     .max(40, { message: 'Не более 40 символов' })
-    .regex(/[A-Z\u0400-\u04FF]/, {
+    .regex(RegExps.oneCapitalLetter, {
         message: 'Должен содержать хотя бы одну заглавную букву и цифру',
     })
-    .regex(/\d/, {
+    .regex(RegExps.oneNumber, {
         message: 'Должен содержать хотя бы одну заглавную букву и цифру',
     });
 
-const nameRules = z
-    .string()
-    .regex(/^[A-ZЁА-Я][a-zа-яё]*(-[A-ZЁА-Яa-zа-яё]*)?$/, {
-        message:
-            'Начинать нужно с заглавной буквы, из спецсимволов допустим только дефис',
-    });
+const nameRules = z.string().regex(RegExps.capitalLetterHyphen, {
+    message:
+        'Начинать нужно с заглавной буквы, из спецсимволов допустим только дефис',
+});
 
 const loginRules = z
     .string()
     .min(3, { message: 'Не менее 3 символов' })
     .max(20, { message: 'Не более 20 символов' })
-    .regex(/^[\d_A-Za-z-]+$/, {
+    .regex(RegExps.latinHyphenUnderscore, {
         message:
             'Может содержать только латинские символы, цифры, дефис и нижнее подчеркивание',
     })
-    .regex(/\D/, {
+    .regex(RegExps.notOnlyNumbers, {
         message: 'Не может состоять только из цифр',
     });
 
@@ -46,11 +45,11 @@ const phoneRules = z
     .string()
     .min(10, { message: 'Не менее 10 символов' })
     .max(15, { message: 'Не более 15 символов' })
-    .regex(/^\+?\d+$/, {
+    .regex(RegExps.numbersPlus, {
         message: 'Должен состоять только из цифр и может начинаться с плюса',
     });
 
-const emailRules = z.string().regex(/^[\w-]+@[\w-]+\.[A-Za-z]{2,}/, {
+const emailRules = z.string().regex(RegExps.email, {
     message: 'Заполнено неверно',
 });
 

@@ -9,18 +9,12 @@ import {
     RegistrationSchema,
     RegistrationSchemaType,
 } from '@/shared/validators/UserValidation';
+import { defaultValues } from '@/shared/constants/forms';
 import s from './RegistrationPage.module.scss';
 
 export default function RegistrationPage() {
     const methods = useForm<RegistrationSchemaType>({
-        defaultValues: {
-            login: '',
-            password: '',
-            first_name: '',
-            second_name: '',
-            phone: '',
-            email: '',
-        },
+        defaultValues: defaultValues.registration,
         mode: 'onChange',
         resolver: zodResolver(RegistrationSchema),
     });
