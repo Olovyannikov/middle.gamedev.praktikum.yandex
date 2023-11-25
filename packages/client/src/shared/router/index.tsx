@@ -9,6 +9,7 @@ import {
     LeaderBoardPageLazy,
     Error500PageLazy,
 } from '@/pages/pages.lazy';
+import { PrivateRoute } from './PrivateRoute';
 
 export const AppRoutes = {
     INDEX: 'index',
@@ -38,7 +39,11 @@ export const RouterPaths: Record<AppRoutesValues, string> = {
 export const router: Record<AppRoutesValues, RouteProps> = {
     [AppRoutes.INDEX]: {
         path: RouterPaths.index,
-        element: <IndexPageLazy />,
+        element: (
+            <PrivateRoute>
+                <IndexPageLazy />
+            </PrivateRoute>
+        ),
     },
     [AppRoutes.LOGIN]: {
         path: RouterPaths.login,
@@ -50,11 +55,19 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     },
     [AppRoutes.PROFILE]: {
         path: RouterPaths.profile,
-        element: <ProfilePageLazy />,
+        element: (
+            <PrivateRoute>
+                <ProfilePageLazy />
+            </PrivateRoute>
+        ),
     },
     [AppRoutes.GAME]: {
         path: RouterPaths.game,
-        element: <GamePageLazy />,
+        element: (
+            <PrivateRoute>
+                <GamePageLazy />
+            </PrivateRoute>
+        ),
     },
     [AppRoutes.LEADERBOARD]: {
         path: RouterPaths.leaderboard,
@@ -62,7 +75,11 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     },
     [AppRoutes.FORUM]: {
         path: RouterPaths.forum,
-        element: <ForumPageLazy />,
+        element: (
+            <PrivateRoute>
+                <ForumPageLazy />
+            </PrivateRoute>
+        ),
     },
     [AppRoutes.Error500]: {
         path: RouterPaths.Error500,
