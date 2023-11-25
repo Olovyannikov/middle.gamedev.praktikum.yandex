@@ -3,23 +3,23 @@ import { Container, Button, Typography } from '@mui/material';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+    LoginSchema,
+    LoginSchemaType,
+} from '@/shared/validators/UserValidation';
 import { Form } from '@/components/Form';
+import { defaultValues } from '@/shared/constants/forms';
 import s from './LoginPage.module.scss';
 
-interface LoginParams {
-    login: string;
-    password: string;
-}
-
 export default function LoginPage() {
-    const methods = useForm<LoginParams>({
-        defaultValues: {
-            login: '',
-            password: '',
-        },
+    const methods = useForm<LoginSchemaType>({
+        defaultValues: defaultValues.login,
+        mode: 'onChange',
+        resolver: zodResolver(LoginSchema),
     });
 
-    const onSubmit: SubmitHandler<LoginParams> = (data) => {
+    const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
         console.log(data);
     };
 
