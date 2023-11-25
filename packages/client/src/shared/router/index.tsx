@@ -39,11 +39,7 @@ export const RouterPaths: Record<AppRoutesValues, string> = {
 export const router: Record<AppRoutesValues, RouteProps> = {
     [AppRoutes.INDEX]: {
         path: RouterPaths.index,
-        element: (
-            <PrivateRoute>
-                <IndexPageLazy />
-            </PrivateRoute>
-        ),
+        element: <IndexPageLazy />,
     },
     [AppRoutes.LOGIN]: {
         path: RouterPaths.login,
@@ -63,11 +59,7 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     },
     [AppRoutes.GAME]: {
         path: RouterPaths.game,
-        element: (
-            <PrivateRoute>
-                <GamePageLazy />
-            </PrivateRoute>
-        ),
+        element: <GamePageLazy />,
     },
     [AppRoutes.LEADERBOARD]: {
         path: RouterPaths.leaderboard,

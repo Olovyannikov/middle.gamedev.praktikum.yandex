@@ -5,7 +5,7 @@ interface PrivateRouteProps {
     children: ReactNode;
 }
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = () => {
-    const isAuth = true;
-    return isAuth ? <Outlet /> : <Navigate to={'/sign-in'} replace />;
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+    const isAuth = false;
+    return isAuth ? children : <Navigate to={'/sign-in'} replace />;
 };
