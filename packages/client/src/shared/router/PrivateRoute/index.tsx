@@ -6,6 +6,6 @@ interface PrivateRouteProps {
 }
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-    const isAuth = false;
+    const isAuth = true;
     return isAuth ? children : <Navigate to={'/sign-in'} replace />;
 };

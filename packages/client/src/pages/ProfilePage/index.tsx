@@ -1,43 +1,35 @@
 import cn from 'clsx';
 import { RootLayout } from '@/layouts/RootLayout';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import s from './profile.module.scss';
-import { Button } from '@/shared/ui/Button';
 import imgAvatar from '@/app/assets/img/avatar_default.svg';
 import backgroundMain from '@/app/assets/img/bg.svg';
 import { Container } from '@/shared/ui';
+import { Form } from '@/components/Form';
+import { FormInputText } from '@/components/FormInputText';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import {
+    NewPasswordSchemaType,
+    NewPasswordSchema,
+} from '@/shared/validators/UserValidation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Modal, Typography } from '@mui/material';
 
 export default function ProfilePage() {
+    const methods = useForm<NewPasswordSchemaType>({
+        mode: 'onChange',
+        resolver: zodResolver(NewPasswordSchema),
+    });
+
     const [username, setUsername] = useState('John Doe');
     const [email, setEmail] = useState('johndoe@example.com');
-    const [oldPassword, setOldPassword] = useState('');
     const [showChangePass, setShowChangePass] = useState(false);
-    const [newPassword, setNewPassword] = useState('');
     const [avatarUrl, setAvatarUrl] = useState(imgAvatar);
     const [previewAvatar, setPreviewAvatar] = useState(imgAvatar);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // ref to control input element
-    const inputRef = useRef(null);
-
-    const handleNewPassword = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewPassword(e.target.value);
-    };
-
-    const handleOldPassword = (e: ChangeEvent<HTMLInputElement>) => {
-        setOldPassword(e.target.value);
-    };
-
-    const handleSubmitPassword = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        // Здесь можно добавить логику валидации перед отправкой данных
-        // Например, проверка на минимальную длину пароля и другие условия
-
-        // Отправка запроса на смену пароля
-
-        setOldPassword('');
-        setNewPassword('');
+    const onSubmitPassword: SubmitHandler<NewPasswordSchemaType> = (data) => {
+        console.log(data);
     };
 
     const handleOpenChangePassword = () => {
@@ -66,92 +58,90 @@ export default function ProfilePage() {
                     className={cn(s.main_background)}
                 ></img>
 
-                <form
+                <Form
+                    id="avatarForm"
                     className={cn(s.form_avatar)}
                     onSubmit={handleSubmitAvatar}
                 >
-                    {!isModalOpen && (
-                        <label className={cn(s.avatar_position)}>
+                    <label className={cn(s.avatar_position)}>
+                        <img
+                            src={avatarUrl}
+                            alt="avatar"
+                            className={cn(s.avatar)}
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                            className={cn(s.avatar_overlay)}
+                            hidden
+                        />
+                        <span className={cn(s.avatar_overlay)}>
+                            Change avatar
+                        </span>
+                    </label>
+
+                    <Modal
+                        open={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        className={cn(s.modal)}
+                    >
+                        <Container className={cn(s.modal_container)}>
                             <img
-                                src={avatarUrl}
+                                src={previewAvatar}
                                 alt="avatar"
-                                className={cn(s.avatar)}
+                                className={cn(s.modal_preview)}
                             />
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleAvatarChange}
-                                className={cn(s.avatar_overlay)}
-                                hidden
-                            />
-                            <span className={cn(s.avatar_overlay)}>
-                                Change avatar
-                            </span>
-                        </label>
-                    )}
-                    {isModalOpen && (
-                        <div className={cn(s.modal)}>
-                            <div className={cn(s.modal_overlay)}></div>
-                            <div className={cn(s.modal_container)}>
-                                <img
-                                    src={previewAvatar}
-                                    alt="avatar"
-                                    className={cn(s.modal_preview)}
-                                />
 
-                                <div className={cn(s.modal_buttons)}>
-                                    <button
-                                        className={cn(s.modal_cancel_button)}
-                                        onClick={(e) => setIsModalOpen(false)}
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className={cn(s.modal_confirm_button)}
-                                    >
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </form>
+                            <Container className={cn(s.modal_buttons)}>
+                                <Button
+                                    variant={'contained'}
+                                    color="secondary"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    variant={'contained'}
+                                    type="submit"
+                                    form="avatarForm"
+                                >
+                                    Save
+                                </Button>
+                            </Container>
+                        </Container>
+                    </Modal>
+                </Form>
 
-                <div className={cn(s.profile_info)}>
-                    <h2>User information</h2>
-                    <p>Full name: {username}</p>
-                    <p>Email: {email}</p>
-                </div>
+                <Container className={cn(s.profile_info)}>
+                    <Typography variant="h4">User information</Typography>
+                    <Typography variant="h6">Full name: {username}</Typography>
+                    <Typography variant="h6">Email: {email}</Typography>
+                </Container>
 
-                <Button text onClick={handleOpenChangePassword}>
+                <Button onClick={handleOpenChangePassword}>
                     Change password?
                 </Button>
 
-                <form onSubmit={handleSubmitPassword}>
-                    {showChangePass && (
-                        <div className={cn(s.password_section)}>
-                            <input
-                                type="password"
-                                placeholder="Current Password"
-                                value={oldPassword}
-                                onChange={handleOldPassword}
-                            />
-                            <input
-                                type="password"
-                                placeholder="New Password"
-                                value={newPassword}
-                                onChange={handleNewPassword}
-                            />
-                            <Button
-                                type="submit"
-                                disabled={!newPassword || !oldPassword}
-                            >
-                                Change password
-                            </Button>
-                        </div>
-                    )}
-                </form>
+                <FormProvider {...methods}>
+                    <Form onSubmit={methods.handleSubmit(onSubmitPassword)}>
+                        {showChangePass && (
+                            <Container className={cn(s.password_section)}>
+                                <FormInputText
+                                    label="Пароль"
+                                    name={'oldPassword'}
+                                />
+                                <FormInputText
+                                    label="Новый пароль"
+                                    name={'newPassword'}
+                                />
+                                <Button type="submit" variant={'contained'}>
+                                    Change password
+                                </Button>
+                            </Container>
+                        )}
+                    </Form>
+                </FormProvider>
             </Container>
         </RootLayout>
     );

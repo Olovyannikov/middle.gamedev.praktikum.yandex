@@ -13,6 +13,8 @@ const registrationFields = [
     'email',
 ];
 
+const newPasswordFields = ['oldPassword', 'newPassword'];
+
 const passwordRules = z
     .string()
     .min(8, { message: 'Не менее 8 символов' })
@@ -57,6 +59,8 @@ const validators: Record<string, z.ZodString> = {
     login: loginRules,
     password: passwordRules,
     confirmPassword: passwordRules,
+    oldPassword: passwordRules,
+    newPassword: passwordRules,
     first_name: nameRules,
     second_name: nameRules,
     phone: phoneRules,
@@ -81,6 +85,12 @@ export const RegistrationSchema = z
         path: ['confirmPassword'],
     });
 
+export const NewPasswordSchema = z.object(
+    getValidatorsByFields(newPasswordFields)
+);
+
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 
 export type RegistrationSchemaType = z.infer<typeof RegistrationSchema>;
+
+export type NewPasswordSchemaType = z.infer<typeof NewPasswordSchema>;
