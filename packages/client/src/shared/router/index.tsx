@@ -9,6 +9,7 @@ import {
     LeaderBoardPageLazy,
     ForumTopicPageLazy,
     ForumTopicCreatePageLazy,
+    Error500PageLazy,
 } from '@/pages/pages.lazy';
 
 export const AppRoutes = {
@@ -22,6 +23,7 @@ export const AppRoutes = {
     TOPICS: 'topics',
     TOPIC: 'topic',
     CREATE_TOPIC: 'createTopic',
+    Error500: 'Error500',
 } as const;
 
 type AppRoutesKeys = keyof typeof AppRoutes;
@@ -38,6 +40,7 @@ export const RouterPaths: Record<AppRoutesValues, string> = {
     [AppRoutes.TOPICS]: '/topic/:id',
     [AppRoutes.TOPIC]: '/topic',
     [AppRoutes.CREATE_TOPIC]: '/create/topic',
+    [AppRoutes.Error500]: '/505',
 };
 
 export const router: Record<AppRoutesValues, RouteProps> = {
@@ -80,5 +83,9 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     [AppRoutes.CREATE_TOPIC]: {
         path: RouterPaths.createTopic,
         element: <ForumTopicCreatePageLazy />,
+    },
+    [AppRoutes.Error500]: {
+        path: RouterPaths.Error500,
+        element: <Error500PageLazy />,
     },
 };

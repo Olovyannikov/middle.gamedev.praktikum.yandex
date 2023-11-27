@@ -13,18 +13,18 @@ export const FormInputText = ({ name, label }: FormInputTextProps) => {
 
     return (
         <Controller
-            name={name}
             control={control}
-            render={({ field: { onChange, value }, fieldState: { error } }) => (
+            name={name}
+            render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <TextField
                     helperText={error ? error.message : null}
                     error={!!error}
-                    onChange={onChange}
                     variant={'standard'}
-                    value={value}
-                    label={label}
                     className={s.textField}
+                    inputRef={ref}
+                    label={label}
                     fullWidth
+                    {...field}
                 />
             )}
         />

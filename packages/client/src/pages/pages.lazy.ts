@@ -8,3 +8,4 @@ export * from './RegistationPage/lazy';
 export * from './ForumTopicCreatePage/lazy';
 export * from './ForumTopicPage/lazy';
 export * from './ForumPage/lazy';
+export * from './Error500/lazy';
