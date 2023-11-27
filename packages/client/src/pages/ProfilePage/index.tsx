@@ -13,12 +13,15 @@ import {
     NewPasswordSchema,
 } from '@/shared/validators/UserValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Typography } from '@mui/material';
+import { Button, Modal, Typography } from '@mui/material';
 
 export default function ProfilePage() {
     const methods = useForm<NewPasswordSchemaType>({
         mode: 'onChange',
         resolver: zodResolver(NewPasswordSchema),
+    });
+    const methodsAvatar = useForm<any>({
+        mode: 'onChange',
     });
 
     const [username, setUsername] = useState('John Doe');
@@ -59,6 +62,7 @@ export default function ProfilePage() {
                 ></img>
 
                 <Form
+                    id="avatarForm"
                     className={cn(s.form_avatar)}
                     onSubmit={handleSubmitAvatar}
                 >
@@ -82,31 +86,36 @@ export default function ProfilePage() {
                         </label>
                     )}
                     {isModalOpen && (
-                        <Container className={cn(s.modal)}>
-                            <div className={cn(s.modal_overlay)}></div>
-                            <div className={cn(s.modal_container)}>
+                        <Modal
+                            open={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                            className={cn(s.modal)}
+                        >
+                            <Container className={cn(s.modal_container)}>
                                 <img
                                     src={previewAvatar}
                                     alt="avatar"
                                     className={cn(s.modal_preview)}
                                 />
 
-                                <div className={cn(s.modal_buttons)}>
-                                    <button
-                                        className={cn(s.modal_cancel_button)}
-                                        onClick={(e) => setIsModalOpen(false)}
+                                <Container className={cn(s.modal_buttons)}>
+                                    <Button
+                                        variant={'contained'}
+                                        color="secondary"
+                                        onClick={() => setIsModalOpen(false)}
                                     >
                                         Cancel
-                                    </button>
-                                    <button
+                                    </Button>
+                                    <Button
+                                        variant={'contained'}
                                         type="submit"
-                                        className={cn(s.modal_confirm_button)}
+                                        form="avatarForm"
                                     >
                                         Save
-                                    </button>
-                                </div>
-                            </div>
-                        </Container>
+                                    </Button>
+                                </Container>
+                            </Container>
+                        </Modal>
                     )}
                 </Form>
 
