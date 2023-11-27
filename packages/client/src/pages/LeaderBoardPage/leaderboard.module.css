@@ -1,6 +1,4 @@
-import styled from 'styled-components';
-
-export const TextBadgeUI = styled.div`
+.textBadgeUI {
     padding: 5px 10px;
     border-radius: 15%;
 
@@ -9,4 +7,4 @@ export const TextBadgeUI = styled.div`
 
     font-size: 12px;
     font-weight: 600;
-`;
+}

@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { TextBadgeUI } from './styled';
+import styles from './leaderboard.module.css';
 
 export default function LeaderBoardPage() {
     return (
@@ -27,7 +27,7 @@ export default function LeaderBoardPage() {
                     gap={1}
                 >
                     <h1>Leaderboard for</h1>
-                    <TextBadgeUI>Today</TextBadgeUI>
+                    <div className={styles.textBadgeUI}>Today</div>
                 </Grid>
 
                 <Grid
