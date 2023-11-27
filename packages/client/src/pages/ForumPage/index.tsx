@@ -1,5 +1,5 @@
 import { RootLayout } from '@/layouts/RootLayout';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,7 +20,9 @@ export default function ForumPage() {
                 direction="column"
                 sx={{ minWidth: '100%', padding: 1 }}
             >
-                <h1>Snake's forum page</h1>
+                <Typography variant="h4" sx={{ padding: '20px 0' }}>
+                    Snake's forum page
+                </Typography>
                 <Grid
                     alignItems="center"
                     justifyContent="center"

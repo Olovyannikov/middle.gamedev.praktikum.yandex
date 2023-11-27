@@ -1,21 +1,15 @@
 import { useEffect } from 'react';
 import { RootLayout } from '@/layouts/RootLayout';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { Grid, Typography, Divider, TextareaAutosize } from '@mui/material';
 import { Button } from '@/shared/ui';
 
 export default function ForumTopicPage() {
     let { id } = useParams();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!id) {
-            navigate('/forum');
-        }
-    }, [id]);
 
     return (
         <RootLayout>
+            {!id && <Navigate to="/forum" replace={true} />}
             <Grid
                 container
                 alignItems="center"
