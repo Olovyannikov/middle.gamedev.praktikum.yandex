@@ -5,3 +5,7 @@ export * from './LeaderBoardPage/lazy';
 export * from './LoginPage/lazy';
 export * from './ProfilePage/lazy';
 export * from './RegistationPage/lazy';
+export * from './ForumTopicCreatePage/lazy';
+export * from './ForumTopicPage/lazy';
+export * from './ForumPage/lazy';
+export * from './Error500/lazy';
