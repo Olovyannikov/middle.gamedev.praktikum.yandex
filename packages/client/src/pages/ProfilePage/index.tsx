@@ -20,9 +20,6 @@ export default function ProfilePage() {
         mode: 'onChange',
         resolver: zodResolver(NewPasswordSchema),
     });
-    const methodsAvatar = useForm<any>({
-        mode: 'onChange',
-    });
 
     const [username, setUsername] = useState('John Doe');
     const [email, setEmail] = useState('johndoe@example.com');
@@ -66,57 +63,54 @@ export default function ProfilePage() {
                     className={cn(s.form_avatar)}
                     onSubmit={handleSubmitAvatar}
                 >
-                    {!isModalOpen && (
-                        <label className={cn(s.avatar_position)}>
-                            <img
-                                src={avatarUrl}
-                                alt="avatar"
-                                className={cn(s.avatar)}
-                            />
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleAvatarChange}
-                                className={cn(s.avatar_overlay)}
-                                hidden
-                            />
-                            <span className={cn(s.avatar_overlay)}>
-                                Change avatar
-                            </span>
-                        </label>
-                    )}
-                    {isModalOpen && (
-                        <Modal
-                            open={isModalOpen}
-                            onClose={() => setIsModalOpen(false)}
-                            className={cn(s.modal)}
-                        >
-                            <Container className={cn(s.modal_container)}>
-                                <img
-                                    src={previewAvatar}
-                                    alt="avatar"
-                                    className={cn(s.modal_preview)}
-                                />
+                    <label className={cn(s.avatar_position)}>
+                        <img
+                            src={avatarUrl}
+                            alt="avatar"
+                            className={cn(s.avatar)}
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                            className={cn(s.avatar_overlay)}
+                            hidden
+                        />
+                        <span className={cn(s.avatar_overlay)}>
+                            Change avatar
+                        </span>
+                    </label>
 
-                                <Container className={cn(s.modal_buttons)}>
-                                    <Button
-                                        variant={'contained'}
-                                        color="secondary"
-                                        onClick={() => setIsModalOpen(false)}
-                                    >
-                                        Cancel
-                                    </Button>
-                                    <Button
-                                        variant={'contained'}
-                                        type="submit"
-                                        form="avatarForm"
-                                    >
-                                        Save
-                                    </Button>
-                                </Container>
+                    <Modal
+                        open={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        className={cn(s.modal)}
+                    >
+                        <Container className={cn(s.modal_container)}>
+                            <img
+                                src={previewAvatar}
+                                alt="avatar"
+                                className={cn(s.modal_preview)}
+                            />
+
+                            <Container className={cn(s.modal_buttons)}>
+                                <Button
+                                    variant={'contained'}
+                                    color="secondary"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    variant={'contained'}
+                                    type="submit"
+                                    form="avatarForm"
+                                >
+                                    Save
+                                </Button>
                             </Container>
-                        </Modal>
-                    )}
+                        </Container>
+                    </Modal>
                 </Form>
 
                 <Container className={cn(s.profile_info)}>
@@ -141,11 +135,7 @@ export default function ProfilePage() {
                                     label="Новый пароль"
                                     name={'newPassword'}
                                 />
-                                <Button
-                                    type="submit"
-                                    variant={'contained'}
-                                    // disabled={!newPassword || !oldPassword}
-                                >
+                                <Button type="submit" variant={'contained'}>
                                     Change password
                                 </Button>
                             </Container>
