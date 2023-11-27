@@ -64,9 +64,7 @@
 /* Стили для смены аватара */
 .form_avatar {
     display: flex;
-    // flex-direction: column;
     align-self: center;
-    // align-items: center;
     z-index: 111;
     height: 130px;
     width: 130px;
@@ -95,9 +93,6 @@
     transition: 0.5s;
     border-radius: 35%;
     opacity: 0;
-    // font-family: var(--main-font-family);
-    // font-style: var(--main-font-style);
-    // font-weight: var(--main-font-weight500);
     font-size: 13px;
     line-height: 14px;
     align-items: center;
@@ -110,14 +105,7 @@
     cursor: pointer;
     background-color: rgb(77, 90, 142);
 }
-// .btn {
-//     font-family: Roboto, Mono;
-//     font-weight: 700;
-//     font-size: 18px;
-//     line-height: 32px;
-//     // Letter45%;
-//     align-items: center;
-// }
+
 .modal {
     position: absolute;
     width: 100%;
@@ -128,19 +116,10 @@
     justify-content: center;
 }
 
-.modal_overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: #000;
-    opacity: 0.6;
-    z-index: -10;
-}
-
 .modal_container {
+    margin-top: 60px;
     width: 300px;
+
     height: 300px;
     display: flex;
     flex-direction: column;
