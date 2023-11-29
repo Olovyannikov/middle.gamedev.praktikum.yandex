@@ -1,11 +1,13 @@
 import { ReactNode } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useGetUserQuery } from '@/services/authApi';
 
 interface PrivateRouteProps {
     children: ReactNode;
 }
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-    const isAuth = true;
-    return isAuth ? children : <Navigate to={'/sign-in'} replace />;
+    const { data } = useGetUserQuery();
+
+    return data ? children : <Navigate to={'/sign-in'} replace />;
 };
