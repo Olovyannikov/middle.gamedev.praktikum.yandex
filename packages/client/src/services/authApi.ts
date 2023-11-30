@@ -3,6 +3,8 @@ import { baseUrl, authOperations } from '@/shared/constants/api';
 import {
     signinRequest,
     signinResponse,
+    signupRequest,
+    signupResponse,
     userResponse,
 } from '@/shared/types/api';
 
@@ -19,6 +21,13 @@ export const authApi = createApi({
                 credentials: 'include',
             }),
         }),
+        signUp: builder.mutation<signupResponse, signupRequest>({
+            query: (body) => ({
+                url: authOperations.signup,
+                method: 'POST',
+                body,
+            }),
+        }),
         getUser: builder.query<userResponse, void>({
             query: () => ({
                 url: authOperations.user,
@@ -28,4 +37,5 @@ export const authApi = createApi({
     }),
 });
 
-export const { useSignInMutation, useGetUserQuery } = authApi;
+export const { useSignInMutation, useGetUserQuery, useSignUpMutation } =
+    authApi;

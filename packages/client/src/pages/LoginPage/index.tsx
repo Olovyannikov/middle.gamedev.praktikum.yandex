@@ -13,6 +13,7 @@ import { Form } from '@/components/Form';
 import { defaultValues } from '@/shared/constants/forms';
 import s from './LoginPage.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { FormStatusLine } from '@/components/FormStatusLine';
 
 export default function LoginPage() {
     const methods = useForm<LoginSchemaType>({
@@ -21,7 +22,7 @@ export default function LoginPage() {
         resolver: zodResolver(LoginSchema),
     });
 
-    const [signin, { isLoading: isSuccess, isUpdating, isError, error }] =
+    const [signin, { isLoading: isUpdating, isError, error }] =
         useSignInMutation();
     const { refetch } = useGetUserQuery();
     const navigate = useNavigate();
@@ -44,7 +45,11 @@ export default function LoginPage() {
                     <FormProvider {...methods}>
                         <Form onSubmit={methods.handleSubmit(onSubmit)}>
                             <FormInputText label="Логин" name={'login'} />
-                            <FormInputText label="Пароль" name={'password'} />
+                            <FormInputText
+                                label="Пароль"
+                                name={'password'}
+                                type={'password'}
+                            />
                             <Button
                                 type={'submit'}
                                 variant={'contained'}
@@ -54,17 +59,11 @@ export default function LoginPage() {
                             </Button>
                         </Form>
                     </FormProvider>
-                    {isUpdating ? (
-                        <Typography variant="body1">Идёт запрос...</Typography>
-                    ) : null}
-                    {isError ? (
-                        <Typography
-                            variant="body1"
-                            className={s.formErrorMessage}
-                        >
-                            Ошибка {error?.data?.reason}
-                        </Typography>
-                    ) : null}
+                    <FormStatusLine
+                        isUpdating={isUpdating}
+                        isError={isError}
+                        error={error?.data?.reason}
+                    />
                 </FormPaperWrapper>
             </Container>
         </RootLayout>
