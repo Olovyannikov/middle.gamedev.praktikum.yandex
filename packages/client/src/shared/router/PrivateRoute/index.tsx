@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 }
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-    const { data } = useGetUserQuery();
-
+    const { data, isLoading } = useGetUserQuery();
+    if (isLoading) return null;
     return data ? children : <Navigate to={'/sign-in'} replace />;
 };

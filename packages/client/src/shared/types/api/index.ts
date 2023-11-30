@@ -18,7 +18,7 @@ export type signinRequest = {
     password: string;
 };
 
-export type signinResponse = null | requestError;
+export type signinResponse = null;
 
 export type signupRequest = {
     first_name: string;
@@ -29,10 +29,19 @@ export type signupRequest = {
     password: string;
 };
 
-export type signupResponse =
-    | {
-          id: number;
-      }
-    | requestError;
+export type signupResponse = { id: number };
 
-export type userResponse = User | requestError;
+export type userResponse = User;
+
+export type avatarRequest = {
+    avatar: FormData;
+};
+
+export type avatarResponse = userResponse;
+
+export type passwordRequest = {
+    oldPassword: string;
+    newPassword: string;
+};
+
+export type passwordResponse = null;

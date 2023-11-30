@@ -6,7 +6,7 @@ import { useGetUserQuery } from '@/services/authApi';
 
 export const App = () => {
     const { data } = useGetUserQuery();
-
+    console.log(data);
     useEffect(() => {
         const fetchServerData = async () => {
             const url = `http://localhost:${__SERVER_PORT__}`;
