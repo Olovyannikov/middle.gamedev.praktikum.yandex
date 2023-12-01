@@ -7,7 +7,7 @@ import {
     passwordResponse,
 } from '@/shared/types/api';
 
-const usersApi = baseApi.injectEndpoints({
+export const usersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         changeAvatar: builder.mutation<avatarResponse, avatarRequest>({
             query: (body) => ({
@@ -15,8 +15,8 @@ const usersApi = baseApi.injectEndpoints({
                 method: 'PUT',
                 body,
                 credentials: 'include',
-                invalidatesTags: ['User'],
             }),
+            invalidatesTags: ['User'],
         }),
         changePassword: builder.mutation<passwordResponse, passwordRequest>({
             query: (body) => ({

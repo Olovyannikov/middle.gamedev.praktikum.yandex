@@ -8,7 +8,7 @@ import {
     userResponse,
 } from '@/shared/types/api';
 
-const authApi = baseApi.injectEndpoints({
+export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         signIn: builder.mutation<signinResponse, signinRequest>({
             query: (body) => ({
@@ -33,8 +33,8 @@ const authApi = baseApi.injectEndpoints({
             query: () => ({
                 url: authOperations.user,
                 credentials: 'include',
-                providesTags: ['User'],
             }),
+            providesTags: ['User'],
         }),
     }),
     overrideExisting: false,

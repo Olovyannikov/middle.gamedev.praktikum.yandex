@@ -29,12 +29,26 @@ export default function ProfilePage() {
     });
 
     const { data: user } = useGetUserQuery();
-    const [changePassword, { isLoading: isUpdating, isError, error }] =
-        useChangePasswordMutation();
+    const [
+        changePassword,
+        {
+            isLoading: isPasswordUpdating,
+            isError: isPasswordError,
+            error: passwordError,
+        },
+    ] = useChangePasswordMutation();
+    const [
+        changeAvatar,
+        {
+            isLoading: isAvatarUpdating,
+            isError: isAvatarError,
+            error: avatarError,
+        },
+    ] = useChangeAvatarMutation();
     const [showChangePass, setShowChangePass] = useState(false);
-    const [avatarUrl, setAvatarUrl] = useState(imgAvatar);
     const [previewAvatar, setPreviewAvatar] = useState(imgAvatar);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [avatarFile, setAvatarFile] = useState(null);
 
     const onSubmitPassword: SubmitHandler<NewPasswordSchemaType> = async (
         data
@@ -49,15 +63,20 @@ export default function ProfilePage() {
         setShowChangePass(!showChangePass);
     };
 
-    const handleSubmitAvatar = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitAvatar = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsModalOpen(false);
-        setAvatarUrl(previewAvatar);
+        const formData = new FormData();
+        formData.append('avatar', avatarFile);
+        const response = await changeAvatar(formData);
+        if (response && response.data) {
+            setIsModalOpen(false);
+        }
     };
 
     const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-
+        if (!file) return;
+        setAvatarFile(file);
         setIsModalOpen(true);
         file && setPreviewAvatar(URL.createObjectURL(file));
     };
@@ -69,7 +88,7 @@ export default function ProfilePage() {
                     src={backgroundMain}
                     alt="background"
                     className={cn(s.main_background)}
-                ></img>
+                />
 
                 <Form
                     id="avatarForm"
@@ -81,7 +100,7 @@ export default function ProfilePage() {
                             src={
                                 user.avatar
                                     ? resourcesBaseUrl + user.avatar
-                                    : avatarUrl
+                                    : imgAvatar
                             }
                             alt="avatar"
                             className={cn(s.avatar)}
@@ -125,6 +144,11 @@ export default function ProfilePage() {
                                 >
                                     Save
                                 </Button>
+                                <FormStatusLine
+                                    isUpdating={isAvatarUpdating}
+                                    isError={isAvatarError}
+                                    error={avatarError?.data?.reason}
+                                />
                             </Container>
                         </Container>
                     </Modal>
@@ -175,9 +199,9 @@ export default function ProfilePage() {
                                     Change password
                                 </Button>
                                 <FormStatusLine
-                                    isUpdating={isUpdating}
-                                    isError={isError}
-                                    error={error?.data?.reason}
+                                    isUpdating={isPasswordUpdating}
+                                    isError={isPasswordError}
+                                    error={passwordError?.data?.reason}
                                 />
                             </Container>
                         )}
