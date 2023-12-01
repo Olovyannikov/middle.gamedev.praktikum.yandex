@@ -14,7 +14,11 @@ import {
 } from '@/shared/validators/UserValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Modal, Typography } from '@mui/material';
-import { useGetUserQuery, useChangePasswordMutation } from '@/services/authApi';
+import { useGetUserQuery } from '@/services/authApi';
+import {
+    useChangePasswordMutation,
+    useChangeAvatarMutation,
+} from '@/services/usersApi';
 import { resourcesBaseUrl } from '@/shared/constants/api';
 import { FormStatusLine } from '@/components/FormStatusLine';
 

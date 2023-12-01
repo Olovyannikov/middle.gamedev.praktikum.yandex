@@ -1,5 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, usersOperations } from '@/shared/constants/api';
+import { baseApi } from './baseApi';
+import { usersOperations } from '@/shared/constants/api';
 import {
     avatarRequest,
     avatarResponse,
@@ -7,10 +7,7 @@ import {
     passwordResponse,
 } from '@/shared/types/api';
 
-export const usersApi = createApi({
-    reducerPath: 'authApi',
-    tagTypes: ['User'],
-    baseQuery: fetchBaseQuery({ baseUrl }),
+const usersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         changeAvatar: builder.mutation<avatarResponse, avatarRequest>({
             query: (body) => ({
@@ -26,11 +23,15 @@ export const usersApi = createApi({
                 url: usersOperations.password,
                 method: 'PUT',
                 body,
-                responseHandler: 'text',
                 credentials: 'include',
+                responseHandler: (response) => {
+                    if (response.status == 200) return response.text();
+                    return response.json();
+                },
             }),
         }),
     }),
+    overrideExisting: false,
 });
 
 export const { useChangeAvatarMutation, useChangePasswordMutation } = usersApi;

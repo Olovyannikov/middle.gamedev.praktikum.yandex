@@ -1,14 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { baseApi } from './baseApi';
+import { authOperations } from '@/shared/constants/api';
 import {
-    baseUrl,
-    authOperations,
-    usersOperations,
-} from '@/shared/constants/api';
-import {
-    avatarRequest,
-    avatarResponse,
-    passwordRequest,
-    passwordResponse,
     signinRequest,
     signinResponse,
     signupRequest,
@@ -16,10 +8,7 @@ import {
     userResponse,
 } from '@/shared/types/api';
 
-export const authApi = createApi({
-    reducerPath: 'authApi',
-    tagTypes: ['User'],
-    baseQuery: fetchBaseQuery({ baseUrl }),
+const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         signIn: builder.mutation<signinResponse, signinRequest>({
             query: (body) => ({
@@ -47,34 +36,9 @@ export const authApi = createApi({
                 providesTags: ['User'],
             }),
         }),
-        changeAvatar: builder.mutation<avatarResponse, avatarRequest>({
-            query: (body) => ({
-                url: usersOperations.avatar,
-                method: 'PUT',
-                body,
-                credentials: 'include',
-                invalidatesTags: ['User'],
-            }),
-        }),
-        changePassword: builder.mutation<passwordResponse, passwordRequest>({
-            query: (body) => ({
-                url: usersOperations.password,
-                method: 'PUT',
-                body,
-                credentials: 'include',
-                responseHandler: (response) => {
-                    if (response.status == 200) return response.text();
-                    return response.json();
-                },
-            }),
-        }),
     }),
+    overrideExisting: false,
 });
 
-export const {
-    useSignInMutation,
-    useGetUserQuery,
-    useSignUpMutation,
-    useChangeAvatarMutation,
-    useChangePasswordMutation,
-} = authApi;
+export const { useSignInMutation, useGetUserQuery, useSignUpMutation } =
+    authApi;
