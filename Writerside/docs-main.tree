@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
+
+<instance-profile id="docs-main"
+                  name="Документация по игре " Snake start-page="Navigation.md">
+    <toc-element topic="Navigation.md">
+        <toc-element topic="Base-Features.md"/>
+        <toc-element topic="Script.md"/>
+        <toc-element topic="Game-Engine.md"/>
+    </toc-element>
+</instance-profile>""
+                 start-page="starter-topic.md">
+
+    <toc-element topic="starter-topic.md"/>
+</instance-profile>

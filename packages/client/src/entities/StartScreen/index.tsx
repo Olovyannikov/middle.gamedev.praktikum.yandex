@@ -1,12 +1,12 @@
-import { Button } from '@mui/material';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
-import { Card, Container, Flex, Typography } from '@/shared/ui';
+import { Card, Container } from '@/shared/ui';
 
 import type { GameState } from '@/widgets/Game/types';
 import { GAME_STATE } from '@/widgets/Game/constants';
-import s from './StartScreen.module.scss';
 import { GameEndScreen } from '../GameEndScreen';
+import { Stack } from '@mui/material';
+import s from './StartScreen.module.scss';
 
 export const StartScreen = ({
     gameState,
@@ -20,8 +20,8 @@ export const StartScreen = ({
 
     return (
         <section className={s.root}>
-            <Container className={s.container}>
-                <Flex align="center" justify="center" className={s.start}>
+            <Container>
+                <Stack alignItems="center" justifyContent="center">
                     <Card className={s.card}>
                         <main className={s.content}>
                             {gameState === GAME_STATE.PREPARE && (
@@ -45,13 +45,12 @@ export const StartScreen = ({
                                     {({ remainingTime }) => remainingTime}
                                 </CountdownCircleTimer>
                             )}
-                            {/* TODO: Тут должен быть экран конца игры */}
                             {gameState === GAME_STATE.GAME_OVER && (
                                 <GameEndScreen setGameState={setGameState} />
                             )}
                         </main>
                     </Card>
-                </Flex>
+                </Stack>
             </Container>
         </section>
     );
