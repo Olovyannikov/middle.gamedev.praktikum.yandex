@@ -6,9 +6,10 @@ interface FormInputTextProps {
     name: string;
     label: string;
     setValue?: unknown;
+    type?: string;
 }
 
-export const FormInputText = ({ name, label }: FormInputTextProps) => {
+export const FormInputText = ({ name, label, type }: FormInputTextProps) => {
     const { control } = useFormContext();
 
     return (
@@ -24,6 +25,7 @@ export const FormInputText = ({ name, label }: FormInputTextProps) => {
                     inputRef={ref}
                     label={label}
                     fullWidth
+                    type={type}
                     {...field}
                 />
             )}
