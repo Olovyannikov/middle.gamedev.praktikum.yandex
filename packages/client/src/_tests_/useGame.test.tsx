@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useGame } from '../widgets/Game/useGame';
 import { GAME_STATE } from '../widgets/Game/constants';
-import { FC, createContext } from 'react';
+import { createContext } from 'react';
 import { act } from 'react-dom/test-utils';
 
 describe('useGame Hook', () => {
@@ -11,24 +11,28 @@ describe('useGame Hook', () => {
     const mockHeight = 500;
     const WrappperContext = createContext('');
 
-    const Wrapper: FC<{ children: JSX.Element }> = ({ children }) => (
-        <WrappperContext.Provider value="">{children}</WrappperContext.Provider>
+    const Wrapper = ({ children }: { children: React.ReactNode }) => {
+        return (
+            <WrappperContext.Provider value="">
+                {children}
+            </WrappperContext.Provider>
+        );
+    };
+
+    const { result } = renderHook(
+        () =>
+            useGame({
+                gameState: GAME_STATE.RUNNING,
+                onGameOver: mockOnGameOver,
+                setGameState: mockSetGameState,
+                width: mockWidth,
+                height: mockHeight,
+            }),
+        { wrapper: Wrapper }
     );
 
     it('корректно инициализирует состояние игры', () => {
         act(() => {
-            const { result } = renderHook(
-                () =>
-                    useGame({
-                        gameState: GAME_STATE.RUNNING,
-                        onGameOver: mockOnGameOver,
-                        setGameState: mockSetGameState,
-                        width: mockWidth,
-                        height: mockHeight,
-                    }),
-                { wrapper: Wrapper }
-            );
-
             console.log(result);
 
             expect(result.current.snakeBody).toBeDefined();
@@ -38,20 +42,6 @@ describe('useGame Hook', () => {
 
     it('правильно обрабатывает движение змеи', () => {
         act(() => {
-            const { result } = renderHook(
-                () =>
-                    useGame({
-                        gameState: GAME_STATE.RUNNING,
-                        onGameOver: mockOnGameOver,
-                        setGameState: mockSetGameState,
-                        width: mockWidth,
-                        height: mockHeight,
-                    }),
-                { wrapper: Wrapper }
-            );
-
-            console.log(result);
-
             const mockEvent = {
                 code: 'ArrowRight',
             } as unknown as React.KeyboardEvent<Element>;
