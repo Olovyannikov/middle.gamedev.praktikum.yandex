@@ -1,0 +1,199 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang='en-US' data-colors-preset='contrast' data-primary-color='#307FFF'>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+    <meta charset='UTF-8'>
+    <meta name='robots' content='noindex'>
+    <meta name='built-on' content='2023-12-02T19:06:47.424737'>
+    <meta name='build-number' content='${buildNumber}'>
+    <title>Игровой Движок | Документация по игре </title>
+    <script id='virtual-toc-data' type='application/json'>[
+        {
+            "id": "44b5073b_2258",
+            "level": 0,
+            "title": "Базовые сущности",
+            "anchor": "#44b5073b_2258"
+        }
+    ]</script>
+    <script id='topic-shortcuts' type='application/json'></script>
+    <link href='https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.css' rel='stylesheet'>
+    <link rel='apple-touch-icon' sizes='180x180' href='https://jetbrains.com/apple-touch-icon.png'>
+    <link rel='icon' type='image/png' sizes='32x32' href='https://jetbrains.com/favicon-32x32.png'>
+    <link rel='icon' type='image/png' sizes='16x16' href='https://jetbrains.com/favicon-16x16.png'>
+    <link rel='manifest' href='https://jetbrains.com/site.webmanifest'>
+    <link rel='mask-icon' href='https://jetbrains.com/safari-pinned-tab.svg' color='#000000'>
+    <meta name='msapplication-TileColor' content='#000000' />
+    <meta name='msapplication-TileImage'
+          content='https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png' />
+    <meta name='msapplication-square70x70logo'
+          content='https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png' />
+    <meta name='msapplication-square150x150logo'
+          content='https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png' />
+    <meta name='msapplication-wide310x150logo'
+          content='https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png' />
+    <meta name='msapplication-square310x310logo'
+          content='https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png' />
+    <meta name='image' content=''><!-- Open Graph -->
+    <meta property='og:title' content='Игровой Движок | Документация по игре ' />
+    <meta property='og:description' content='' />
+    <meta property='og:image' content='' />
+    <meta property='og:site_name' content='Документация по игре  Help' />
+    <meta property='og:type' content='website' />
+    <meta property='og:locale' content='en_US' />
+    <meta property='og:url' content='/docs-main/1.0/game-engine.html' /><!-- End Open Graph --><!-- Twitter Card -->
+    <meta name='twitter:card' content='summary_large_image'>
+    <meta name='twitter:site' content=''>
+    <meta name='twitter:title' content='Игровой Движок | Документация по игре '>
+    <meta name='twitter:description' content=''>
+    <meta name='twitter:creator' content=''>
+    <meta name='twitter:image:src' content=''><!-- End Twitter Card --><!-- Schema.org WebPage -->
+    <script type='application/ld+json'> {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "@id": "/docs-main/1.0/game-engine.html#webpage",
+        "url": "/docs-main/1.0/game-engine.html",
+        "name": "Игровой Движок | Документация по игре ",
+        "description": "",
+        "image": "",
+        "inLanguage": "en-US"
+    }</script><!-- End Schema.org --><!-- Schema.org WebSite -->
+    <script type='application/ld+json'> {
+        "@type": "WebSite",
+        "@id": "/docs-main/#website",
+        "url": "/docs-main/",
+        "name": "Документация по игре  Help"
+    }</script><!-- End Schema.org --> <!-- Mermaid light/dark themes -->
+    <link rel='stylesheet' type='text/css' href='mermaid.css'>
+</head>
+<body data-id='Game-Engine' data-main-title='Игровой Движок'
+      data-article-props='{&quot;seeAlsoStyle&quot;:&quot;links&quot;}' data-template='article'
+      data-breadcrumbs='Навигация.md|&#1053;&#1072;&#1074;&#1080;&#1075;&#1072;&#1094;&#1080;&#1103;'>
+<div class='wrapper'>
+    <main class='panel _main'>
+        <header class='panel__header'>
+            <div class='container'><h3>Документация по игре 1.0 Help</h3>
+                <div class='panel-trigger'></div>
+            </div>
+        </header>
+        <section class='panel__content'>
+            <div class='container'>
+                <article class='article' data-shortcut-switcher='inactive'><h1 data-toc='Game-Engine'
+                                                                               id='Game-Engine.md'>Игровой Движок</h1>
+                    <section class='chapter'><h2 id='44b5073b_2258' data-toc='44b5073b_2258'>Базовые сущности</h2>
+                        <section class='chapter'><h3 id='game' data-toc='game'>Виджет Game</h3>
+                            <p id='44b5073b_2259'><code class='code' id='44b5073b_2260'>Game</code> - это основной
+                                компонент, отвечающий за отображение игрового поля и обработку пользовательского ввода.
+                            </p>
+                            <section class='chapter'><h4 id='44b5073b_2261' data-toc='44b5073b_2261'>Состояние</h4>
+                                <ul class='list _ul' id='44b5073b_2262'>
+                                    <li class='list__item' id='44b5073b_2263'><p><code class='code' id='44b5073b_2264'>gameState</code>:
+                                        Состояние игры (e.g., <code class='code'
+                                                                    id='44b5073b_2265'>GAME_STATE.GAME_OVER</code>,
+                                        <code class='code' id='44b5073b_2266'>GAME_STATE.RUNNING</code>, <code
+                                            class='code' id='44b5073b_2267'>GAME_STATE.PAUSED</code>).</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2268' data-toc='44b5073b_2268'>Методы</h4>
+                                <ul class='list _ul' id='44b5073b_2269'>
+                                    <li class='list__item' id='44b5073b_2270'><p><code class='code' id='44b5073b_2271'>onGameOver</code>:
+                                        Метод, вызываемый при завершении игры.</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2272' data-toc='44b5073b_2272'>Рефы</h4>
+                                <ul class='list _ul' id='44b5073b_2273'>
+                                    <li class='list__item' id='44b5073b_2274'><p><code class='code' id='44b5073b_2275'>canvasRef</code>:
+                                        Ссылка на элемент </p>
+                                        <p>, используемый для отображения игрового поля.</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2277' data-toc='44b5073b_2277'>Хуки</h4>
+                                <ul class='list _ul' id='44b5073b_2278'>
+                                    <li class='list__item' id='44b5073b_2279'><p><code class='code' id='44b5073b_2280'>useGame</code>:
+                                        Пользовательский хук, обеспечивающий логику игры.</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2281' data-toc='44b5073b_2281'>Рендеринг</h4>
+                                <ul class='list _ul' id='44b5073b_2282'>
+                                    <li class='list__item' id='44b5073b_2283'><p><code class='code' id='44b5073b_2284'>StartScreen</code>:
+                                        Компонент, отображающий стартовый экран игры.</p></li>
+                                    <li class='list__item' id='44b5073b_2285'><p><code class='code' id='44b5073b_2286'>Canvas</code>:
+                                        Компонент, отвечающий за отрисовку игрового поля.</p></li>
+                                    <li class='list__item' id='44b5073b_2287'><p><code class='code' id='44b5073b_2288'>Button</code>:
+                                        Кнопка для паузы/продолжения игры.</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2289' data-toc='44b5073b_2289'>Обработка
+                                событий</h4>
+                                <ul class='list _ul' id='44b5073b_2290'>
+                                    <li class='list__item' id='44b5073b_2291'><p>Обработка событий клавиатуры для
+                                        управления движением змеи.</p></li>
+                                </ul>
+                            </section>
+                        </section>
+                        <section class='chapter'><h3 id='usegame-ts' data-toc='usegame-ts'>Игровая логика
+                            useGame.ts</h3>
+                            <section class='chapter'><h4 id='usegame' data-toc='usegame'>Хук useGame</h4>
+                                <p id='44b5073b_2292'><code class='code' id='44b5073b_2293'>useGame</code> - это
+                                    пользовательский хук, который предоставляет функциональность для управления логикой
+                                    игры.</p></section>
+                            <section class='chapter'><h4 id='44b5073b_2294' data-toc='44b5073b_2294'>Параметры</h4>
+                                <ul class='list _ul' id='44b5073b_2295'>
+                                    <li class='list__item' id='44b5073b_2296'><p><code class='code' id='44b5073b_2297'>width</code>:
+                                        Ширина игрового поля.</p></li>
+                                    <li class='list__item' id='44b5073b_2298'><p><code class='code' id='44b5073b_2299'>height</code>:
+                                        Высота игрового поля.</p></li>
+                                    <li class='list__item' id='44b5073b_2300'><p><code class='code' id='44b5073b_2301'>onGameOver</code>:
+                                        Callback-функция, вызываемая при завершении игры.</p></li>
+                                    <li class='list__item' id='44b5073b_2302'><p><code class='code' id='44b5073b_2303'>gameState</code>:
+                                        Текущее состояние игры.</p></li>
+                                    <li class='list__item' id='44b5073b_2304'><p><code class='code' id='44b5073b_2305'>setGameState</code>:
+                                        Метод для изменения состояния игры.</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2306' data-toc='44b5073b_2306'>Состояние</h4>
+                                <ul class='list _ul' id='44b5073b_2307'>
+                                    <li class='list__item' id='44b5073b_2308'><p><code class='code' id='44b5073b_2309'>bodyLocked</code>:
+                                        Состояние блокировки страницы, если меняется состояние игры (PAUSED / RUNNING);
+                                    </p></li>
+                                    <li class='list__item' id='44b5073b_2310'><p><code class='code' id='44b5073b_2311'>dir</code>:
+                                        Направление движения змеи.</p></li>
+                                    <li class='list__item' id='44b5073b_2312'><p><code class='code' id='44b5073b_2313'>snakeBody</code>:
+                                        Массив координат тела змеи.</p></li>
+                                    <li class='list__item' id='44b5073b_2314'><p><code class='code' id='44b5073b_2315'>foodPos</code>:
+                                        Координаты еды на игровом поле.</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2316' data-toc='44b5073b_2316'>Методы</h4>
+                                <ul class='list _ul' id='44b5073b_2317'>
+                                    <li class='list__item' id='44b5073b_2318'><p><code class='code' id='44b5073b_2319'>onSnakeMove</code>:
+                                        Обработка событий клавиатуры для управления движением змеи.</p></li>
+                                    <li class='list__item' id='44b5073b_2320'><p><code class='code' id='44b5073b_2321'>moveSnake</code>:
+                                        Логика обновления положения змеи.</p></li>
+                                    <li class='list__item' id='44b5073b_2322'><p><code class='code' id='44b5073b_2323'>resetGameState</code>:
+                                        Сброс состояния игры.</p></li>
+                                </ul>
+                            </section>
+                            <section class='chapter'><h4 id='44b5073b_2324' data-toc='44b5073b_2324'>Эффекты</h4>
+                                <ul class='list _ul' id='44b5073b_2325'>
+                                    <li class='list__item' id='44b5073b_2326'><p><code class='code' id='44b5073b_2327'>useInterval</code>:
+                                        Обновление состояния змеи с заданной периодичностью.</p></li>
+                                    <li class='list__item' id='44b5073b_2328'><p><code class='code' id='44b5073b_2329'>useEffect</code>:
+                                        Обновление координат еды и тела змеи при изменении размеров игрового поля или
+                                        состояния игры.</p></li>
+                                </ul>
+                            </section>
+                        </section>
+                    </section>
+                    <div class='last-modified'> Last modified: 02 декабря 2023</div>
+                    <div data-feedback-placeholder='true'></div>
+                    <div class='navigation-links _bottom'><a class='navigation-links__prev' href='script.html'>&#1057;&#1094;&#1077;&#1085;&#1072;&#1088;&#1080;&#1081;
+                        &#1080;&#1075;&#1088;&#1099;</a></div>
+                </article>
+                <div id='disqus_thread'></div>
+            </div>
+        </section>
+    </main>
+</div>
+<script src='https://resources.jetbrains.com/writerside/apidoc/6.1.5-b176/app.js'></script>
+</body>
+</html>
