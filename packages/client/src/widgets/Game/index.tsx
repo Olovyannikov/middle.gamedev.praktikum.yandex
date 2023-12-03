@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 import { StartScreen, Canvas } from '@/entities';
 
@@ -15,7 +15,7 @@ export const Game = () => {
     const onGameOver = () => setGameState(GAME_STATE.GAME_OVER);
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const { snakeBody, foodPos, onSnakeMove, resetGameState } = useGame({
+    const { snakeBody, foodPos, onSnakeMove, resetGameState, score } = useGame({
         width: canvasRef?.current?.width,
         height: canvasRef?.current?.height,
         gameState,
@@ -28,6 +28,7 @@ export const Game = () => {
     return (
         <div className={s.root} tabIndex={0} onKeyDown={onSnakeMove}>
             <StartScreen gameState={gameState} setGameState={setGameState} />
+            {score > 0 && <Typography>Total score: {score}</Typography>}
             {(gameState === GAME_STATE.RUNNING ||
                 gameState === GAME_STATE.PAUSED) && (
                 <>
