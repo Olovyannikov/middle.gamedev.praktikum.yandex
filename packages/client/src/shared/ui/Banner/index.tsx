@@ -1,4 +1,4 @@
-import { Container } from '../Container';
+import { Container } from '@/shared/ui';
 import { Typography } from '@mui/material';
 
 import s from './Banner.module.scss';

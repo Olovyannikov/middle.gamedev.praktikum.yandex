@@ -1,5 +1,5 @@
 import { RootLayout } from '@/layouts/RootLayout';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,7 +8,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button } from '@/shared/ui';
 
 export default function ForumPage() {
     return (
@@ -62,8 +61,8 @@ export default function ForumPage() {
                         alignItems="flex-end"
                         justifyContent="flex-end"
                     >
-                        <Button>
-                            <Link to="/create/topic">Create topic</Link>
+                        <Button component={Link} to="/create/topic">
+                            Create topic
                         </Button>
                     </Grid>
                 </Grid>
