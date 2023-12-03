@@ -8,7 +8,9 @@ export const createSnakeMove = (gridSize = 5) => ({
 
         body.shift();
 
-        return [...body, { ...head, y: head.y - gridSize }];
+        body.push({ ...head, y: head.y - gridSize });
+
+        return body;
     },
     moveDown: (snake: Position[]) => {
         const body = [...snake];
@@ -16,7 +18,9 @@ export const createSnakeMove = (gridSize = 5) => ({
 
         body.shift();
 
-        return [...body, { ...head, y: head.y + gridSize }];
+        body.push({ ...head, y: head.y + gridSize });
+
+        return body;
     },
     moveLeft: (snake: Position[]) => {
         const body = [...snake];
@@ -24,7 +28,9 @@ export const createSnakeMove = (gridSize = 5) => ({
 
         body.shift();
 
-        return [...body, { ...head, x: head.x - gridSize }];
+        body.push({ ...head, x: head.x - gridSize });
+
+        return body;
     },
     moveRight: (snake: Position[]) => {
         const body = [...snake];
@@ -32,7 +38,9 @@ export const createSnakeMove = (gridSize = 5) => ({
 
         body.shift();
 
-        return [...body, { ...head, x: head.x + gridSize }];
+        body.push({ ...head, x: head.x + gridSize });
+
+        return body;
     },
 });
 

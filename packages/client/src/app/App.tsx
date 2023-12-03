@@ -2,8 +2,11 @@ import { Suspense, useEffect } from 'react';
 import { AppRouter } from '@/app/providers/AppRouter';
 
 import './assets/styles/index.scss';
+import { useGetUserQuery } from '@/services/authApi';
 
 export const App = () => {
+    const { data } = useGetUserQuery();
+
     useEffect(() => {
         const fetchServerData = async () => {
             const url = `http://localhost:${__SERVER_PORT__}`;
@@ -16,7 +19,7 @@ export const App = () => {
     }, []);
     return (
         <Suspense fallback="Loading translations...">
-            <AppRouter />
+            <AppRouter user={data} />
         </Suspense>
     );
 };

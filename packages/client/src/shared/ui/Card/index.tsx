@@ -2,8 +2,6 @@ import cn from 'clsx';
 import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 import type { NumericRange } from '@/shared/types/utility/NumericRange';
 
-import { ProgressLinear } from '@/shared/ui';
-
 import s from './Card.module.scss';
 
 interface CardProps
@@ -49,15 +47,6 @@ export const Card = ({
 
     return (
         <div className={classes} {...props}>
-            {loading ? (
-                <ProgressLinear
-                    active
-                    fillHeight
-                    height={4}
-                    indeterminate
-                    color="var(--purple-500)"
-                />
-            ) : null}
             {children}
         </div>
     );
