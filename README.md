@@ -122,3 +122,6 @@ docs: update description of run() method
 
 Если вам понадобится только один сервис, просто уточните какой в команде
 `docker compose up {sevice_name}`, например `docker compose up server`
+
+## Документация
+https://olovyannikov.github.io/middle.gamedev.praktikum.yandex/index.html
