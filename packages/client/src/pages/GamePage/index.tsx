@@ -5,10 +5,12 @@ import { AppLink } from '@/shared/ui/AppLink';
 import { TITLE, DESCRIPTION } from '../../../config';
 
 import s from './GamePage.module.scss';
+import { FullScreen } from '@/entities/FullScreen';
 
 export default function GamePage() {
     return (
         <RootLayout hasHeader={false}>
+            <FullScreen />
             <Banner title={TITLE} description={DESCRIPTION} />
             <Stack
                 sx={{
