@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
 import { RootLayout } from '@/layouts/RootLayout';
 import { useParams, Navigate } from 'react-router-dom';
-import { Grid, Typography, Divider, TextareaAutosize } from '@mui/material';
-import { Button } from '@/shared/ui';
+import {
+    Grid,
+    Typography,
+    Divider,
+    TextareaAutosize,
+    Button,
+} from '@mui/material';
 
 export default function ForumTopicPage() {
     let { id } = useParams();
