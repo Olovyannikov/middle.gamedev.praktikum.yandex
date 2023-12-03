@@ -1,4 +1,4 @@
-.buttonFullScreen {
+.IconFullScreen {
     position: absolute;
     bottom: 40px;
     right: 40px;
@@ -11,13 +11,8 @@
     background-color: transparent;
     background-repeat: no-repeat;
     transition: 0.5s;
-    background-image: url('../../app/assets/img/fullscreen_icon.svg');
     &:hover {
         opacity: 0.8;
         cursor: pointer;
     }
-}
-
-.buttonExitFullScreen {
-    background-image: url('../../app/assets/img/fullscreen_exit_icon.svg');
 }
