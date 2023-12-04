@@ -1,15 +1,5 @@
 import { useEffect, useState } from 'react';
-
-// Функция для включения/выключения полноэкранного режима
-const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-    } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        }
-    }
-};
+import { toggleFullscreen } from '../utils/toggleFullScreen';
 
 export const useFullScreenAPI = () => {
     const [isFullscreen, setIsFullscreen] = useState(false);
