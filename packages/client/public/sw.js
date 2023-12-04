@@ -1,5 +1,5 @@
-const staticCacheName = 's-app-v3'
-const dynamicCacheName = 'd-app-v3'
+const staticCacheName = 's-app-v1'
+const dynamicCacheName = 'd-app-v1'
 
 const assetUrls = [
     '/connect-sw.js',
@@ -18,32 +18,33 @@ const assetUrls = [
 ]
 
 async function cacheFirst(request) {
-    const cached = await caches.match(request)
+    const cached = await caches.match(request);
 
-    return cached ?? await fetch(request)
+    return cached ?? await fetch(request);
 }
 
 async function networkFirst(request) {
-    const cache = await caches.open(dynamicCacheName)
+    const cache = await caches.open(dynamicCacheName);
+
     try {
-        const response = await fetch(request)
-        await cache.put(request, response.clone())
+        const response = await fetch(request);
+        await cache.put(request, response.clone());
 
-        return response
+        return response;
     } catch (e) {
-        const cached = await cache.match(request)
+        const cached = await cache.match(request);
 
-        return cached ?? await caches.match('/offline.html')
+        return cached;
     }
 }
 
 self.addEventListener('install', async () => {
-    const cache = await caches.open(staticCacheName)
-    await cache.addAll(assetUrls)
+    const cache = await caches.open(staticCacheName);
+    await cache.addAll(assetUrls);
 })
 
 self.addEventListener('activate', async () => {
-    const cacheNames = await caches.keys()
+    const cacheNames = await caches.keys();
     await Promise.all(
         cacheNames
             .filter((name) => name !== staticCacheName)
@@ -54,8 +55,8 @@ self.addEventListener('activate', async () => {
 
 self.addEventListener('fetch', (event) => {
     const { request } = event;
-
     const url = new URL(request.url)
+
     if (url.origin === location.origin) {
         event.respondWith(cacheFirst(request))
     } else {
