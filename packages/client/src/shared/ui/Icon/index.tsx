@@ -6,6 +6,6 @@ interface IconProps {
     src: string;
 }
 
-export const Icon: React.FC<IconProps> = ({ src }) => {
+export const Icon = ({ src }: IconProps) => {
     return <img src={src} alt="icon" className={cn(s.IconFullScreen)} />;
 };
