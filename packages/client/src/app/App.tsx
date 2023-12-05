@@ -2,8 +2,6 @@ import { Suspense, useEffect } from 'react';
 import { AppRouter } from '@/app/providers/AppRouter';
 
 import './assets/styles/index.scss';
-import { useGetUserQuery } from '@/services/authApi';
-import { AuthProvider } from '@/shared/context/AuthContext';
 
 export const App = () => {
     useEffect(() => {
@@ -19,9 +17,7 @@ export const App = () => {
 
     return (
         <Suspense fallback="Loading translations...">
-            <AuthProvider>
-                <AppRouter />
-            </AuthProvider>
+            <AppRouter />
         </Suspense>
     );
 };
