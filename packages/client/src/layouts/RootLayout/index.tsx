@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { Header } from './Header';
 import { Main } from './Main';
+import { AuthProvider } from '@/shared/context/AuthContext';
 
 interface RootLayoutProps {
     hasHeader?: boolean;
@@ -11,9 +12,9 @@ export const RootLayout = ({
     children,
 }: PropsWithChildren<RootLayoutProps>) => {
     return (
-        <>
-            {hasHeader ? <Header /> : null}
+        <AuthProvider>
+            {hasHeader && <Header />}
             <Main>{children}</Main>
-        </>
+        </AuthProvider>
     );
 };

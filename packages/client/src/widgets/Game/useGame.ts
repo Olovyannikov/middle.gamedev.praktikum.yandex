@@ -6,7 +6,13 @@ import {
     randomPositionOnGrid,
     willSnakeHitTheFood,
 } from '@/widgets/Game/lib';
-import { DIRECTIONS, GAME_STATE, SEGMENT_SIZE } from '@/widgets/Game/constants';
+import {
+    DIRECTIONS,
+    GAME_CONTROLS,
+    GAME_STATE,
+    SEGMENT_SIZE,
+    SETUP_POSITION,
+} from '@/widgets/Game/constants';
 import { useInterval, useLockedBody } from 'usehooks-ts';
 
 const MOVE_SPEED = 100;
@@ -27,7 +33,8 @@ export const useGame = ({
     setGameState,
 }: UseGameProps) => {
     const [bodyLocked, setBodyLocked] = useLockedBody(false);
-    const [dir, setDir] = useState<Dir>();
+    const [speed, setSpeed] = useState(MOVE_SPEED);
+    const [dir, setDir] = useState<Dir | undefined>(SETUP_POSITION);
     const [snakeBody, setSnakeBody] = useState<Position[] | undefined>([
         {
             x: randomPositionOnGrid({
@@ -57,23 +64,19 @@ export const useGame = ({
 
     const onSnakeMove = (e: KeyboardEvent) => {
         switch (e.code) {
-            case 'KeyW':
+            case GAME_CONTROLS.KEY_W:
+            case GAME_CONTROLS.UP:
                 return dir !== DIRECTIONS.DOWN && setDir(DIRECTIONS.UP);
-            case 'KeyA':
+            case GAME_CONTROLS.KEY_A:
+            case GAME_CONTROLS.LEFT:
                 return dir !== DIRECTIONS.RIGHT && setDir(DIRECTIONS.LEFT);
-            case 'KeyS':
+            case GAME_CONTROLS.KEY_S:
+            case GAME_CONTROLS.DOWN:
                 return dir !== DIRECTIONS.UP && setDir(DIRECTIONS.DOWN);
-            case 'KeyD':
+            case GAME_CONTROLS.KEY_D:
+            case GAME_CONTROLS.RIGHT:
                 return dir !== DIRECTIONS.LEFT && setDir(DIRECTIONS.RIGHT);
-            case 'ArrowUp':
-                return dir !== DIRECTIONS.DOWN && setDir(DIRECTIONS.UP);
-            case 'ArrowDown':
-                return dir !== DIRECTIONS.UP && setDir(DIRECTIONS.DOWN);
-            case 'ArrowLeft':
-                return dir !== DIRECTIONS.RIGHT && setDir(DIRECTIONS.LEFT);
-            case 'ArrowRight':
-                return dir !== DIRECTIONS.LEFT && setDir(DIRECTIONS.RIGHT);
-            case 'Space':
+            case GAME_CONTROLS.SPACE:
                 return gameState === GAME_STATE.RUNNING
                     ? setGameState(GAME_STATE.PAUSED)
                     : setGameState(GAME_STATE.RUNNING);
@@ -179,10 +182,7 @@ export const useGame = ({
         ]);
     };
 
-    useInterval(
-        moveSnake,
-        gameState === GAME_STATE.RUNNING ? MOVE_SPEED : null
-    );
+    useInterval(moveSnake, gameState === GAME_STATE.RUNNING ? speed : null);
 
     useEffect(() => {
         if (!width || !height) return;
@@ -228,7 +228,16 @@ export const useGame = ({
         }
     }, [bodyLocked]);
 
+    useEffect(() => {
+        if (snakeBody && snakeBody?.length % 5 === 0) {
+            setSpeed((speed) => speed - 10);
+        }
+    }, [snakeBody?.length]);
+
+    const total = snakeBody && snakeBody.length > 1 ? snakeBody.length : 0;
+
     return {
+        score: total * 5,
         foodPos,
         snakeBody,
         onSnakeMove,

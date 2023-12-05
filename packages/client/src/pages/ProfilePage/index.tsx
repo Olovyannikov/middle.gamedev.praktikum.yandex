@@ -14,6 +14,13 @@ import {
 } from '@/shared/validators/UserValidation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Modal, Typography } from '@mui/material';
+import { useGetUserQuery } from '@/services/authApi';
+import {
+    useChangePasswordMutation,
+    useChangeAvatarMutation,
+} from '@/services/usersApi';
+import { resourcesBaseUrl } from '@/shared/constants/api';
+import { FormStatusLine } from '@/components/FormStatusLine';
 
 export default function ProfilePage() {
     const methods = useForm<NewPasswordSchemaType>({
@@ -21,30 +28,55 @@ export default function ProfilePage() {
         resolver: zodResolver(NewPasswordSchema),
     });
 
-    const [username, setUsername] = useState('John Doe');
-    const [email, setEmail] = useState('johndoe@example.com');
+    const { data: user } = useGetUserQuery();
+    const [
+        changePassword,
+        {
+            isLoading: isPasswordUpdating,
+            isError: isPasswordError,
+            error: passwordError,
+        },
+    ] = useChangePasswordMutation();
+    const [
+        changeAvatar,
+        {
+            isLoading: isAvatarUpdating,
+            isError: isAvatarError,
+            error: avatarError,
+        },
+    ] = useChangeAvatarMutation();
     const [showChangePass, setShowChangePass] = useState(false);
-    const [avatarUrl, setAvatarUrl] = useState(imgAvatar);
     const [previewAvatar, setPreviewAvatar] = useState(imgAvatar);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [avatarFile, setAvatarFile] = useState(null);
 
-    const onSubmitPassword: SubmitHandler<NewPasswordSchemaType> = (data) => {
-        console.log(data);
+    const onSubmitPassword: SubmitHandler<NewPasswordSchemaType> = async (
+        data
+    ) => {
+        const response = await changePassword(data);
+        if (response && response.data == 'OK') {
+            setShowChangePass(false);
+        }
     };
 
     const handleOpenChangePassword = () => {
         setShowChangePass(!showChangePass);
     };
 
-    const handleSubmitAvatar = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitAvatar = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsModalOpen(false);
-        setAvatarUrl(previewAvatar);
+        const formData = new FormData();
+        formData.append('avatar', avatarFile);
+        const response = await changeAvatar(formData);
+        if (response && response.data) {
+            setIsModalOpen(false);
+        }
     };
 
     const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-
+        if (!file) return;
+        setAvatarFile(file);
         setIsModalOpen(true);
         file && setPreviewAvatar(URL.createObjectURL(file));
     };
@@ -56,7 +88,7 @@ export default function ProfilePage() {
                     src={backgroundMain}
                     alt="background"
                     className={cn(s.main_background)}
-                ></img>
+                />
 
                 <Form
                     id="avatarForm"
@@ -65,7 +97,11 @@ export default function ProfilePage() {
                 >
                     <label className={cn(s.avatar_position)}>
                         <img
-                            src={avatarUrl}
+                            src={
+                                user.avatar
+                                    ? resourcesBaseUrl + user.avatar
+                                    : imgAvatar
+                            }
                             alt="avatar"
                             className={cn(s.avatar)}
                         />
@@ -108,6 +144,11 @@ export default function ProfilePage() {
                                 >
                                     Save
                                 </Button>
+                                <FormStatusLine
+                                    isUpdating={isAvatarUpdating}
+                                    isError={isAvatarError}
+                                    error={avatarError?.data?.reason}
+                                />
                             </Container>
                         </Container>
                     </Modal>
@@ -115,8 +156,25 @@ export default function ProfilePage() {
 
                 <Container className={cn(s.profile_info)}>
                     <Typography variant="h4">User information</Typography>
-                    <Typography variant="h6">Full name: {username}</Typography>
-                    <Typography variant="h6">Email: {email}</Typography>
+                    {user ? (
+                        <div>
+                            <Typography variant="h6">
+                                Login: {user.login}
+                            </Typography>
+                            <Typography variant="h6">
+                                Full name: {user.first_name + user.second_name}
+                            </Typography>
+                            <Typography variant="h6">
+                                Display name: {user.display_name}
+                            </Typography>
+                            <Typography variant="h6">
+                                Email: {user.email}
+                            </Typography>
+                            <Typography variant="h6">
+                                Phone: {user.phone}
+                            </Typography>
+                        </div>
+                    ) : null}
                 </Container>
 
                 <Button onClick={handleOpenChangePassword}>
@@ -130,14 +188,21 @@ export default function ProfilePage() {
                                 <FormInputText
                                     label="Пароль"
                                     name={'oldPassword'}
+                                    type={'password'}
                                 />
                                 <FormInputText
                                     label="Новый пароль"
                                     name={'newPassword'}
+                                    type={'password'}
                                 />
                                 <Button type="submit" variant={'contained'}>
                                     Change password
                                 </Button>
+                                <FormStatusLine
+                                    isUpdating={isPasswordUpdating}
+                                    isError={isPasswordError}
+                                    error={passwordError?.data?.reason}
+                                />
                             </Container>
                         )}
                     </Form>

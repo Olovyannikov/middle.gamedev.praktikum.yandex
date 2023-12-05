@@ -1,31 +1,42 @@
+import { useEffect } from 'react';
 import { RootLayout } from '@/layouts/RootLayout';
-import { Container } from '@/shared/ui';
-import { Flex } from '@/shared/ui/Flex';
-import { Button } from '@/shared/ui/Button';
+import { AppLink } from '@/shared/ui';
+import { Banner } from '@/shared/ui/Banner';
+import { DESCRIPTION, TITLE } from '../../../config';
+import { Stack } from '@mui/material';
+import { useAuth } from '@/shared/context/AuthContext';
+import s from '@/pages/GamePage/GamePage.module.scss';
 
 export default function IndexPage() {
+    const userIsAuth = useAuth();
+
+    useEffect(() => {
+        console.log('useEffect from IndexPage', userIsAuth);
+    }, []);
+
     return (
-        <RootLayout>
-            <section>
-                <Container>
-                    <Flex gap="large" align="center">
-                        <Button>Click Me</Button>
-                        <Button bordered>Bordered</Button>
-                        <Button depressed>Click Me</Button>
-                        <Button outlined>Click Me</Button>
-                        <Button rounded>Click Me</Button>
-                        <Button size="small">Click Me</Button>
-                        <Button size="medium">Click Me</Button>
-                        <Button size="large">Click Me</Button>
-                        <Button text>Click Me</Button>
-                        <Button disabled={true}>Disabled</Button>
-                        <Button block>Block</Button>
-                        <Button bordered color="var(--green-300)">
-                            asd
-                        </Button>
-                    </Flex>
-                </Container>
-            </section>
+        <RootLayout hasHeader={false}>
+            <Banner title={TITLE} description={DESCRIPTION} />
+            <Stack
+                sx={{
+                    maxWidth: '275px',
+                    margin: '95px auto 50px',
+                }}
+                spacing={3.2}
+            >
+                <AppLink className={s.button} to="/game">
+                    Start
+                </AppLink>
+                <AppLink className={s.button} to="/me">
+                    Profile
+                </AppLink>
+                <AppLink className={s.button} to="/forum">
+                    Forum
+                </AppLink>
+                <AppLink className={s.button} to="/leaderboard">
+                    Leaderboard
+                </AppLink>
+            </Stack>
         </RootLayout>
     );
 }
