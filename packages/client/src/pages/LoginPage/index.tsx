@@ -14,6 +14,12 @@ import { defaultValues } from '@/shared/constants/forms';
 import s from './LoginPage.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { FormStatusLine } from '@/components/FormStatusLine';
+import { useEffect } from 'react';
+import { useAuth } from '@/shared/context/AuthContext';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+
+const isFetchBaseQueryErrorType = (error: any): error is FetchBaseQueryError =>
+    'status' in error;
 
 export default function LoginPage() {
     const methods = useForm<LoginSchemaType>({
@@ -22,19 +28,20 @@ export default function LoginPage() {
         resolver: zodResolver(LoginSchema),
     });
 
-    const [signin, { isLoading: isUpdating, isError, error }] =
+    const [signin, { isLoading: isUpdating, isError, error, isSuccess }] =
         useSignInMutation();
-    const { refetch } = useGetUserQuery();
+    const userIsAuth = useAuth();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log(error);
+        if (userIsAuth) navigate('/me');
+    }, [userIsAuth, isSuccess, error]);
+
     const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
-        const result = await signin(data);
-        if (result?.error?.data.indexOf('User already in system') > 0)
-            navigate('/me');
-        if ('data' in result) {
-            const user = await refetch();
-            if (user.isSuccess && user.data) navigate('/me');
-        }
+        await signin(data);
+
+        if (isSuccess) navigate('/me');
     };
 
     return (
@@ -62,7 +69,11 @@ export default function LoginPage() {
                     <FormStatusLine
                         isUpdating={isUpdating}
                         isError={isError}
-                        error={error?.data?.reason}
+                        error={
+                            error && 'data' in error
+                                ? JSON.stringify(error.data)
+                                : ''
+                        }
                     />
                 </FormPaperWrapper>
             </Container>

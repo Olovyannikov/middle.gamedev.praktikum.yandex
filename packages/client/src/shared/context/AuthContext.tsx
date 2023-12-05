@@ -20,7 +20,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     const { data } = useGetUserQuery();
 
     useEffect(() => {
-        console.log('useEffect from AuthProvider', data);
+        //console.log('useEffect from AuthProvider', data);
         if (data) {
             setIsAuth(true);
         }

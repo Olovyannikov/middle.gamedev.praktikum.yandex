@@ -69,7 +69,11 @@ export default function RegistrationPage() {
                     <FormStatusLine
                         isUpdating={isUpdating}
                         isError={isError}
-                        error={error?.data?.reason}
+                        error={
+                            error && 'data' in error
+                                ? JSON.stringify(error.data)
+                                : ''
+                        }
                     />
                 </FormPaperWrapper>
             </Container>

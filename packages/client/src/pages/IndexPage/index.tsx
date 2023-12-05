@@ -11,7 +11,7 @@ export default function IndexPage() {
     const userIsAuth = useAuth();
 
     useEffect(() => {
-        console.log('useEffect from IndexPage', userIsAuth);
+        //console.log('useEffect from IndexPage', userIsAuth);
     }, []);
 
     return (

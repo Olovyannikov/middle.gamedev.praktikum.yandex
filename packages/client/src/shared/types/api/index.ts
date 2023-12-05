@@ -18,7 +18,7 @@ export type signinRequest = {
     password: string;
 };
 
-export type signinResponse = null;
+export type signinResponse = string;
 
 export type signupRequest = {
     first_name: string;
@@ -34,7 +34,7 @@ export type signupResponse = { id: number };
 export type userResponse = User;
 
 export type avatarRequest = {
-    avatar: FormData;
+    avatar: Blob;
 };
 
 export type avatarResponse = userResponse;
