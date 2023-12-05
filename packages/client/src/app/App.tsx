@@ -17,6 +17,7 @@ export const App = () => {
 
         fetchServerData();
     }, []);
+
     return (
         <Suspense fallback="Loading translations...">
             <AppRouter user={data} />
