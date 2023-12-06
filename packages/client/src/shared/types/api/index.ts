@@ -1,8 +1,8 @@
-export type requestError = {
+export interface RequestError {
     reason: string;
-};
+}
 
-export type User = {
+export interface User {
     id: number;
     first_name: string;
     second_name: string;
@@ -11,16 +11,16 @@ export type User = {
     login: string;
     avatar?: string;
     email: string;
-};
+}
 
-export type signinRequest = {
+export interface SigninRequest {
     login: string;
     password: string;
-};
+}
 
-export type signinResponse = string;
+export type SigninResponse = string;
 
-export type signupRequest = {
+export type SignupRequest = {
     first_name: string;
     second_name: string;
     phone: string;
@@ -29,7 +29,9 @@ export type signupRequest = {
     password: string;
 };
 
-export type signupResponse = { id: number };
+export interface SignupResponse {
+    id: number;
+}
 
 export type userResponse = User;
 
@@ -37,9 +39,9 @@ export type avatarRequest = FormData;
 
 export type avatarResponse = userResponse;
 
-export type passwordRequest = {
+export interface PasswordRequest {
     oldPassword: string;
     newPassword: string;
-};
+}
 
 export type passwordResponse = string;

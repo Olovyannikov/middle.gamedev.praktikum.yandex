@@ -1,18 +1,22 @@
 import { baseApi } from './baseApi';
 import { authOperations } from '@/shared/constants/api';
 import {
-    signinResponse,
-    signupResponse,
+    SigninResponse,
+    SignupResponse,
     userResponse,
 } from '@/shared/types/api';
 import {
     LoginSchemaType,
     RegistrationSchemaType,
 } from '@/shared/validators/UserValidation';
+import {
+    BaseQueryError,
+    BaseQueryMeta,
+} from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        signIn: builder.mutation<signinResponse, LoginSchemaType>({
+        signIn: builder.mutation<SigninResponse, LoginSchemaType>({
             query: (body) => ({
                 url: authOperations.signin,
                 method: 'POST',
@@ -25,7 +29,7 @@ export const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['User'],
         }),
-        signUp: builder.mutation<signupResponse, RegistrationSchemaType>({
+        signUp: builder.mutation<SignupResponse, RegistrationSchemaType>({
             query: (body) => ({
                 url: authOperations.signup,
                 method: 'POST',
@@ -38,11 +42,26 @@ export const authApi = baseApi.injectEndpoints({
                 url: authOperations.user,
                 credentials: 'include',
             }),
+            transformErrorResponse: () => ({
+                data: null,
+            }),
             providesTags: ['User'],
+        }),
+        logOut: builder.mutation<void, void>({
+            query: () => ({
+                url: authOperations.logout,
+                method: 'POST',
+                credentials: 'include',
+            }),
+            invalidatesTags: ['User'],
         }),
     }),
     overrideExisting: false,
 });
 
-export const { useSignInMutation, useGetUserQuery, useSignUpMutation } =
-    authApi;
+export const {
+    useSignInMutation,
+    useGetUserQuery,
+    useSignUpMutation,
+    useLogOutMutation,
+} = authApi;

@@ -11,11 +11,11 @@ import { useGame } from './useGame';
 import s from './Game.module.scss';
 
 export const Game = () => {
-    const [gameState, setGameState] = useState<GameState>(GAME_STATE.GAME_OVER);
+    const [gameState, setGameState] = useState<GameState>(GAME_STATE.INIT);
     const onGameOver = () => setGameState(GAME_STATE.GAME_OVER);
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const { snakeBody, foodPos, onSnakeMove, resetGameState, score } = useGame({
+    const { snakeBody, foodPos, onSnakeMove, score } = useGame({
         width: canvasRef?.current?.width,
         height: canvasRef?.current?.height,
         gameState,
@@ -27,8 +27,10 @@ export const Game = () => {
 
     return (
         <div className={s.root} tabIndex={0} onKeyDown={onSnakeMove}>
+            {gameState !== GAME_STATE.INIT && (
+                <Typography>Total score: {score}</Typography>
+            )}
             <StartScreen gameState={gameState} setGameState={setGameState} />
-            {score > 0 && <Typography>Total score: {score}</Typography>}
             {(gameState === GAME_STATE.RUNNING ||
                 gameState === GAME_STATE.PAUSED) && (
                 <>
