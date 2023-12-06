@@ -14,6 +14,7 @@ import { defaultValues } from '@/shared/constants/forms';
 import s from './RegistrationPage.module.scss';
 import { useSignUpMutation } from '@/services/authApi';
 import { useNavigate } from 'react-router-dom';
+import { requestError } from '@/shared/types/api';
 
 export default function RegistrationPage() {
     const methods = useForm<RegistrationSchemaType>({
@@ -70,8 +71,8 @@ export default function RegistrationPage() {
                         isUpdating={isUpdating}
                         isError={isError}
                         error={
-                            error && 'data' in error
-                                ? JSON.stringify(error.data)
+                            error && 'status' in error
+                                ? (error.data as requestError).reason
                                 : ''
                         }
                     />

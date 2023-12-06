@@ -1,7 +1,6 @@
 import { baseApi } from './baseApi';
 import { authOperations } from '@/shared/constants/api';
 import {
-    requestError,
     signinResponse,
     signupResponse,
     userResponse,
@@ -25,9 +24,6 @@ export const authApi = baseApi.injectEndpoints({
                 },
             }),
             invalidatesTags: ['User'],
-            transformErrorResponse: (response: { reason: string }) => {
-                return response.reason;
-            },
         }),
         signUp: builder.mutation<signupResponse, RegistrationSchemaType>({
             query: (body) => ({

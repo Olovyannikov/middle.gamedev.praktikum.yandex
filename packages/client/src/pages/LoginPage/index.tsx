@@ -4,7 +4,7 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useGetUserQuery, useSignInMutation } from '@/services/authApi';
+import { useSignInMutation } from '@/services/authApi';
 import {
     LoginSchema,
     LoginSchemaType,
@@ -16,10 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { useEffect } from 'react';
 import { useAuth } from '@/shared/context/AuthContext';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-
-const isFetchBaseQueryErrorType = (error: any): error is FetchBaseQueryError =>
-    'status' in error;
+import { requestError } from '@/shared/types/api';
 
 export default function LoginPage() {
     const methods = useForm<LoginSchemaType>({
@@ -34,7 +31,6 @@ export default function LoginPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(error);
         if (userIsAuth) navigate('/me');
     }, [userIsAuth, isSuccess, error]);
 
@@ -70,8 +66,8 @@ export default function LoginPage() {
                         isUpdating={isUpdating}
                         isError={isError}
                         error={
-                            error && 'data' in error
-                                ? JSON.stringify(error.data)
+                            error && 'status' in error
+                                ? (error.data as requestError).reason
                                 : ''
                         }
                     />

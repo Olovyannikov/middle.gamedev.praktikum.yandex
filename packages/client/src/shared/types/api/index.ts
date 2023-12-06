@@ -33,9 +33,7 @@ export type signupResponse = { id: number };
 
 export type userResponse = User;
 
-export type avatarRequest = {
-    avatar: Blob;
-};
+export type avatarRequest = FormData;
 
 export type avatarResponse = userResponse;
 
@@ -44,4 +42,4 @@ export type passwordRequest = {
     newPassword: string;
 };
 
-export type passwordResponse = null;
+export type passwordResponse = string;
