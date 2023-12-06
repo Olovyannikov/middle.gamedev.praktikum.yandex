@@ -1,6 +1,6 @@
 import cn from 'clsx';
 import { RootLayout } from '@/layouts/RootLayout';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import s from './profile.module.scss';
 import imgAvatar from '@/app/assets/img/avatar_default.svg';
 import backgroundMain from '@/app/assets/img/bg.svg';
@@ -21,15 +21,19 @@ import {
 } from '@/services/usersApi';
 import { resourcesBaseUrl } from '@/shared/constants/api';
 import { FormStatusLine } from '@/components/FormStatusLine';
-import { requestError } from '@/shared/types/api';
+import { RequestError } from '@/shared/types/api';
+import { useAuth } from '@/shared/context/AuthContext';
 
 export default function ProfilePage() {
+    const { isAuth } = useAuth();
     const methods = useForm<NewPasswordSchemaType>({
         mode: 'onChange',
         resolver: zodResolver(NewPasswordSchema),
     });
 
-    const { data: user } = useGetUserQuery();
+    const { data: user } = useGetUserQuery(void true, {
+        skip: !isAuth,
+    });
     const [
         changePassword,
         {
@@ -66,7 +70,7 @@ export default function ProfilePage() {
         setShowChangePass(!showChangePass);
     };
 
-    const handleSubmitAvatar = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitAvatar = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!avatarFile) return;
         const formData = new FormData();
@@ -153,7 +157,7 @@ export default function ProfilePage() {
                                     isError={isAvatarError}
                                     error={
                                         avatarError && 'status' in avatarError
-                                            ? (avatarError.data as requestError)
+                                            ? (avatarError.data as RequestError)
                                                   .reason
                                             : ''
                                     }
@@ -214,7 +218,7 @@ export default function ProfilePage() {
                                         passwordError &&
                                         'status' in passwordError
                                             ? (
-                                                  passwordError.data as requestError
+                                                  passwordError.data as RequestError
                                               ).reason
                                             : ''
                                     }

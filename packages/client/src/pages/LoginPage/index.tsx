@@ -1,22 +1,23 @@
+import { useEffect } from 'react';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { RootLayout } from '@/layouts/RootLayout';
 import { Container, Button, Typography } from '@mui/material';
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignInMutation } from '@/services/authApi';
 import {
     LoginSchema,
     LoginSchemaType,
 } from '@/shared/validators/UserValidation';
+import type { RequestError } from '@/shared/types/api';
 import { Form } from '@/components/Form';
 import { defaultValues } from '@/shared/constants/forms';
-import s from './LoginPage.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { FormStatusLine } from '@/components/FormStatusLine';
-import { useEffect } from 'react';
 import { useAuth } from '@/shared/context/AuthContext';
-import { requestError } from '@/shared/types/api';
+
+import s from './LoginPage.module.scss';
 
 export default function LoginPage() {
     const methods = useForm<LoginSchemaType>({
@@ -27,12 +28,12 @@ export default function LoginPage() {
 
     const [signin, { isLoading: isUpdating, isError, error, isSuccess }] =
         useSignInMutation();
-    const userIsAuth = useAuth();
+    const { isAuth } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (userIsAuth) navigate('/me');
-    }, [userIsAuth, isSuccess, error]);
+        if (isAuth) navigate('/me');
+    }, [isAuth, isSuccess, error]);
 
     const onSubmit: SubmitHandler<LoginSchemaType> = async (data) => {
         await signin(data);
@@ -66,9 +67,9 @@ export default function LoginPage() {
                         isUpdating={isUpdating}
                         isError={isError}
                         error={
-                            error && 'status' in error
-                                ? (error.data as requestError).reason
-                                : ''
+                            error &&
+                            'status' in error &&
+                            (error.data as RequestError).reason
                         }
                     />
                 </FormPaperWrapper>
