@@ -21,6 +21,7 @@ import {
 } from '@/services/usersApi';
 import { resourcesBaseUrl } from '@/shared/constants/api';
 import { FormStatusLine } from '@/components/FormStatusLine';
+import { requestError } from '@/shared/types/api';
 
 export default function ProfilePage() {
     const methods = useForm<NewPasswordSchemaType>({
@@ -45,16 +46,18 @@ export default function ProfilePage() {
             error: avatarError,
         },
     ] = useChangeAvatarMutation();
-    const [showChangePass, setShowChangePass] = useState(false);
-    const [previewAvatar, setPreviewAvatar] = useState(imgAvatar);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [avatarFile, setAvatarFile] = useState(null);
+    const [showChangePass, setShowChangePass] = useState<boolean>(false);
+    const [previewAvatar, setPreviewAvatar] = useState<string>(imgAvatar);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
     const onSubmitPassword: SubmitHandler<NewPasswordSchemaType> = async (
         data
     ) => {
         const response = await changePassword(data);
-        if (response && response.data == 'OK') {
+        if ('error' in response) {
+            console.log(response);
+        } else {
             setShowChangePass(false);
         }
     };
@@ -65,10 +68,11 @@ export default function ProfilePage() {
 
     const handleSubmitAvatar = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!avatarFile) return;
         const formData = new FormData();
         formData.append('avatar', avatarFile);
         const response = await changeAvatar(formData);
-        if (response && response.data) {
+        if ('data' in response) {
             setIsModalOpen(false);
         }
     };
@@ -98,7 +102,7 @@ export default function ProfilePage() {
                     <label className={cn(s.avatar_position)}>
                         <img
                             src={
-                                user.avatar
+                                user && user.avatar
                                     ? resourcesBaseUrl + user.avatar
                                     : imgAvatar
                             }
@@ -147,7 +151,12 @@ export default function ProfilePage() {
                                 <FormStatusLine
                                     isUpdating={isAvatarUpdating}
                                     isError={isAvatarError}
-                                    error={avatarError?.data?.reason}
+                                    error={
+                                        avatarError && 'status' in avatarError
+                                            ? (avatarError.data as requestError)
+                                                  .reason
+                                            : ''
+                                    }
                                 />
                             </Container>
                         </Container>
@@ -201,7 +210,14 @@ export default function ProfilePage() {
                                 <FormStatusLine
                                     isUpdating={isPasswordUpdating}
                                     isError={isPasswordError}
-                                    error={passwordError?.data?.reason}
+                                    error={
+                                        passwordError &&
+                                        'status' in passwordError
+                                            ? (
+                                                  passwordError.data as requestError
+                                              ).reason
+                                            : ''
+                                    }
                                 />
                             </Container>
                         )}

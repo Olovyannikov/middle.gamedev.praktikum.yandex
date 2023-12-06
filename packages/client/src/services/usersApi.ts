@@ -3,9 +3,9 @@ import { usersOperations } from '@/shared/constants/api';
 import {
     avatarRequest,
     avatarResponse,
-    passwordRequest,
     passwordResponse,
 } from '@/shared/types/api';
+import { NewPasswordSchemaType } from '@/shared/validators/UserValidation';
 
 export const usersApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -18,7 +18,10 @@ export const usersApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['User'],
         }),
-        changePassword: builder.mutation<passwordResponse, passwordRequest>({
+        changePassword: builder.mutation<
+            passwordResponse,
+            NewPasswordSchemaType
+        >({
             query: (body) => ({
                 url: usersOperations.password,
                 method: 'PUT',
