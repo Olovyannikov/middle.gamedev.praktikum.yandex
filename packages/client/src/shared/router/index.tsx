@@ -1,6 +1,5 @@
 import type { RouteProps } from 'react-router-dom';
 import {
-    IndexPageLazy,
     ProfilePageLazy,
     RegistrationPageLazy,
     LoginPageLazy,
@@ -9,6 +8,7 @@ import {
     LeaderBoardPageLazy,
     Error500PageLazy,
 } from '@/pages/pages.lazy';
+import IndexPage from '@/pages/IndexPage';
 import { PrivateRoute } from './PrivateRoute';
 
 export const AppRoutes = {
@@ -39,7 +39,7 @@ export const RouterPaths: Record<AppRoutesValues, string> = {
 export const router: Record<AppRoutesValues, RouteProps> = {
     [AppRoutes.INDEX]: {
         path: RouterPaths.index,
-        element: <IndexPageLazy />,
+        element: <IndexPage />,
     },
     [AppRoutes.LOGIN]: {
         path: RouterPaths.login,

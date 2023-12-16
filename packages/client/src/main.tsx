@@ -8,7 +8,8 @@ import { AuthProvider } from '@/shared/context/AuthContext';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../theme.config';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+    document.getElementById('root') as HTMLElement,
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
