@@ -21,8 +21,8 @@ export default defineConfig(({ mode }) => {
             },
             preprocessorOptions: {
                 scss: {
-                    additionalData:
-                        '@import "./src/app/assets/styles/general/_mixins.scss";',
+                    // additionalData:
+                    //     '@import "./src/app/assets/styles/general/_mixins.scss";',
                 },
             },
             devSourcemap: true,

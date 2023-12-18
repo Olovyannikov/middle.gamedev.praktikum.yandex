@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
-import dotenv from 'dotenv';
 import react from '@vitejs/plugin-react';
 import * as path from 'path';
 import { fileURLToPath, URL } from 'node:url';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -23,8 +23,8 @@ export default defineConfig(({ mode }) => {
             },
             preprocessorOptions: {
                 scss: {
-                    additionalData:
-                        '@import "./src/app/assets/styles/general/_mixins.scss";',
+                    // additionalData:
+                    //     '@import "./src/app/assets/styles/general/_mixins.scss";',
                 },
             },
             devSourcemap: true,
