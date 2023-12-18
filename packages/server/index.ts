@@ -37,6 +37,7 @@ async function startServer() {
 
     if (!isDev()) {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
+        app.use('/img', express.static(path.resolve(distPath, 'img')));
     }
 
     app.use('*', async (req, res, next) => {
