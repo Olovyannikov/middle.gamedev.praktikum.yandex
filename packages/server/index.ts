@@ -9,17 +9,17 @@ import express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const isDev = () => false; //process.env.NODE_ENV === 'development';
+const isDev = () => process.env.NODE_ENV === 'development';
 
 async function startServer() {
     const app = express();
     app.use(cors());
-    const port = Number(process.env.SERVER_PORT) || 3001;
+    const port = Number(process.env.SERVER_PORT) || 3000;
 
     let vite: ViteDevServer | undefined;
     const distPath = path.dirname(require.resolve('client/dist/index.html'));
     const srcPath = path.dirname(require.resolve('client/index.html'));
-    const ssrClientPath = require.resolve('client/ssr-dist/client.cjs');
+    const ssrClientPath = require.resolve('client/ssr-dist/ssr.cjs');
 
     if (isDev()) {
         vite = await createViteServer({
@@ -59,17 +59,22 @@ async function startServer() {
                 template = await vite!.transformIndexHtml(url, template);
             }
 
-            let render: (arg: string) => Promise<string>;
-
-            if (!isDev()) {
-                render = (await import(ssrClientPath)).render;
-            } else {
-                render = (
-                    await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))
-                ).render;
+            interface SSRModule {
+                render: (uri: string) => Promise<[string]>;
             }
 
-            const appHtml = await render(url);
+            let mod: SSRModule;
+
+            if (isDev()) {
+                mod = (await vite!.ssrLoadModule(
+                    path.resolve(srcPath, 'ssr.tsx')
+                )) as SSRModule;
+            } else {
+                mod = await import(ssrClientPath);
+            }
+
+            const { render } = mod;
+            const [appHtml] = await render(url);
 
             const html = template.replace(`<!--ssr-outlet-->`, appHtml);
 

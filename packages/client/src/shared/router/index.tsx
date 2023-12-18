@@ -1,15 +1,13 @@
 import type { RouteProps } from 'react-router-dom';
-import {
-    ProfilePageLazy,
-    RegistrationPageLazy,
-    LoginPageLazy,
-    ForumPageLazy,
-    GamePageLazy,
-    LeaderBoardPageLazy,
-    Error500PageLazy,
-} from '@/pages/pages.lazy';
-import IndexPage from '@/pages/IndexPage';
 import { PrivateRoute } from './PrivateRoute';
+import ProfilePage from '@/pages/ProfilePage';
+import ForumPage from '@/pages/ForumPage';
+import IndexPage from '@/pages/IndexPage';
+import Error500 from '@/pages/Error500';
+import LoginPage from '@/pages/LoginPage';
+import RegistrationPage from '@/pages/RegistationPage';
+import GamePage from '@/pages/GamePage';
+import LeaderBoardPage from '@/pages/LeaderBoardPage';
 
 export const AppRoutes = {
     INDEX: 'index',
@@ -43,38 +41,38 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     },
     [AppRoutes.LOGIN]: {
         path: RouterPaths.login,
-        element: <LoginPageLazy />,
+        element: <LoginPage />,
     },
     [AppRoutes.REGISTRATION]: {
         path: RouterPaths.registration,
-        element: <RegistrationPageLazy />,
+        element: <RegistrationPage />,
     },
     [AppRoutes.PROFILE]: {
         path: RouterPaths.profile,
         element: (
             <PrivateRoute>
-                <ProfilePageLazy />
+                <ProfilePage />
             </PrivateRoute>
         ),
     },
     [AppRoutes.GAME]: {
         path: RouterPaths.game,
-        element: <GamePageLazy />,
+        element: <GamePage />,
     },
     [AppRoutes.LEADERBOARD]: {
         path: RouterPaths.leaderboard,
-        element: <LeaderBoardPageLazy />,
+        element: <LeaderBoardPage />,
     },
     [AppRoutes.FORUM]: {
         path: RouterPaths.forum,
         element: (
             <PrivateRoute>
-                <ForumPageLazy />
+                <ForumPage />
             </PrivateRoute>
         ),
     },
     [AppRoutes.Error500]: {
         path: RouterPaths.Error500,
-        element: <Error500PageLazy />,
+        element: <Error500 />,
     },
 };

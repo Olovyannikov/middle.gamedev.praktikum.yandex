@@ -19,12 +19,12 @@ export default defineConfig(({ mode }) => {
             modules: {
                 generateScopedName: cssModulesName,
             },
-            // preprocessorOptions: {
-            //     scss: {
-            //         additionalData:
-            //             '@import "./src/app/assets/styles/general/_mixins.scss";',
-            //     },
-            // },
+            preprocessorOptions: {
+                scss: {
+                    additionalData:
+                        '@import "./src/app/assets/styles/general/_mixins.scss";',
+                },
+            },
             devSourcemap: true,
         },
         server: {

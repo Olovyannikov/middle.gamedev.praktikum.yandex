@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './app/App';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,15 +9,13 @@ import { theme } from '../theme.config';
 
 ReactDOM.hydrateRoot(
     document.getElementById('root') as HTMLElement,
-    <React.StrictMode>
-        <BrowserRouter>
-            <Provider store={store}>
-                <AuthProvider>
-                    <ThemeProvider theme={theme}>
-                        <App />
-                    </ThemeProvider>
-                </AuthProvider>
-            </Provider>
-        </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter>
+        <Provider store={store}>
+            <AuthProvider>
+                <ThemeProvider theme={theme}>
+                    <App />
+                </ThemeProvider>
+            </AuthProvider>
+        </Provider>
+    </BrowserRouter>
 );

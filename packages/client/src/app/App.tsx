@@ -15,9 +15,5 @@ export const App = () => {
         fetchServerData();
     }, []);
 
-    if (typeof window != 'undefined') {
-        return <AppRouter />;
-    } else {
-        return <></>;
-    }
+    return <AppRouter />;
 };
