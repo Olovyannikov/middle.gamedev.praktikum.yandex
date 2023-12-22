@@ -4,13 +4,12 @@
 *.md
 *.mdx
 
-.editorconfig
 .eslintignore
 .gitignore
 .prettierignore
 .stylelintignore
 .npmrc
 
-package.json
 /build
 node_modules
+yarn.lock

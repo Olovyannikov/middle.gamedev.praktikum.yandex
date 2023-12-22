@@ -7,3 +7,5 @@ packages/client/src/pages
 src/app
 vite.config.ts
 *.d.ts
+ssr.config.ts
+yarn.lock
