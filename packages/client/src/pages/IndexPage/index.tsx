@@ -10,8 +10,6 @@ import s from './IndexPage.module.scss';
 export default function IndexPage() {
     const { isAuth } = useAuth();
 
-    console.log({ isAuth });
-
     return (
         <RootLayout hasHeader={false}>
             <Banner title={TITLE} description={DESCRIPTION} />

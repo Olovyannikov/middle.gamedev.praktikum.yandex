@@ -15,8 +15,8 @@
 }
 
 .logout {
-    @include btn-reset;
-    @include flex-center;
+    //@include btn-reset;
+    //@include flex-center;
 
     position: relative;
     gap: var(--size-xs);
