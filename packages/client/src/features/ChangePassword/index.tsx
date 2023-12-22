@@ -1,17 +1,19 @@
-import { Form } from '@/components/Form';
-import { Container } from '@/shared/ui';
-import cn from 'clsx';
-import s from '@/pages/ProfilePage/profile.module.scss';
-import { FormInputText } from '@/components/FormInputText';
-import { Button } from '@mui/material';
-import { FormStatusLine } from '@/components/FormStatusLine';
-import { RequestError } from '@/shared/types/api';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { NewPasswordSchema, NewPasswordSchemaType } from '@/shared/validators/UserValidation';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useChangePasswordMutation } from '@/services/usersApi';
 import { memo } from 'react';
+import { FormProvider, type SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@mui/material';
+import cn from 'clsx';
 import { useToggle } from 'usehooks-ts';
+
+import { Form } from '@/components/Form';
+import { FormInputText } from '@/components/FormInputText';
+import { FormStatusLine } from '@/components/FormStatusLine';
+import { useChangePasswordMutation } from '@/services/usersApi';
+import type { RequestError } from '@/shared/types/api';
+import { Container } from '@/shared/ui';
+import { NewPasswordSchema, type NewPasswordSchemaType } from '@/shared/validators/UserValidation';
+
+import s from './ChangePassword.module.scss';
 
 export const ChangePassword = memo(() => {
     const [showChangePass, setShowChangePass] = useToggle(false);
@@ -27,7 +29,7 @@ export const ChangePassword = memo(() => {
     const onSubmitPassword: SubmitHandler<NewPasswordSchemaType> = async (data) => {
         const response = await changePassword(data);
         if ('error' in response) {
-            console.log(response);
+            console.error(response);
         }
     };
 
@@ -37,9 +39,9 @@ export const ChangePassword = memo(() => {
             <FormProvider {...methods}>
                 <Form hidden={!showChangePass} onSubmit={methods.handleSubmit(onSubmitPassword)}>
                     <Container className={cn(s.password_section)}>
-                        <FormInputText label='Пароль' name={'oldPassword'} type={'password'} />
-                        <FormInputText label='Новый пароль' name={'newPassword'} type={'password'} />
-                        <Button type='submit' variant={'contained'}>
+                        <FormInputText label='Пароль' name='oldPassword' type='password' />
+                        <FormInputText label='Новый пароль' name='newPassword' type='password' />
+                        <Button type='submit' variant='contained'>
                             Change password
                         </Button>
                         <FormStatusLine

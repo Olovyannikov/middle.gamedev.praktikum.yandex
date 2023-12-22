@@ -1,25 +1,26 @@
+import { type ChangeEvent, type FormEvent, useState } from 'react';
+import { Button, Modal, Typography } from '@mui/material';
 import cn from 'clsx';
-import { RootLayout } from '@/layouts/RootLayout';
-import { ChangeEvent, FormEvent, useState } from 'react';
-import s from './profile.module.scss';
+
 import imgAvatar from '@/app/assets/img/avatar_default.svg';
 import backgroundMain from '@/app/assets/img/bg.svg';
-import { Container } from '@/shared/ui';
 import { Form } from '@/components/Form';
-import { Button, Modal, Typography } from '@mui/material';
-import { useGetUserQuery } from '@/services/authApi';
-import { useChangePasswordMutation, useChangeAvatarMutation } from '@/services/usersApi';
-import { resourcesBaseUrl } from '@/shared/constants/api';
 import { FormStatusLine } from '@/components/FormStatusLine';
-import { RequestError } from '@/shared/types/api';
-import { useAuth } from '@/shared/context/AuthContext';
-import { useToggle } from 'usehooks-ts';
 import { ChangePassword } from '@/features';
+import { RootLayout } from '@/layouts/RootLayout';
+import { useGetUserQuery } from '@/services/authApi';
+import { useChangeAvatarMutation } from '@/services/usersApi';
+import { resourcesBaseUrl } from '@/shared/constants/api';
+import { useAuth } from '@/shared/context/AuthContext';
+import type { RequestError } from '@/shared/types/api';
+import { Container } from '@/shared/ui';
+
+import s from './profile.module.scss';
 
 export default function ProfilePage() {
     const { isAuth } = useAuth();
 
-    const { data: user } = useGetUserQuery(void true, {
+    const { data: user } = useGetUserQuery(undefined, {
         skip: !isAuth,
     });
 
