@@ -1,7 +1,6 @@
-import dotenv from 'dotenv';
 import cors from 'cors';
-import { createServer as createViteServer } from 'vite';
-import type { ViteDevServer } from 'vite';
+import dotenv from 'dotenv';
+import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 dotenv.config();
 
@@ -47,15 +46,9 @@ async function startServer() {
             let template: string;
 
             if (!isDev()) {
-                template = fs.readFileSync(
-                    path.resolve(distPath, 'index.html'),
-                    'utf-8'
-                );
+                template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
             } else {
-                template = fs.readFileSync(
-                    path.resolve(srcPath, 'index.html'),
-                    'utf-8'
-                );
+                template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
 
                 template = await vite!.transformIndexHtml(url, template);
             }
@@ -67,9 +60,7 @@ async function startServer() {
             let mod: SSRModule;
 
             if (isDev()) {
-                mod = (await vite!.ssrLoadModule(
-                    path.resolve(srcPath, 'ssr.tsx')
-                )) as SSRModule;
+                mod = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
             } else {
                 mod = await import(ssrClientPath);
             }
