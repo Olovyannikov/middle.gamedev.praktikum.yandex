@@ -13,9 +13,13 @@ import {
 import { defaultValues } from '@/shared/constants/forms';
 import s from './RegistrationPage.module.scss';
 import { useSignUpMutation } from '@/services/authApi';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { RequestError } from '@/shared/types/api';
+import { useAuth } from '@/shared/context/AuthContext';
 
 export default function RegistrationPage() {
+    const { isAuth } = useAuth();
+
     const methods = useForm<RegistrationSchemaType>({
         defaultValues: defaultValues.registration,
         mode: 'onChange',
@@ -32,6 +36,13 @@ export default function RegistrationPage() {
         if ('data' in result) navigate('/sign-in');
     };
 
+    const hasError =
+        error && 'status' in error && (error.data as RequestError).reason;
+
+    if (isAuth) {
+        return <Navigate to="/me" />;
+    }
+
     return (
         <RootLayout>
             <Container>
@@ -39,27 +50,24 @@ export default function RegistrationPage() {
                     <Typography variant="h4">Зарегистрироваться</Typography>
                     <FormProvider {...methods}>
                         <Form onSubmit={methods.handleSubmit(onSubmit)}>
-                            <FormInputText label="Логин" name={'login'} />
-                            <FormInputText label="Имя" name={'first_name'} />
-                            <FormInputText
-                                label="Фамилия"
-                                name={'second_name'}
-                            />
-                            <FormInputText label="Телефон" name={'phone'} />
-                            <FormInputText label="E-mail" name={'email'} />
+                            <FormInputText label="Логин" name="login" />
+                            <FormInputText label="Имя" name="first_name" />
+                            <FormInputText label="Фамилия" name="second_name" />
+                            <FormInputText label="Телефон" name="phone" />
+                            <FormInputText label="E-mail" name="email" />
                             <FormInputText
                                 label="Пароль"
-                                name={'password'}
-                                type={'password'}
+                                name="password"
+                                type="password"
                             />
                             <FormInputText
                                 label="Повторите пароль"
-                                name={'confirmPassword'}
-                                type={'password'}
+                                name="confirmPassword"
+                                type="password"
                             />
                             <Button
-                                type={'submit'}
-                                variant={'contained'}
+                                type="submit"
+                                variant="contained"
                                 className={s.formButton}
                             >
                                 Зарегистрироваться
@@ -69,7 +77,7 @@ export default function RegistrationPage() {
                     <FormStatusLine
                         isUpdating={isUpdating}
                         isError={isError}
-                        error={error?.data?.reason}
+                        error={hasError}
                     />
                 </FormPaperWrapper>
             </Container>

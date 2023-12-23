@@ -1,6 +1,6 @@
 import cn from 'clsx';
 import { RootLayout } from '@/layouts/RootLayout';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import s from './profile.module.scss';
 import imgAvatar from '@/app/assets/img/avatar_default.svg';
 import backgroundMain from '@/app/assets/img/bg.svg';
@@ -21,14 +21,19 @@ import {
 } from '@/services/usersApi';
 import { resourcesBaseUrl } from '@/shared/constants/api';
 import { FormStatusLine } from '@/components/FormStatusLine';
+import { RequestError } from '@/shared/types/api';
+import { useAuth } from '@/shared/context/AuthContext';
 
 export default function ProfilePage() {
+    const { isAuth } = useAuth();
     const methods = useForm<NewPasswordSchemaType>({
         mode: 'onChange',
         resolver: zodResolver(NewPasswordSchema),
     });
 
-    const { data: user } = useGetUserQuery();
+    const { data: user } = useGetUserQuery(void true, {
+        skip: !isAuth,
+    });
     const [
         changePassword,
         {
@@ -45,16 +50,18 @@ export default function ProfilePage() {
             error: avatarError,
         },
     ] = useChangeAvatarMutation();
-    const [showChangePass, setShowChangePass] = useState(false);
-    const [previewAvatar, setPreviewAvatar] = useState(imgAvatar);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [avatarFile, setAvatarFile] = useState(null);
+    const [showChangePass, setShowChangePass] = useState<boolean>(false);
+    const [previewAvatar, setPreviewAvatar] = useState<string>(imgAvatar);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
     const onSubmitPassword: SubmitHandler<NewPasswordSchemaType> = async (
         data
     ) => {
         const response = await changePassword(data);
-        if (response && response.data == 'OK') {
+        if ('error' in response) {
+            console.log(response);
+        } else {
             setShowChangePass(false);
         }
     };
@@ -63,12 +70,13 @@ export default function ProfilePage() {
         setShowChangePass(!showChangePass);
     };
 
-    const handleSubmitAvatar = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitAvatar = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!avatarFile) return;
         const formData = new FormData();
         formData.append('avatar', avatarFile);
         const response = await changeAvatar(formData);
-        if (response && response.data) {
+        if ('data' in response) {
             setIsModalOpen(false);
         }
     };
@@ -98,7 +106,7 @@ export default function ProfilePage() {
                     <label className={cn(s.avatar_position)}>
                         <img
                             src={
-                                user.avatar
+                                user && user.avatar
                                     ? resourcesBaseUrl + user.avatar
                                     : imgAvatar
                             }
@@ -147,7 +155,12 @@ export default function ProfilePage() {
                                 <FormStatusLine
                                     isUpdating={isAvatarUpdating}
                                     isError={isAvatarError}
-                                    error={avatarError?.data?.reason}
+                                    error={
+                                        avatarError && 'status' in avatarError
+                                            ? (avatarError.data as RequestError)
+                                                  .reason
+                                            : ''
+                                    }
                                 />
                             </Container>
                         </Container>
@@ -201,7 +214,14 @@ export default function ProfilePage() {
                                 <FormStatusLine
                                     isUpdating={isPasswordUpdating}
                                     isError={isPasswordError}
-                                    error={passwordError?.data?.reason}
+                                    error={
+                                        passwordError &&
+                                        'status' in passwordError
+                                            ? (
+                                                  passwordError.data as RequestError
+                                              ).reason
+                                            : ''
+                                    }
                                 />
                             </Container>
                         )}

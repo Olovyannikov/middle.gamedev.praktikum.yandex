@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Form } from '../components/Form';
+import { Form } from '@/components/Form';
 import { createRoot } from 'react-dom/client';
 
 describe('Form Component', () => {

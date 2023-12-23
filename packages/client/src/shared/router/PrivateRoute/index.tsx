@@ -1,13 +1,11 @@
-import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useGetUserQuery } from '@/services/authApi';
+import { useAuth } from '@/shared/context/AuthContext';
+import { PageLoader } from '@/shared/ui';
+import { PropsWithChildren } from 'react';
 
-interface PrivateRouteProps {
-    children: ReactNode;
-}
+export const PrivateRoute = ({ children }: PropsWithChildren) => {
+    const { isAuth, isLoading } = useAuth();
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-    const { data, isLoading } = useGetUserQuery();
-    if (isLoading) return null;
-    return data ? children : <Navigate to={'/sign-in'} replace />;
+    if (isLoading) return <PageLoader />;
+    return isAuth ? children : <Navigate to="/sign-in" replace />;
 };

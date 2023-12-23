@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import { useGame } from '../widgets/Game/useGame';
-import { GAME_STATE } from '../widgets/Game/constants';
+import { useGame } from '@/widgets/Game/useGame';
+import { GAME_STATE } from '@/widgets/Game/constants';
 import { createContext } from 'react';
 import { act } from 'react-dom/test-utils';
 

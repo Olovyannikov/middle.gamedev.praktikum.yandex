@@ -1,15 +1,12 @@
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { AppRouter } from '@/app/providers/AppRouter';
 
 import './assets/styles/index.scss';
-import { useGetUserQuery } from '@/services/authApi';
 
 export const App = () => {
-    const { data } = useGetUserQuery();
-
     useEffect(() => {
         const fetchServerData = async () => {
-            const url = `http://localhost:${__SERVER_PORT__}`;
+            const url = `http://localhost:${__SERVER_PORT__}/api`;
             const response = await fetch(url);
             const data = await response.json();
             console.log(data);
@@ -17,9 +14,6 @@ export const App = () => {
 
         fetchServerData();
     }, []);
-    return (
-        <Suspense fallback="Loading translations...">
-            <AppRouter user={data} />
-        </Suspense>
-    );
+
+    return <AppRouter />;
 };

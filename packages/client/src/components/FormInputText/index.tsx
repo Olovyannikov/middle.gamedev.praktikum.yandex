@@ -20,7 +20,7 @@ export const FormInputText = ({ name, label, type }: FormInputTextProps) => {
                 <TextField
                     helperText={error ? error.message : null}
                     error={!!error}
-                    variant={'standard'}
+                    variant="standard"
                     className={s.textField}
                     inputRef={ref}
                     label={label}

@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { FormPaperWrapper } from '../components/FormPaperWrapper';
+import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import { createRoot } from 'react-dom/client';
 
 describe('FormPaperWrapper Component', () => {

@@ -1,31 +1,32 @@
-import { RootLayout } from '@/layouts/RootLayout';
-import { AppLink, Container } from '@/shared/ui';
-import { Banner } from '@/shared/ui/Banner';
-import { DESCRIPTION, TITLE } from '../../../config';
 import { Stack } from '@mui/material';
-import s from '@/pages/GamePage/GamePage.module.scss';
+import { RootLayout } from '@/layouts/RootLayout';
+
+import { AppLink, Banner } from '@/shared/ui';
+import { useAuth } from '@/shared/context/AuthContext';
+import { RouterPaths } from '@/shared/router';
+import { DESCRIPTION, TITLE, BASE_STACK_LAYOUT } from './config';
+import s from './IndexPage.module.scss';
 
 export default function IndexPage() {
+    const { isAuth } = useAuth();
+
     return (
         <RootLayout hasHeader={false}>
             <Banner title={TITLE} description={DESCRIPTION} />
-            <Stack
-                sx={{
-                    maxWidth: '275px',
-                    margin: '95px auto 50px',
-                }}
-                spacing={3.2}
-            >
-                <AppLink className={s.button} to="/game">
+            <Stack sx={BASE_STACK_LAYOUT} spacing={3.2}>
+                <AppLink className={s.button} to={RouterPaths.game}>
                     Start
                 </AppLink>
-                <AppLink className={s.button} to="/me">
-                    Profile
+                <AppLink
+                    className={s.button}
+                    to={isAuth ? RouterPaths.profile : RouterPaths.registration}
+                >
+                    {isAuth ? 'Profile' : 'Register'}
                 </AppLink>
-                <AppLink className={s.button} to="/forum">
+                <AppLink className={s.button} to={RouterPaths.forum}>
                     Forum
                 </AppLink>
-                <AppLink className={s.button} to="/leaderboard">
+                <AppLink className={s.button} to={RouterPaths.leaderboard}>
                     Leaderboard
                 </AppLink>
             </Stack>

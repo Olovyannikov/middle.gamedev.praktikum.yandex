@@ -27,6 +27,7 @@ export const useGame = ({
     setGameState,
 }: UseGameProps) => {
     const [bodyLocked, setBodyLocked] = useLockedBody(false);
+    const [speed, setSpeed] = useState(MOVE_SPEED);
     const [dir, setDir] = useState<Dir>();
     const [snakeBody, setSnakeBody] = useState<Position[] | undefined>([
         {
@@ -179,10 +180,7 @@ export const useGame = ({
         ]);
     };
 
-    useInterval(
-        moveSnake,
-        gameState === GAME_STATE.RUNNING ? MOVE_SPEED : null
-    );
+    useInterval(moveSnake, gameState === GAME_STATE.RUNNING ? speed : null);
 
     useEffect(() => {
         if (!width || !height) return;
@@ -228,7 +226,16 @@ export const useGame = ({
         }
     }, [bodyLocked]);
 
+    useEffect(() => {
+        if (snakeBody && snakeBody?.length % 5 === 0) {
+            setSpeed((speed) => speed - 10);
+        }
+    }, [snakeBody?.length]);
+
+    const total = snakeBody && snakeBody.length > 1 ? snakeBody.length : 0;
+
     return {
+        score: total * 5,
         foodPos,
         snakeBody,
         onSnakeMove,

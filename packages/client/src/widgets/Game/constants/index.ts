@@ -5,6 +5,7 @@ export const GAME_STATE = {
     PAUSED: 'PAUSED',
     GAME_OVER: 'GAME_OVER',
     PREPARE: 'PREPARE',
+    INIT: 'INIT',
 } as const;
 
 export const DIRECTIONS = {
@@ -37,4 +38,4 @@ export const SETUP_POSITION =
         ] as keyof typeof DIRECTIONS
     ];
 
-export const SEGMENT_SIZE = 6;
+export const SEGMENT_SIZE = 5;

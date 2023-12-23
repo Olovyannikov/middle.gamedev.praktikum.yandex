@@ -5,7 +5,7 @@ import { Card, Container } from '@/shared/ui';
 import type { GameState } from '@/widgets/Game/types';
 import { GAME_STATE } from '@/widgets/Game/constants';
 import { GameEndScreen } from '../GameEndScreen';
-import { Stack } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 import s from './StartScreen.module.scss';
 
 export const StartScreen = ({
@@ -47,6 +47,25 @@ export const StartScreen = ({
                             )}
                             {gameState === GAME_STATE.GAME_OVER && (
                                 <GameEndScreen setGameState={setGameState} />
+                            )}
+                            {gameState === GAME_STATE.INIT && (
+                                <Stack
+                                    alignItems="center"
+                                    justifyContent="center"
+                                >
+                                    <Typography variant="h1">
+                                        The Snake
+                                    </Typography>
+                                    <Typography variant="h2">🐍</Typography>
+
+                                    <Button
+                                        onClick={() =>
+                                            setGameState(GAME_STATE.PREPARE)
+                                        }
+                                    >
+                                        Play!
+                                    </Button>
+                                </Stack>
                             )}
                         </main>
                     </Card>

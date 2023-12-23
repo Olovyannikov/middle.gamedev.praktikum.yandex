@@ -12,7 +12,7 @@ export const RootLayout = ({
 }: PropsWithChildren<RootLayoutProps>) => {
     return (
         <>
-            {hasHeader ? <Header /> : null}
+            {hasHeader && <Header />}
             <Main>{children}</Main>
         </>
     );
