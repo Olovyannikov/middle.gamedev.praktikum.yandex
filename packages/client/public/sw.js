@@ -3,9 +3,9 @@ const dynamicCacheName = 'd-app-v1'
 
 const assetUrls = [
     '/connect-sw.js',
-    '/fonts/monofett-v23-latin-regular.woff2',
-    '/fonts/roboto-mono-v23-cyrillic_latin-700.woff2',
-    '/fonts/roboto-mono-v23-cyrillic_latin-regular.woff2',
+    '/fonts/Monofett-regular.woff2',
+    '/fonts/Roboto-Mono-700.woff2',
+    '/fonts/Roboto-Mono-regular.woff2',
     '/img/bg.jpg',
     '/img/icons/icon-72x72.png',
     '/img/icons/icon-96x96.png',
@@ -53,15 +53,15 @@ self.addEventListener('activate', async () => {
     )
 })
 
-self.addEventListener('fetch', (event) => {
-    const { request } = event;
-    const url = new URL(request.url)
-
-    if (url.origin === location.origin) {
-        event.respondWith(cacheFirst(request))
-    } else {
-        event.respondWith(networkFirst(request))
-    }
-})
+// self.addEventListener('fetch', (event) => {
+//     const { request } = event;
+//     const url = new URL(request.url)
+//
+//     if (url.origin === location.origin) {
+//         event.respondWith(cacheFirst(request))
+//     } else {
+//         event.respondWith(networkFirst(request))
+//     }
+// })
 
 

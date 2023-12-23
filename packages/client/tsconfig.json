@@ -32,8 +32,11 @@
         "name": "typescript-plugin-css-modules",
         "options": {
           "rendererOptions": {
+            "postcssOptions": {
+              "useConfig": true
+            },
             "sass": {
-              "loadPaths": ["*/**"]
+              "loadPaths": ["../"]
             }
           }
         }

@@ -1,11 +1,10 @@
 import { Typography } from '@mui/material';
-import s from '@/components/FormStatusLine/FormStatusLine.module.scss';
 
-type FormStatusLineProps = {
+interface FormStatusLineProps {
     isUpdating?: boolean;
     isError?: boolean;
-    error?: string;
-};
+    error?: string | false;
+}
 
 export const FormStatusLine = ({
     isUpdating,
@@ -18,9 +17,7 @@ export const FormStatusLine = ({
                 <Typography variant="body1">Идёт запрос...</Typography>
             ) : null}
             {isError ? (
-                <Typography variant="body1" className={s.formErrorMessage}>
-                    Ошибка: {error}
-                </Typography>
+                <Typography variant="body1">Ошибка: {error}</Typography>
             ) : null}
         </div>
     );

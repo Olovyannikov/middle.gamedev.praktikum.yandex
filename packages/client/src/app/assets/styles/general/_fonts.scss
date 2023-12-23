@@ -1,15 +1,5 @@
-@include font-face(
-    'Roboto Mono',
-    'roboto-mono-v23-cyrillic_latin-regular',
-    400,
-    'normal'
-);
+@include font-face('Roboto Mono', 'Roboto-Mono-regular', 400, 'normal');
 
-@include font-face(
-    'Roboto Mono',
-    'roboto-mono-v23-cyrillic_latin-700',
-    700,
-    'normal'
-);
+@include font-face('Roboto Mono', 'Roboto-Mono-700', 700, 'normal');
 
-@include font-face('Monofett', 'monofett-v23-latin-regular', 400, 'normal');
+@include font-face('Monofett', 'Monofett-regular', 400, 'normal');

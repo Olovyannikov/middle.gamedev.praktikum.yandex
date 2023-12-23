@@ -14,6 +14,23 @@
     gap: var(--size-md);
 }
 
+.logout {
+    //@include btn-reset;
+    //@include flex-center;
+
+    position: relative;
+    gap: var(--size-xs);
+    font-size: var(--size-md);
+    color: var(--purple-600);
+
+    &::before {
+        content: '';
+        width: 1px;
+        height: 20px;
+        background-color: var(--purple-500);
+    }
+}
+
 .hr {
     margin: 0;
     border: 0;

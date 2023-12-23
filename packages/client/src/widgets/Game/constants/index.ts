@@ -5,6 +5,7 @@ export const GAME_STATE = {
     PAUSED: 'PAUSED',
     GAME_OVER: 'GAME_OVER',
     PREPARE: 'PREPARE',
+    INIT: 'INIT',
 } as const;
 
 export const DIRECTIONS = {

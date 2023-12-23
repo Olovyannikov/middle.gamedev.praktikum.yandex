@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --config vite.config.ts",
+    "build:ssr": "vite build --config ssr.config.ts",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -53,6 +54,8 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.6",
     "@phosphor-icons/react": "^2.0.14",
     "@reduxjs/toolkit": "^1.9.7",
+    "@types/lodash-es": "^4.17.12",
+    "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
