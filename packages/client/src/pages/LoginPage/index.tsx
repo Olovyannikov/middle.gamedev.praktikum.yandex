@@ -16,6 +16,7 @@ import { defaultValues } from '@/shared/constants/forms';
 import { useNavigate } from 'react-router-dom';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { useAuth } from '@/shared/context/AuthContext';
+import clsx from 'clsx';
 
 import s from './LoginPage.module.scss';
 
@@ -41,6 +42,27 @@ export default function LoginPage() {
         if (isSuccess) navigate('/me');
     };
 
+    const REDIRECT_URI = 'http://localhost:3000';
+    const urlGetOauthServiceId = `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${REDIRECT_URI}`;
+
+    const onOauth = () => {
+        console.log('onOauth');
+
+        fetch(urlGetOauthServiceId)
+            .then((response) => {
+                console.log('response', response);
+
+                return response.json();
+            })
+            .then((result) => {
+                console.log('result', result.service_id);
+                const CLIENT_ID = result.service_id;
+                const urlOauth = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
+
+                document.location.href = urlOauth;
+            });
+    };
+
     return (
         <RootLayout>
             <Container>
@@ -57,9 +79,20 @@ export default function LoginPage() {
                             <Button
                                 type={'submit'}
                                 variant={'contained'}
-                                className={s.formButton}
+                                className={clsx([s.formButton, s['m-t-40']])}
                             >
                                 Войти
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={'contained'}
+                                className={clsx([
+                                    s.formButton,
+                                    s['color-yandex-orange'],
+                                ])}
+                                onClick={onOauth}
+                            >
+                                Войти с Yandex
                             </Button>
                         </Form>
                     </FormProvider>

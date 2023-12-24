@@ -2,10 +2,21 @@
     text-align: center;
 }
 .formButton {
-    margin: 40px auto 0 !important;
     width: 200px;
-    display: inline-block;
+
+    & + & {
+        margin-top: 15px;
+    }
 }
+
+.m-t-40 {
+    margin-top: 40px !important;
+}
+
+.color-yandex-orange {
+    background-color: #fc3f1d !important;
+}
+
 .formErrorMessage {
     color: red;
     text-align: center;
