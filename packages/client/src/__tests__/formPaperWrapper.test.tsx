@@ -1,7 +1,9 @@
-import { screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import { createRoot } from 'react-dom/client';
+import { screen } from '@testing-library/react';
+
+import '@testing-library/jest-dom';
+
+import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 
 describe('FormPaperWrapper Component', () => {
     it('renders its children correctly', () => {

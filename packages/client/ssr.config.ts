@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import * as path from 'path';
 import { fileURLToPath, URL } from 'node:url';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -10,10 +10,7 @@ const generateScopedName = '[name]__[local]--[hash:base64:5]';
 const hashName = '[hash:base64:5]';
 
 export default defineConfig(({ mode }) => {
-    const cssModulesName =
-        mode === 'development'
-            ? generateScopedName.replace('-module', '')
-            : hashName;
+    const cssModulesName = mode === 'development' ? generateScopedName.replace('-module', '') : hashName;
 
     return {
         plugins: [react()],
@@ -48,6 +45,9 @@ export default defineConfig(({ mode }) => {
         },
         resolve: {
             alias: {
+                // TODO: check how to fix this
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore resolving by vite
                 '@': fileURLToPath(new URL('./src', import.meta.url)),
             },
         },

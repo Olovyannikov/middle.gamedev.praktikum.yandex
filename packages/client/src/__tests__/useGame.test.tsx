@@ -1,23 +1,20 @@
-import { renderHook } from '@testing-library/react';
-import { useGame } from '@/widgets/Game/useGame';
-import { GAME_STATE } from '@/widgets/Game/constants';
-import { createContext } from 'react';
+import { createContext, type KeyboardEvent, type ReactNode } from 'react';
 import { act } from 'react-dom/test-utils';
+import { renderHook } from '@testing-library/react';
+
+import { GAME_STATE } from '@/widgets/Game/constants';
+import { useGame } from '@/widgets/Game/useGame';
 
 describe('useGame Hook', () => {
     const mockOnGameOver = jest.fn();
     const mockSetGameState = jest.fn();
     const mockWidth = 500;
     const mockHeight = 500;
-    const WrappperContext = createContext('');
+    const WrapperContext = createContext('');
 
-    const Wrapper = ({ children }: { children: React.ReactNode }) => {
-        return (
-            <WrappperContext.Provider value="">
-                {children}
-            </WrappperContext.Provider>
-        );
-    };
+    const Wrapper = ({ children }: { children: ReactNode }) => (
+        <WrapperContext.Provider value=''>{children}</WrapperContext.Provider>
+    );
 
     const { result } = renderHook(
         () =>
@@ -33,8 +30,6 @@ describe('useGame Hook', () => {
 
     it('корректно инициализирует состояние игры', () => {
         act(() => {
-            console.log(result);
-
             expect(result.current.snakeBody).toBeDefined();
             expect(result.current.foodPos).toBeDefined();
         });
@@ -44,7 +39,7 @@ describe('useGame Hook', () => {
         act(() => {
             const mockEvent = {
                 code: 'ArrowRight',
-            } as unknown as React.KeyboardEvent<Element>;
+            } as unknown as KeyboardEvent<Element>;
 
             result.current.onSnakeMove(mockEvent);
         });

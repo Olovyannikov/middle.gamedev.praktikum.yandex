@@ -1,13 +1,9 @@
-import { useState, type KeyboardEvent, useEffect } from 'react';
-import type { Dir, GameState, Position } from '@/widgets/Game/types';
-import {
-    createSnakeMove,
-    hasSnakeEatenItself,
-    randomPositionOnGrid,
-    willSnakeHitTheFood,
-} from '@/widgets/Game/lib';
-import { DIRECTIONS, GAME_STATE, SEGMENT_SIZE } from '@/widgets/Game/constants';
+import { type KeyboardEvent, useEffect, useState } from 'react';
 import { useInterval, useLockedBody } from 'usehooks-ts';
+
+import { DIRECTIONS, GAME_STATE, SEGMENT_SIZE } from '@/widgets/Game/constants';
+import { createSnakeMove, hasSnakeEatenItself, randomPositionOnGrid, willSnakeHitTheFood } from '@/widgets/Game/lib';
+import type { Dir, GameState, Position } from '@/widgets/Game/types';
 
 const MOVE_SPEED = 100;
 
@@ -19,13 +15,7 @@ interface UseGameProps {
     height?: number;
 }
 
-export const useGame = ({
-    width,
-    height,
-    onGameOver,
-    gameState,
-    setGameState,
-}: UseGameProps) => {
+export const useGame = ({ width, height, onGameOver, gameState, setGameState }: UseGameProps) => {
     const [bodyLocked, setBodyLocked] = useLockedBody(false);
     const [speed, setSpeed] = useState(MOVE_SPEED);
     const [dir, setDir] = useState<Dir>();
@@ -78,6 +68,8 @@ export const useGame = ({
                 return gameState === GAME_STATE.RUNNING
                     ? setGameState(GAME_STATE.PAUSED)
                     : setGameState(GAME_STATE.RUNNING);
+            default:
+                setDir(DIRECTIONS.RIGHT);
         }
     };
 
@@ -121,6 +113,8 @@ export const useGame = ({
                     setDir(DIRECTIONS.UP);
                 }
                 break;
+            default:
+                setDir(DIRECTIONS.RIGHT);
         }
 
         if (snakeAfterMove) {

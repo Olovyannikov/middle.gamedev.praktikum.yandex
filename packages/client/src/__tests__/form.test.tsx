@@ -1,7 +1,9 @@
-import { screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import { Form } from '@/components/Form';
 import { createRoot } from 'react-dom/client';
+import { screen } from '@testing-library/react';
+
+import '@testing-library/jest-dom';
+
+import { Form } from '@/components/Form';
 
 describe('Form Component', () => {
     it('Отображает форму с пользовательским className и дочерними элементами', () => {

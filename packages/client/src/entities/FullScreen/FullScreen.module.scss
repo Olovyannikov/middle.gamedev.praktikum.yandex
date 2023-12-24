@@ -1,0 +1,19 @@
+.fullscreen {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  border: none;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  font: inherit;
+  color: inherit;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  transition: 0.5s;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
