@@ -11,8 +11,7 @@ pre-commit:
             run: npx prettier --write {staged_files} && git add {staged_files}
         test:
             glob: '*.{spec,test}.{ts,tsx}'
-            run: npm run test {staged_files}
-            stage_fixed: true
+            run: npm run test
 
 commit-msg:
     parallel: true

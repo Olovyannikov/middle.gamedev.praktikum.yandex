@@ -1,19 +1,9 @@
-import { useState, type KeyboardEvent, useEffect } from 'react';
-import type { Dir, GameState, Position } from '@/widgets/Game/types';
-import {
-    createSnakeMove,
-    hasSnakeEatenItself,
-    randomPositionOnGrid,
-    willSnakeHitTheFood,
-} from '@/widgets/Game/lib';
-import {
-    DIRECTIONS,
-    GAME_CONTROLS,
-    GAME_STATE,
-    SEGMENT_SIZE,
-    SETUP_POSITION,
-} from '@/widgets/Game/constants';
+import { type KeyboardEvent, useEffect, useState } from 'react';
 import { useInterval, useLockedBody } from 'usehooks-ts';
+
+import { DIRECTIONS, GAME_STATE, SEGMENT_SIZE } from '@/widgets/Game/constants';
+import { createSnakeMove, hasSnakeEatenItself, randomPositionOnGrid, willSnakeHitTheFood } from '@/widgets/Game/lib';
+import type { Dir, GameState, Position } from '@/widgets/Game/types';
 
 const MOVE_SPEED = 100;
 
@@ -25,16 +15,10 @@ interface UseGameProps {
     height?: number;
 }
 
-export const useGame = ({
-    width,
-    height,
-    onGameOver,
-    gameState,
-    setGameState,
-}: UseGameProps) => {
+export const useGame = ({ width, height, onGameOver, gameState, setGameState }: UseGameProps) => {
     const [bodyLocked, setBodyLocked] = useLockedBody(false);
     const [speed, setSpeed] = useState(MOVE_SPEED);
-    const [dir, setDir] = useState<Dir | undefined>(SETUP_POSITION);
+    const [dir, setDir] = useState<Dir>();
     const [snakeBody, setSnakeBody] = useState<Position[] | undefined>([
         {
             x: randomPositionOnGrid({
@@ -64,22 +48,28 @@ export const useGame = ({
 
     const onSnakeMove = (e: KeyboardEvent) => {
         switch (e.code) {
-            case GAME_CONTROLS.KEY_W:
-            case GAME_CONTROLS.UP:
+            case 'KeyW':
                 return dir !== DIRECTIONS.DOWN && setDir(DIRECTIONS.UP);
-            case GAME_CONTROLS.KEY_A:
-            case GAME_CONTROLS.LEFT:
+            case 'KeyA':
                 return dir !== DIRECTIONS.RIGHT && setDir(DIRECTIONS.LEFT);
-            case GAME_CONTROLS.KEY_S:
-            case GAME_CONTROLS.DOWN:
+            case 'KeyS':
                 return dir !== DIRECTIONS.UP && setDir(DIRECTIONS.DOWN);
-            case GAME_CONTROLS.KEY_D:
-            case GAME_CONTROLS.RIGHT:
+            case 'KeyD':
                 return dir !== DIRECTIONS.LEFT && setDir(DIRECTIONS.RIGHT);
-            case GAME_CONTROLS.SPACE:
+            case 'ArrowUp':
+                return dir !== DIRECTIONS.DOWN && setDir(DIRECTIONS.UP);
+            case 'ArrowDown':
+                return dir !== DIRECTIONS.UP && setDir(DIRECTIONS.DOWN);
+            case 'ArrowLeft':
+                return dir !== DIRECTIONS.RIGHT && setDir(DIRECTIONS.LEFT);
+            case 'ArrowRight':
+                return dir !== DIRECTIONS.LEFT && setDir(DIRECTIONS.RIGHT);
+            case 'Space':
                 return gameState === GAME_STATE.RUNNING
                     ? setGameState(GAME_STATE.PAUSED)
                     : setGameState(GAME_STATE.RUNNING);
+            default:
+                setDir(DIRECTIONS.RIGHT);
         }
     };
 
@@ -123,6 +113,8 @@ export const useGame = ({
                     setDir(DIRECTIONS.UP);
                 }
                 break;
+            default:
+                setDir(DIRECTIONS.RIGHT);
         }
 
         if (snakeAfterMove) {

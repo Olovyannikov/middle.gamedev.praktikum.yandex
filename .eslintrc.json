@@ -176,6 +176,12 @@
   },
   "overrides": [
     {
+      "files": ["jest.config.js"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
       "files": ["**/*.{spec,test}.*"],
       "rules": {
         "@typescript-eslint/no-non-null-assertion": "off",
