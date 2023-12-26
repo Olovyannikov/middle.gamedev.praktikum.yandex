@@ -11,9 +11,9 @@ import s from './IndexPage.module.scss';
 
 export default function IndexPage() {
     const { isAuth } = useAuth();
-
+  
     useOAuth(isAuth);
-
+  
     return (
         <RootLayout hasHeader={false}>
             <Banner title={TITLE} description={DESCRIPTION} />

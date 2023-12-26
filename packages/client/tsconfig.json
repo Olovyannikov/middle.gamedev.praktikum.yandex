@@ -51,6 +51,9 @@
   "exclude": [
     "node_modules"
   ],
+  "types": [
+    "jest"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

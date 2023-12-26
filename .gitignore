@@ -1,5 +1,6 @@
 /build
 dist
+ssr-dist
 node_modules
 .idea
 .vscode/*

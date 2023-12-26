@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
-import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
-import dotenv from 'dotenv';
-import svgr from 'vite-plugin-svgr';
+import * as path from 'path';
+import { fileURLToPath, URL } from 'node:url';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
     const cssModulesName = mode === 'development' ? generateScopedName.replace('-module', '') : hashName;
 
     return {
+        plugins: [react()],
         css: {
             modules: {
                 generateScopedName: cssModulesName,
@@ -25,25 +26,30 @@ export default defineConfig(({ mode }) => {
             },
             devSourcemap: true,
         },
-        server: {
-            port: Number(process.env.CLIENT_PORT) || 3000,
+        build: {
+            outDir: 'ssr-dist',
+            ssr: true,
+            lib: {
+                entry: path.resolve(__dirname, 'ssr.tsx'),
+                name: 'Client',
+                formats: ['cjs'],
+            },
+            rollupOptions: {
+                output: {
+                    dir: 'ssr-dist',
+                },
+            },
         },
-        define: {
-            __SERVER_PORT__: Number(process.env.SERVER_PORT) || 3001,
+        ssr: {
+            format: 'cjs',
         },
         resolve: {
             alias: {
+                // TODO: check how to fix this
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore resolving by vite
                 '@': fileURLToPath(new URL('./src', import.meta.url)),
             },
         },
-        plugins: [
-            react(),
-            svgr({
-                svgrOptions: {
-                    exportType: 'default',
-                    plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
-                },
-            }),
-        ],
     };
 });

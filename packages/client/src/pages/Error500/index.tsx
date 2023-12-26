@@ -8,18 +8,18 @@ export default function Error500() {
         <RootLayout>
             <Grid
                 container
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
+                direction='column'
+                alignItems='center'
+                justifyContent='center'
                 style={{ minHeight: '90vh' }}
             >
                 <Grid item xs={3}>
                     <h1 style={{ textAlign: 'center' }}>Error 500</h1>
                     <p style={{ textAlign: 'center' }}>
-                        Try return to <Link to="/">mainpage</Link>
+                        Try return to <Link to='/'>mainpage</Link>
                     </p>
                     <Icon style={{ width: 400, height: 400 }}>
-                        <img src={ErrorVector} />
+                        <img src={ErrorVector} alt='error' />
                     </Icon>
                 </Grid>
             </Grid>
