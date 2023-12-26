@@ -7,14 +7,14 @@
     & + & {
         margin-top: 15px;
     }
-}
 
-.m-t-40 {
-    margin-top: 40px !important;
-}
+    &.oauth {
+        background-color: #fc3f1d;
+    }
 
-.color-yandex-orange {
-    background-color: #fc3f1d !important;
+    &.m-t-40 {
+        margin-top: 40px;
+    }
 }
 
 .formErrorMessage {

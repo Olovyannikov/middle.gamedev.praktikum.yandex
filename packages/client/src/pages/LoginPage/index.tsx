@@ -10,12 +10,14 @@ import {
     LoginSchema,
     LoginSchemaType,
 } from '@/shared/validators/UserValidation';
-import type { RequestError } from '@/shared/types/api';
+import type { RequestError, ServiceIdResponse } from '@/shared/types/api';
 import { Form } from '@/components/Form';
 import { defaultValues } from '@/shared/constants/forms';
 import { useNavigate } from 'react-router-dom';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { useAuth } from '@/shared/context/AuthContext';
+import { useLazyGetServiceIdQuery } from '@/services/oauthApi';
+import { redirectUri } from '@/shared/constants/api';
 import clsx from 'clsx';
 
 import s from './LoginPage.module.scss';
@@ -42,25 +44,20 @@ export default function LoginPage() {
         if (isSuccess) navigate('/me');
     };
 
-    const REDIRECT_URI = 'http://localhost:3000';
-    const urlGetOauthServiceId = `https://ya-praktikum.tech/api/v2/oauth/yandex/service-id?redirect_uri=${REDIRECT_URI}`;
+    const [
+        getServiceId,
+        { isLoading: isServiceIdLoading, isFetching: isServiceIdFetching },
+    ] = useLazyGetServiceIdQuery();
 
-    const onOauth = () => {
-        console.log('onOauth');
+    const onOAuth = async () => {
+        if (isServiceIdLoading || isServiceIdFetching) return;
 
-        fetch(urlGetOauthServiceId)
-            .then((response) => {
-                console.log('response', response);
+        const { data, isSuccess } = await getServiceId();
 
-                return response.json();
-            })
-            .then((result) => {
-                console.log('result', result.service_id);
-                const CLIENT_ID = result.service_id;
-                const urlOauth = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
-
-                document.location.href = urlOauth;
-            });
+        if (isSuccess) {
+            const { service_id } = data;
+            document.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${redirectUri}`;
+        }
     };
 
     return (
@@ -86,11 +83,8 @@ export default function LoginPage() {
                             <Button
                                 type="button"
                                 variant={'contained'}
-                                className={clsx([
-                                    s.formButton,
-                                    s['color-yandex-orange'],
-                                ])}
-                                onClick={onOauth}
+                                className={clsx([s.formButton, s.oauth])}
+                                onClick={onOAuth}
                             >
                                 Войти с Yandex
                             </Button>
