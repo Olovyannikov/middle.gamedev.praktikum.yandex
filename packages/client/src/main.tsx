@@ -7,6 +7,13 @@ import { AuthProvider } from '@/shared/context/AuthContext';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../theme.config';
 
+const preloadedState = window.__PRELOADED_STATE__;
+delete window.__PRELOADED_STATE__;
+
+// TODO^ Удалить эту строку после проверки
+// Создается пока пустой объект
+console.log('InitialState from server --> ', preloadedState);
+
 ReactDOM.hydrateRoot(
     document.getElementById('root') as HTMLElement,
     <BrowserRouter>

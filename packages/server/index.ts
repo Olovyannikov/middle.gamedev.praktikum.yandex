@@ -8,6 +8,8 @@ dotenv.config();
 import express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
+import { configureStore } from '@reduxjs/toolkit';
+import { baseApi } from './store';
 
 const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -42,6 +44,16 @@ async function startServer() {
 
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl;
+        const preloadedState = {};
+
+        const store = configureStore({
+            reducer: {
+                [baseApi.reducerPath]: baseApi.reducer,
+            },
+            middleware: (getDefaultMiddleware) =>
+                getDefaultMiddleware().concat(baseApi.middleware),
+            preloadedState,
+        });
 
         try {
             let template: string;
@@ -61,7 +73,7 @@ async function startServer() {
             }
 
             interface SSRModule {
-                render: (uri: string) => Promise<[string]>;
+                render: (uri: string, store: any) => Promise<[string]>;
             }
 
             let mod: SSRModule;
@@ -75,9 +87,16 @@ async function startServer() {
             }
 
             const { render } = mod;
-            const [appHtml] = await render(url);
+            const [appHtml] = await render(url, store);
 
-            const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+            const scriptTag = `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+                preloadedState
+            )}</script>`;
+
+            const html = template.replace(
+                `<!--ssr-outlet-->`,
+                appHtml + scriptTag
+            );
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
         } catch (e) {
