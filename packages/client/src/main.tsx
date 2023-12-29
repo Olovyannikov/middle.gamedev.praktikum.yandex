@@ -7,6 +7,12 @@ import { AuthProvider } from '@/shared/context/AuthContext';
 import { ThemeProvider } from '@mui/material';
 import { theme } from '../theme.config';
 
+declare global {
+    interface Window {
+        __PRELOADED_STATE__?: object;
+    }
+}
+
 const preloadedState = window.__PRELOADED_STATE__;
 delete window.__PRELOADED_STATE__;
 
