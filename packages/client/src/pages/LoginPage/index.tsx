@@ -10,12 +10,15 @@ import {
     LoginSchema,
     LoginSchemaType,
 } from '@/shared/validators/UserValidation';
-import type { RequestError } from '@/shared/types/api';
+import type { RequestError, ServiceIdResponse } from '@/shared/types/api';
 import { Form } from '@/components/Form';
 import { defaultValues } from '@/shared/constants/forms';
 import { useNavigate } from 'react-router-dom';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { useAuth } from '@/shared/context/AuthContext';
+import { useLazyGetServiceIdQuery } from '@/services/oauthApi';
+import { redirectUri } from '@/shared/constants/api';
+import clsx from 'clsx';
 
 import s from './LoginPage.module.scss';
 
@@ -41,6 +44,22 @@ export default function LoginPage() {
         if (isSuccess) navigate('/me');
     };
 
+    const [
+        getServiceId,
+        { isLoading: isServiceIdLoading, isFetching: isServiceIdFetching },
+    ] = useLazyGetServiceIdQuery();
+
+    const onOAuth = async () => {
+        if (isServiceIdLoading || isServiceIdFetching) return;
+
+        const { data, isSuccess } = await getServiceId();
+
+        if (isSuccess) {
+            const { service_id } = data;
+            document.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${redirectUri}`;
+        }
+    };
+
     return (
         <RootLayout>
             <Container>
@@ -57,9 +76,17 @@ export default function LoginPage() {
                             <Button
                                 type={'submit'}
                                 variant={'contained'}
-                                className={s.formButton}
+                                className={clsx([s.formButton, s['m-t-40']])}
                             >
                                 Войти
+                            </Button>
+                            <Button
+                                type="button"
+                                variant={'contained'}
+                                className={clsx([s.formButton, s.oauth])}
+                                onClick={onOAuth}
+                            >
+                                Войти с Yandex
                             </Button>
                         </Form>
                     </FormProvider>

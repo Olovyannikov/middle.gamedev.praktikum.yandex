@@ -45,3 +45,12 @@ export interface PasswordRequest {
 }
 
 export type passwordResponse = string;
+
+export interface YandexRequest {
+    code: string;
+    redirect_uri: string;
+}
+
+export interface ServiceIdResponse {
+    service_id: string;
+}
