@@ -73,7 +73,7 @@ async function startServer() {
             }
 
             interface SSRModule {
-                render: (uri: string, store: any) => Promise<[string]>;
+                render: (uri: string, store: unknown) => Promise<[string]>;
             }
 
             let mod: SSRModule;

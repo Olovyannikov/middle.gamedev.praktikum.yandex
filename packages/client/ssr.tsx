@@ -5,9 +5,13 @@ import { Provider } from 'react-redux';
 import { AuthProvider } from './src/shared/context/AuthContext';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './theme.config';
-import React from 'react';
+import { Location } from 'react-router-dom';
+import { Store, AnyAction } from 'redux';
 
-async function render(uri, store) {
+async function render(
+    uri: string | Partial<Location<any>>,
+    store: Store<unknown, AnyAction>
+) {
     const renderResult = renderToString(
         <StaticRouter location={uri}>
             <Provider store={store}>
