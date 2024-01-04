@@ -1,18 +1,13 @@
 import ReactDOM from 'react-dom/client';
-import { App } from './app/App';
-import { BrowserRouter } from 'react-router-dom';
-import { store } from '@/app/store';
 import { Provider } from 'react-redux';
-import { AuthProvider } from '@/shared/context/AuthContext';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
+
+import { store } from '@/app/store';
+import { AuthProvider } from '@/shared/context/AuthContext';
+
 import { theme } from '../theme.config';
-
-const preloadedState = window.__PRELOADED_STATE__;
-delete window.__PRELOADED_STATE__;
-
-// TODO^ Удалить эту строку после проверки
-// Создается пока пустой объект
-console.log('InitialState from server --> ', preloadedState);
+import { App } from './app/App';
 
 ReactDOM.hydrateRoot(
     document.getElementById('root') as HTMLElement,

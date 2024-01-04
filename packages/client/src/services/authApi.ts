@@ -1,18 +1,8 @@
-import { baseApi } from './baseApi';
 import { authOperations } from '@/shared/constants/api';
-import {
-    SigninResponse,
-    SignupResponse,
-    userResponse,
-} from '@/shared/types/api';
-import {
-    LoginSchemaType,
-    RegistrationSchemaType,
-} from '@/shared/validators/UserValidation';
-import {
-    BaseQueryError,
-    BaseQueryMeta,
-} from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { SigninResponse, SignupResponse, userResponse } from '@/shared/types/api';
+import { LoginSchemaType, RegistrationSchemaType } from '@/shared/validators/UserValidation';
+
+import { baseApi } from './baseApi';
 
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -59,9 +49,4 @@ export const authApi = baseApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const {
-    useSignInMutation,
-    useGetUserQuery,
-    useSignUpMutation,
-    useLogOutMutation,
-} = authApi;
+export const { useSignInMutation, useGetUserQuery, useSignUpMutation, useLogOutMutation } = authApi;

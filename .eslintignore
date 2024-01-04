@@ -3,7 +3,8 @@ package.json
 node_modules
 config
 webpack.config.ts
-packages/client/src/pages
 src/app
 vite.config.ts
 *.d.ts
+ssr.config.ts
+yarn.lock

@@ -1,17 +1,15 @@
-import { App } from './src/app/App';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
 import { Provider } from 'react-redux';
-import { AuthProvider } from './src/shared/context/AuthContext';
-import { ThemeProvider } from '@mui/material';
-import { theme } from './theme.config';
 import { Location } from 'react-router-dom';
-import { Store, AnyAction } from 'redux';
+import { StaticRouter } from 'react-router-dom/server';
+import { ThemeProvider } from '@mui/material';
+import type { AnyAction, Store } from 'redux';
 
-async function render(
-    uri: string | Partial<Location<any>>,
-    store: Store<unknown, AnyAction>
-) {
+import { App } from './src/app/App';
+import { AuthProvider } from './src/shared/context/AuthContext';
+import { theme } from './theme.config';
+
+async function render(uri: string | Partial<Location<unknown>>, store: Store<unknown, AnyAction>) {
     const renderResult = renderToString(
         <StaticRouter location={uri}>
             <Provider store={store}>

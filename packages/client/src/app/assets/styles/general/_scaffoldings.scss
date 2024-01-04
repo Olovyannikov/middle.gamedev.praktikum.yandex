@@ -1,44 +1,58 @@
 *,
 *::after,
 *::before {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    box-sizing: inherit;
-    scroll-behavior: smooth;
+  box-sizing: inherit;
+  scroll-behavior: smooth;
 }
 
 body {
-    overflow-x: hidden;
-    font-weight: 400;
-    font-size: var(--size-md);
-    line-height: 1.1;
-    font-family: var(--font-main);
-    color: var(--neutral-700);
-    background-color: var(--white);
+  overflow-x: hidden;
+  font-weight: 400;
+  font-size: var(--size-md);
+  line-height: 1.1;
+  font-family: var(--font-main);
+  color: var(--neutral-700);
+  background-color: var(--white);
 }
 
 .btn-reset {
-    @include btn-reset;
+  @include btn-reset;
+}
+
+.button-reset {
+  margin: 0;
+  outline: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .list-reset {
-    @include list-reset;
+  @include list-reset;
 }
 
 a {
-    color: var(--semantic-blue);
-    transition: color 0.3s ease-in-out;
+  color: var(--semantic-blue);
+  transition: color 0.3s ease-in-out;
 
-    &:hover {
-        color: var(--accent-blue);
-    }
+  &:hover {
+    color: var(--accent-blue);
+  }
 }
 
 img {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
 }

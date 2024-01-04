@@ -1,14 +1,14 @@
-import dotenv from 'dotenv';
 import cors from 'cors';
-import { createServer as createViteServer } from 'vite';
-import type { ViteDevServer } from 'vite';
+import dotenv from 'dotenv';
+import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 dotenv.config();
 
+import { configureStore } from '@reduxjs/toolkit';
 import express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
-import { configureStore } from '@reduxjs/toolkit';
+
 import { baseApi } from './store';
 
 const isDev = () => process.env.NODE_ENV === 'development';
@@ -23,7 +23,7 @@ async function startServer() {
     const srcPath = path.dirname(require.resolve('client/index.html'));
     const ssrClientPath = require.resolve('client/ssr-dist/ssr.cjs');
 
-    if (isDev()) {
+    if (isDev() && vite) {
         vite = await createViteServer({
             server: { middlewareMode: true },
             root: srcPath,
@@ -50,26 +50,19 @@ async function startServer() {
             reducer: {
                 [baseApi.reducerPath]: baseApi.reducer,
             },
-            middleware: (getDefaultMiddleware) =>
-                getDefaultMiddleware().concat(baseApi.middleware),
+            middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
             preloadedState,
         });
 
         try {
-            let template: string;
+            let template: string | undefined;
 
             if (!isDev()) {
-                template = fs.readFileSync(
-                    path.resolve(distPath, 'index.html'),
-                    'utf-8'
-                );
+                template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
             } else {
-                template = fs.readFileSync(
-                    path.resolve(srcPath, 'index.html'),
-                    'utf-8'
-                );
+                template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
 
-                template = await vite!.transformIndexHtml(url, template);
+                template = (await vite?.transformIndexHtml(url, template)) ?? undefined;
             }
 
             interface SSRModule {
@@ -79,9 +72,7 @@ async function startServer() {
             let mod: SSRModule;
 
             if (isDev()) {
-                mod = (await vite!.ssrLoadModule(
-                    path.resolve(srcPath, 'ssr.tsx')
-                )) as SSRModule;
+                mod = (await vite?.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
             } else {
                 mod = await import(ssrClientPath);
             }
@@ -89,19 +80,14 @@ async function startServer() {
             const { render } = mod;
             const [appHtml] = await render(url, store);
 
-            const scriptTag = `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
-                preloadedState
-            )}</script>`;
+            const scriptTag = `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}</script>`;
 
-            const html = template.replace(
-                `<!--ssr-outlet-->`,
-                appHtml + scriptTag
-            );
+            const html = template?.replace(`<!--ssr-outlet-->`, appHtml + scriptTag);
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
         } catch (e) {
             if (isDev()) {
-                vite!.ssrFixStacktrace(e as Error);
+                vite?.ssrFixStacktrace(e as Error);
             }
             next(e);
         }

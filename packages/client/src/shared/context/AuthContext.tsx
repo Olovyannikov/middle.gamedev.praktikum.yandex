@@ -1,10 +1,4 @@
-import {
-    createContext,
-    useContext,
-    useState,
-    useEffect,
-    PropsWithChildren,
-} from 'react';
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
 import { useGetUserQuery } from '@/services/authApi';
 import { isErrorWithStatus } from '@/shared/types/guards/isError';
@@ -17,7 +11,7 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({
     isAuth: false,
     isLoading: false,
-    logoutHandler: () => void true,
+    logoutHandler: () => undefined,
 });
 
 export function useAuth() {
@@ -28,7 +22,7 @@ export function useAuth() {
     return context;
 }
 
-export function AuthProvider({ children }: PropsWithChildren) {
+export const AuthProvider = ({ children }: PropsWithChildren) => {
     const [isAuth, setIsAuth] = useState(false);
 
     const { data, error, isError, isLoading } = useGetUserQuery();
@@ -45,9 +39,14 @@ export function AuthProvider({ children }: PropsWithChildren) {
         }
     }, [data]);
 
-    return (
-        <AuthContext.Provider value={{ isAuth, isLoading, logoutHandler }}>
-            {children}
-        </AuthContext.Provider>
+    const memoizedValues = useMemo(
+        () => ({
+            isAuth,
+            isLoading,
+            logoutHandler,
+        }),
+        [isAuth, isLoading]
     );
-}
+
+    return <AuthContext.Provider value={memoizedValues}>{children}</AuthContext.Provider>;
+};

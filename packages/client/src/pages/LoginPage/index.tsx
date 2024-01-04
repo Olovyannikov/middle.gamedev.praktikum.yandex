@@ -1,21 +1,22 @@
 import { useEffect } from 'react';
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RootLayout } from '@/layouts/RootLayout';
-import { Container, Button, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
+import clsx from 'clsx';
+
+import { Form } from '@/components/Form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
-import { useSignInMutation } from '@/services/authApi';
-import {
-    LoginSchema,
-    LoginSchemaType,
-} from '@/shared/validators/UserValidation';
-import type { RequestError } from '@/shared/types/api';
-import { Form } from '@/components/Form';
-import { defaultValues } from '@/shared/constants/forms';
-import { useNavigate } from 'react-router-dom';
 import { FormStatusLine } from '@/components/FormStatusLine';
+import { RootLayout } from '@/layouts/RootLayout';
+import { useSignInMutation } from '@/services/authApi';
+import { useLazyGetServiceIdQuery } from '@/services/oauthApi';
+import { redirectUri } from '@/shared/constants/api';
+import { defaultValues } from '@/shared/constants/forms';
 import { useAuth } from '@/shared/context/AuthContext';
+import type { RequestError, ServiceIdResponse } from '@/shared/types/api';
+import { LoginSchema, LoginSchemaType } from '@/shared/validators/UserValidation';
 
 import s from './LoginPage.module.scss';
 
@@ -26,8 +27,7 @@ export default function LoginPage() {
         resolver: zodResolver(LoginSchema),
     });
 
-    const [signin, { isLoading: isUpdating, isError, error, isSuccess }] =
-        useSignInMutation();
+    const [signin, { isLoading: isUpdating, isError, error, isSuccess }] = useSignInMutation();
     const { isAuth } = useAuth();
     const navigate = useNavigate();
 
@@ -41,36 +41,46 @@ export default function LoginPage() {
         if (isSuccess) navigate('/me');
     };
 
+    const [getServiceId, { isLoading: isServiceIdLoading, isFetching: isServiceIdFetching }] =
+        useLazyGetServiceIdQuery();
+
+    const onOAuth = async () => {
+        if (isServiceIdLoading || isServiceIdFetching) return;
+
+        const { data, isSuccess } = await getServiceId();
+
+        if (isSuccess) {
+            const { service_id } = data;
+            document.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${redirectUri}`;
+        }
+    };
+
     return (
         <RootLayout>
             <Container>
                 <FormPaperWrapper>
-                    <Typography variant="h4">Войти</Typography>
+                    <Typography variant='h4'>Войти</Typography>
                     <FormProvider {...methods}>
                         <Form onSubmit={methods.handleSubmit(onSubmit)}>
-                            <FormInputText label="Логин" name={'login'} />
-                            <FormInputText
-                                label="Пароль"
-                                name={'password'}
-                                type={'password'}
-                            />
-                            <Button
-                                type={'submit'}
-                                variant={'contained'}
-                                className={s.formButton}
-                            >
+                            <FormInputText label='Логин' name='login' />
+                            <FormInputText label='Пароль' name='password' type='password' />
+                            <Button type='submit' variant='contained' className={clsx([s.formButton, s['m-t-40']])}>
                                 Войти
+                            </Button>
+                            <Button
+                                type='button'
+                                variant='contained'
+                                className={clsx([s.formButton, s.oauth])}
+                                onClick={onOAuth}
+                            >
+                                Войти с Yandex
                             </Button>
                         </Form>
                     </FormProvider>
                     <FormStatusLine
                         isUpdating={isUpdating}
                         isError={isError}
-                        error={
-                            error &&
-                            'status' in error &&
-                            (error.data as RequestError).reason
-                        }
+                        error={error && 'status' in error && (error.data as RequestError).reason}
                     />
                 </FormPaperWrapper>
             </Container>

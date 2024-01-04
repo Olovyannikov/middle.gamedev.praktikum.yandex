@@ -13,3 +13,10 @@ export const usersOperations = {
     avatar: '/user/profile/avatar',
     password: '/user/password',
 };
+
+export const redirectUri = 'http://localhost:3000';
+
+export const oauthOperations = {
+    yandex: '/oauth/yandex',
+    serviceId: '/oauth/yandex/service-id',
+};

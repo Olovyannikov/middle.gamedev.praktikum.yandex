@@ -8,7 +8,9 @@ const cast = (spell: string, item: string) => {
     return item;
 };
 
-test('spell casting', () => {
-    const result = cast(magic, '🐸');
-    expect(result).toBe('🐷');
+describe('test', () => {
+    it('spell casting', () => {
+        const result = cast(magic, '🐸');
+        expect(result).toBe('🐷');
+    });
 });

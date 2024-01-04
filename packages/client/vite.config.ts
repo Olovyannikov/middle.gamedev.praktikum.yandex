@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
+import svgr from 'vite-plugin-svgr';
 
 dotenv.config();
 
@@ -9,10 +10,7 @@ const generateScopedName = '[name]__[local]--[hash:base64:5]';
 const hashName = '[hash:base64:5]';
 
 export default defineConfig(({ mode }) => {
-    const cssModulesName =
-        mode === 'development'
-            ? generateScopedName.replace('-module', '')
-            : hashName;
+    const cssModulesName = mode === 'development' ? generateScopedName.replace('-module', '') : hashName;
 
     return {
         css: {
@@ -38,6 +36,14 @@ export default defineConfig(({ mode }) => {
                 '@': fileURLToPath(new URL('./src', import.meta.url)),
             },
         },
-        plugins: [react()],
+        plugins: [
+            react(),
+            svgr({
+                svgrOptions: {
+                    exportType: 'default',
+                    plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+                },
+            }),
+        ],
     };
 });
