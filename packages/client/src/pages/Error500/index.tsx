@@ -1,8 +1,9 @@
-import { RootLayout } from '@/layouts/RootLayout';
-import { Grid, Icon } from '@mui/material';
-import ErrorVector from './ErrorVector.svg';
 import { Link } from 'react-router-dom';
+import { Grid, Icon } from '@mui/material';
 
+import { RootLayout } from '@/layouts/RootLayout';
+
+import ErrorVector from './ErrorVector.svg';
 export default function Error500() {
     return (
         <RootLayout>
