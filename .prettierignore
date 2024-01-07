@@ -13,3 +13,7 @@
 /build
 node_modules
 yarn.lock
+*.log
+*.d.ts
+*.config.ts
+*.config.js

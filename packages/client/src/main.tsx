@@ -1,11 +1,13 @@
 import ReactDOM from 'react-dom/client';
-import { App } from './app/App';
-import { BrowserRouter } from 'react-router-dom';
-import { store } from '@/app/store';
 import { Provider } from 'react-redux';
-import { AuthProvider } from '@/shared/context/AuthContext';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
+
+import { store } from '@/app/store';
+import { AuthProvider } from '@/shared/context/AuthContext';
+
 import { theme } from '../theme.config';
+import { App } from './app/App';
 
 ReactDOM.hydrateRoot(
     document.getElementById('root') as HTMLElement,

@@ -1,23 +1,24 @@
 .form {
-    text-align: center;
+  text-align: center;
 }
+
 .formButton {
-    width: 200px;
+  width: 200px;
 
-    & + & {
-        margin-top: 15px;
-    }
+  &.oauth {
+    background-color: var(--yandex-oauth-color);
+  }
 
-    &.oauth {
-        background-color: #fc3f1d;
-    }
+  &.m-t-40 {
+    margin-top: var(--size-5xl);
+  }
 
-    &.m-t-40 {
-        margin-top: 40px;
-    }
+  & + & {
+    margin-top: var(--size-lg);
+  }
 }
 
 .formErrorMessage {
-    color: red;
-    text-align: center;
+  text-align: center;
+  color: var(--red-400);
 }
