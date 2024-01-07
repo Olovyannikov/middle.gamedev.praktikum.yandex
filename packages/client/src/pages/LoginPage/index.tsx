@@ -10,7 +10,7 @@ import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { RootLayout } from '@/layouts/RootLayout';
-import { useSignInMutation } from '@/services/authApi';
+import { useSignInMutation } from '@/services/AuthService/AuthService';
 import { useLazyGetServiceIdQuery } from '@/services/oauthApi';
 import { redirectUri } from '@/shared/constants/api';
 import { defaultValues } from '@/shared/constants/forms';

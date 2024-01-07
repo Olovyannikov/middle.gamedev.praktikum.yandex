@@ -1,6 +1,6 @@
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
-import { useGetUserQuery } from '@/services/authApi';
+import { useGetUserQuery } from '@/services/AuthService/AuthService';
 import { isErrorWithStatus } from '@/shared/types/guards/isError';
 interface AuthContextProps {
     isAuth: boolean;
