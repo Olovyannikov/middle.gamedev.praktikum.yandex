@@ -8,7 +8,7 @@ import { Form } from '@/components/Form';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { ChangePassword } from '@/features';
 import { RootLayout } from '@/layouts/RootLayout';
-import { useGetUserQuery } from '@/services/authApi';
+import { useGetUserQuery } from '@/services/AuthService/AuthService';
 import { useChangeAvatarMutation } from '@/services/usersApi';
 import { resourcesBaseUrl } from '@/shared/constants/api';
 import { useAuth } from '@/shared/context/AuthContext';

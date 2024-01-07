@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useLogOutMutation } from '@/services/authApi';
+
+import { useLogOutMutation } from '@/services/AuthService/AuthService';
 import { useAuth } from '@/shared/context/AuthContext';
 
 export const useLogout = () => {
