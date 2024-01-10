@@ -41,7 +41,7 @@ Comment.belongsTo(User, { foreignKey: { name: 'author', allowNull: false } });
 
 async function startServer() {
     const app = express();
-    app.use(cors());
+    app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
     app.use(bodyParser.json());
     app.use(
