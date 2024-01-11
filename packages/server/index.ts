@@ -17,6 +17,14 @@ import { commentModel } from './models/comment';
 import { topicModel } from './models/topic';
 import { userModel } from './models/user';
 import { baseApi } from './store';
+import https from 'https';
+
+type requestOptions = {
+    host: string;
+    path: string;
+    method?: string;
+    headers?: Record<string, string | number>;
+};
 
 const isDev = () => process.env.NODE_ENV === 'development';
 
@@ -67,6 +75,42 @@ async function startServer() {
     }
 
     app.use('/api', apiRouter);
+
+    app.use('/practicum/*', async (_req, _res) => {
+        const path = _req.baseUrl.replace('/practicum', '');
+
+        const options: requestOptions = {
+            host: 'ya-praktikum.tech',
+            path: '/api/v2' + path,
+            method: _req.method,
+            headers: {},
+        };
+        if (_req.headers?.cookie && options.headers) {
+            options.headers.cookie = _req.headers?.cookie;
+        }
+        if (_req.body && options.headers) {
+            options.headers['Content-Type'] = 'application/json';
+            options.headers['Content-Length'] = JSON.stringify(_req.body).length;
+        }
+        const req = https.request(options, (res) => {
+            const proxyCookies: string[] = [];
+            res.headers['set-cookie']?.forEach((e) => proxyCookies.push(e.replace('Domain=ya-praktikum.tech', '')));
+            _res.writeHead(200, {
+                'Set-Cookie': proxyCookies,
+            });
+            res.on('data', function (chunk) {
+                _res.status(res.statusCode || 400).end(chunk);
+            });
+        });
+
+        req.on('error', (e) => {
+            _res.status(400).end(JSON.stringify({ reason: e }));
+            console.error('Error: ' + e);
+        });
+
+        if (_req.body) req.write(JSON.stringify(_req.body));
+        req.end();
+    });
 
     if (!isDev()) {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));

@@ -5,7 +5,6 @@ export interface IUser {
     name: string;
     avatar: string;
     login: string;
-    uuid: string;
 }
 export const userModel: ModelAttributes<Model, IUser> = {
     name: {
@@ -16,10 +15,6 @@ export const userModel: ModelAttributes<Model, IUser> = {
         type: DataType.STRING,
     },
     login: {
-        type: DataType.STRING,
-        allowNull: false,
-    },
-    uuid: {
         type: DataType.STRING,
         allowNull: false,
     },

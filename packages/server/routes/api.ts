@@ -7,6 +7,7 @@ export const router = express.Router();
 type authOptions = {
     host: string;
     path: string;
+    method?: string;
     headers?: Record<string, string>;
 };
 
@@ -22,96 +23,98 @@ router.use(function checkAuth(_req, _res, next) {
             };
         }
         https.get(options, (res) => {
-            console.log(res.statusCode, res.statusMessage);
+            res.on('data', function (chunk) {
+                if (res.statusCode == 200) {
+                    _res.locals.user = JSON.parse(chunk);
+                    User.findOrCreate({
+                        where: {
+                            login: _res.locals.user.login,
+                        },
+                        defaults: {
+                            name:
+                                _res.locals.user.display_name ||
+                                _res.locals.user.first_name + ' ' + _res.locals.user.second_name,
+                            avatar: '/practicum/resources' + _res.locals.user.avatar,
+                        },
+                    })
+                        .then((res) => {
+                            const [user] = res;
+                            _res.locals.userId = user.id;
+                            next();
+                        })
+                        .catch((error) => {
+                            _res.status(403).end(JSON.stringify({ reason: error }));
+                            console.error('Failed to create a user record : ', error);
+                        });
+                } else {
+                    next();
+                }
+            });
         });
-        next();
     } else {
-        _res.status(401).end(JSON.stringify({ error: 'Unauthorized' }));
+        _res.status(403).end(JSON.stringify({ reason: 'Unauthorized' }));
     }
 });
 
-router.get('/topic', function (_, response) {
+router.get('/topic', (_req, _res) => {
     Topic.findAll({
         include: User,
+        order: [['createdAt', 'DESC']],
     })
         .then((res) => {
-            response.send(res);
+            _res.send(res);
         })
         .catch((error) => {
+            _res.status(403).end(JSON.stringify({ reason: error }));
             console.error('Failed to retrieve data : ', error);
         });
 });
 
-router.post('/topic', function (request, response) {
+router.post('/topic', async (_req, _res) => {
     Topic.create({
-        title: request.body.title || 'No title',
-        text: request.body.text || 'No text',
+        title: _req.body.title || 'No title',
+        text: _req.body.text || 'No text',
+        author: _res.locals.userId,
     })
         .then((res) => {
-            response.send(res);
+            _res.send(res);
         })
         .catch((error) => {
+            _res.status(403).end(JSON.stringify({ reason: error }));
             console.error('Failed to create a new record : ', error);
         });
 });
 
-router.get('/comment', function (_, response) {
+router.get('/comment', function (_req, _res) {
     Comment.findAll({
         include: User,
+        order: [['createdAt', 'ASC']],
     })
         .then((res) => {
-            response.send(res);
+            _res.send(res);
         })
         .catch((error) => {
+            _res.status(403).end(JSON.stringify({ reason: error }));
             console.error('Failed to retrieve data : ', error);
         });
 });
 
-router.post('/comment', function (request, response) {
+router.post('/comment', function (_req, _res) {
     Comment.create({
-        text: request.body.text || 'No text',
-        parentComment: request.body.parentComment || null,
-        topic: request.body.topic,
+        text: _req.body.text || 'No text',
+        parentComment: _req.body.parentComment || null,
+        topic: _req.body.topic,
+        author: _res.locals.userId,
     })
         .then((res) => {
-            response.send(res);
+            _res.send(res);
         })
         .catch((error) => {
+            _res.status(403).end(JSON.stringify({ reason: error }));
             console.error('Failed to create a new record : ', error);
         });
 });
 
-router.post('/auth', (request, response) => {
-    const login = request.body.login;
-    const password = request.body.password;
-    if (!login || !password) response.status(400).send('No data');
-
-    const authData = JSON.stringify(request.body);
-    const req = https.request(
-        {
-            host: 'ya-praktikum.tech',
-            path: '/api/v2/auth/signin',
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': authData.length,
-            },
-        },
-        (res) => {
-            const proxyCookies: string[] = [];
-            res.headers['set-cookie']?.forEach((e) => proxyCookies.push(e.replace('Domain=ya-praktikum.tech', '')));
-            response.writeHead(200, {
-                'Set-Cookie': proxyCookies,
-            });
-
-            response.end(`OK`);
-        }
-    );
-
-    req.on('error', (e) => {
-        console.error('Error: ' + e);
-    });
-
-    req.write(authData);
-    req.end();
+router.get('/user', (_req, _res) => {
+    _res.send(_res.locals.user);
 });
