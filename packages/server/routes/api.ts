@@ -58,14 +58,18 @@ router.use(function checkAuth(_req, _res, next) {
 
 router.get('/topic', (_req, _res) => {
     Topic.findAll({
-        include: User,
+        include: {
+            model: User,
+            attributes: ['name', 'avatar'],
+            as: 'author',
+        },
         order: [['createdAt', 'DESC']],
     })
         .then((res) => {
             _res.send(res);
         })
         .catch((error) => {
-            _res.status(403).end(JSON.stringify({ reason: error }));
+            _res.status(400).end(JSON.stringify({ reason: error }));
             console.error('Failed to retrieve data : ', error);
         });
 });
@@ -74,27 +78,39 @@ router.post('/topic', async (_req, _res) => {
     Topic.create({
         title: _req.body.title || 'No title',
         text: _req.body.text || 'No text',
-        author: _res.locals.userId,
+        authorId: _res.locals.userId,
     })
         .then((res) => {
             _res.send(res);
         })
         .catch((error) => {
-            _res.status(403).end(JSON.stringify({ reason: error }));
+            _res.status(400).end(JSON.stringify({ reason: error }));
             console.error('Failed to create a new record : ', error);
         });
 });
 
 router.get('/comment', function (_req, _res) {
+    const topic = _req.query.topic;
+    if (!topic) {
+        _res.status(400).end(JSON.stringify({ reason: 'topic field required' }));
+        return;
+    }
     Comment.findAll({
-        include: User,
+        include: {
+            model: User,
+            attributes: ['name', 'avatar'],
+            as: 'author',
+        },
         order: [['createdAt', 'ASC']],
+        where: {
+            topicId: topic,
+        },
     })
         .then((res) => {
             _res.send(res);
         })
         .catch((error) => {
-            _res.status(403).end(JSON.stringify({ reason: error }));
+            _res.status(400).end(JSON.stringify({ reason: error }));
             console.error('Failed to retrieve data : ', error);
         });
 });
@@ -103,14 +119,14 @@ router.post('/comment', function (_req, _res) {
     Comment.create({
         text: _req.body.text || 'No text',
         parentComment: _req.body.parentComment || null,
-        topic: _req.body.topic,
-        author: _res.locals.userId,
+        topicId: _req.body.topic,
+        authorId: _res.locals.userId,
     })
         .then((res) => {
             _res.send(res);
         })
         .catch((error) => {
-            _res.status(403).end(JSON.stringify({ reason: error }));
+            _res.status(400).end(JSON.stringify({ reason: error }));
             console.error('Failed to create a new record : ', error);
         });
 });

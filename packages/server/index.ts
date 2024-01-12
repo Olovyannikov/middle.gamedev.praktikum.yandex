@@ -11,13 +11,13 @@ dotenv.config();
 import { configureStore } from '@reduxjs/toolkit';
 import express from 'express';
 import * as fs from 'fs';
+import https from 'https';
 import * as path from 'path';
 
 import { commentModel } from './models/comment';
 import { topicModel } from './models/topic';
 import { userModel } from './models/user';
 import { baseApi } from './store';
-import https from 'https';
 
 type requestOptions = {
     host: string;
@@ -43,9 +43,9 @@ export const User = sequelize.define('User', userModel, {});
 export const Topic = sequelize.define('Topic', topicModel, {});
 export const Comment = sequelize.define('Comment', commentModel, {});
 Comment.belongsTo(Comment, { foreignKey: 'parentComment' });
-Comment.belongsTo(Topic, { foreignKey: { name: 'topic', allowNull: false } });
-Topic.belongsTo(User, { foreignKey: { name: 'author', allowNull: false } });
-Comment.belongsTo(User, { foreignKey: { name: 'author', allowNull: false } });
+Comment.belongsTo(Topic, { as: 'topic' });
+Topic.belongsTo(User, { as: 'author' });
+Comment.belongsTo(User, { as: 'author' });
 
 async function startServer() {
     const app = express();
