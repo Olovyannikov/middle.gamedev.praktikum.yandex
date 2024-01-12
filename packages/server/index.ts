@@ -12,13 +12,13 @@ dotenv.config();
 import { configureStore } from '@reduxjs/toolkit';
 import express from 'express';
 import * as fs from 'fs';
+import https from 'https';
 import * as path from 'path';
 
 import { commentModel } from './models/comment';
 import { topicModel } from './models/topic';
 import { userModel } from './models/user';
 import { baseApi } from './store';
-import https from 'https';
 
 type requestOptions = {
     host: string;
