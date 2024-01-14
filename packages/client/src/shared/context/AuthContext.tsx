@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         if (isError && isErrorWithStatus(error) && error?.status === 401) {
             setIsAuth(false);
         }
-    }, [data]);
+    }, [data, error]);
 
     const memoizedValues = useMemo(
         () => ({

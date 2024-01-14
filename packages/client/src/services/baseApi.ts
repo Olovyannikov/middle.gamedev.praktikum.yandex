@@ -5,6 +5,8 @@ import { baseUrl } from '@/shared/constants/api';
 export const baseApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['User'],
-    baseQuery: fetchBaseQuery({ baseUrl }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://',
+    }),
     endpoints: () => ({}),
 });

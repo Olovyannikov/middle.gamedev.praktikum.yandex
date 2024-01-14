@@ -1,6 +1,11 @@
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createServer as createViteServer, type ViteDevServer } from 'vite';
+
+import { router as apiRouter } from './routes/api';
+import { router as practicumRouter } from './routes/practicum';
 
 dotenv.config();
 
@@ -9,13 +14,42 @@ import express from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { commentModel } from './models/comment';
+import { topicModel } from './models/topic';
+import { userModel } from './models/user';
 import { baseApi } from './store';
 
 const isDev = () => process.env.NODE_ENV === 'development';
 
+const sequelizeOptions: SequelizeOptions = {
+    host: 'localhost',
+    port: 5432,
+    username: 'postgres',
+    password: 'postgres',
+    database: 'postgres',
+    dialect: 'postgres',
+};
+
+export const sequelize = new Sequelize(sequelizeOptions);
+
+export const User = sequelize.define('User', userModel, {});
+export const Topic = sequelize.define('Topic', topicModel, {});
+export const Comment = sequelize.define('Comment', commentModel, {});
+Comment.belongsTo(Comment, { foreignKey: 'parentComment' });
+Comment.belongsTo(Topic, { as: 'topic' });
+Topic.belongsTo(User, { as: 'author' });
+Comment.belongsTo(User, { as: 'author' });
+
 async function startServer() {
     const app = express();
-    app.use(cors());
+    app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+
+    app.use(bodyParser.json());
+    app.use(
+        bodyParser.urlencoded({
+            extended: true,
+        })
+    );
     const port = Number(process.env.SERVER_PORT) || 3001;
 
     let vite: ViteDevServer | undefined;
@@ -33,9 +67,8 @@ async function startServer() {
         app.use(vite.middlewares);
     }
 
-    app.get('/api', (_, res) => {
-        res.json('👋 Howdy from the server :)');
-    });
+    app.use('/api', apiRouter);
+    app.use('/practicum/*', practicumRouter);
 
     if (!isDev()) {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
@@ -93,8 +126,10 @@ async function startServer() {
         }
     });
 
-    app.listen(port, () => {
-        console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+    sequelize.sync().then(() => {
+        app.listen(port, () => {
+            console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
+        });
     });
 }
 
