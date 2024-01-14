@@ -4,16 +4,15 @@ import * as https from 'https';
 import { Comment, Topic, User } from '../index';
 export const router = express.Router();
 
-type authOptions = {
+interface AuthOptions {
     host: string;
     path: string;
-    method?: string;
     headers?: Record<string, string>;
-};
+}
 
 router.use(function checkAuth(_req, _res, next) {
     if (_req.headers?.cookie || _req.originalUrl == '/api/auth') {
-        const options: authOptions = {
+        const options: AuthOptions = {
             host: 'ya-praktikum.tech',
             path: '/api/v2/auth/user',
         };

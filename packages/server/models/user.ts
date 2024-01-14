@@ -1,12 +1,12 @@
 import type { ModelAttributes } from 'sequelize/types';
 import { DataType, Model } from 'sequelize-typescript';
 
-export interface IUser {
+interface User {
     name: string;
     avatar: string;
     login: string;
 }
-export const userModel: ModelAttributes<Model, IUser> = {
+export const userModel: ModelAttributes<Model, User> = {
     name: {
         type: DataType.STRING,
         allowNull: false,

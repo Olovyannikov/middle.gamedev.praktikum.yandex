@@ -1,10 +1,10 @@
 import type { ModelAttributes } from 'sequelize/types';
 import { DataType, Model } from 'sequelize-typescript';
 
-export interface IComment {
+interface Comment {
     text: string;
 }
-export const commentModel: ModelAttributes<Model, IComment> = {
+export const commentModel: ModelAttributes<Model, Comment> = {
     text: {
         type: DataType.STRING,
         allowNull: false,
