@@ -5,7 +5,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 import { router as apiRouter } from './routes/api';
-import { router as practicumRouter } from './routes/practicum';
+import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 
 dotenv.config();
 
@@ -68,7 +68,21 @@ async function startServer() {
     }
 
     app.use('/api', apiRouter);
-    app.use('/practicum/*', practicumRouter);
+    app.use(
+        '/practicum/*',
+        createProxyMiddleware('/', {
+            changeOrigin: true,
+            cookieDomainRewrite: {
+                '*': '',
+            },
+            target: 'https://ya-praktikum.tech',
+            pathRewrite: function (path) {
+                return path.replace('/practicum', '/api/v2');
+            },
+            logLevel: 'debug',
+            onProxyReq: fixRequestBody,
+        })
+    );
 
     if (!isDev()) {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
