@@ -11,7 +11,7 @@ interface AuthOptions {
 }
 
 router.use(function checkAuth(_req, _res, next) {
-    if (_req.headers?.cookie || _req.originalUrl == '/api/auth') {
+    if ((_req.headers?.cookie && _req.headers?.cookie.indexOf('authCookie') > -1) || _req.originalUrl == '/api/auth') {
         const options: AuthOptions = {
             host: 'ya-praktikum.tech',
             path: '/api/v2/auth/user',
@@ -21,6 +21,7 @@ router.use(function checkAuth(_req, _res, next) {
                 cookie: _req.headers?.cookie,
             };
         }
+        const ssoCookie = _req.headers?.cookie?.indexOf('isSSO=true');
         https.get(options, (res) => {
             res.on('data', function (chunk) {
                 if (res.statusCode == 200) {
@@ -34,11 +35,16 @@ router.use(function checkAuth(_req, _res, next) {
                                 _res.locals.user.display_name ||
                                 _res.locals.user.first_name + ' ' + _res.locals.user.second_name,
                             avatar: '/practicum/resources' + _res.locals.user.avatar,
+                            isSSO: ssoCookie && ssoCookie > -1,
                         },
                     })
                         .then((res) => {
                             const [user] = res;
-                            _res.locals.userId = user.id;
+                            _res.locals.userId = user;
+                            //TODO разобраться почему сюда не попадает тип userModel
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
+                            _res.locals.user.isSSO = user.isSSO;
                             next();
                         })
                         .catch((error) => {
@@ -48,6 +54,9 @@ router.use(function checkAuth(_req, _res, next) {
                 } else {
                     next();
                 }
+            });
+            res.on('error', function (err) {
+                _res.status(_res.statusCode).end(JSON.stringify({ reason: err }));
             });
         });
     } else {

@@ -1,11 +1,11 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 import { router as apiRouter } from './routes/api';
-import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 
 dotenv.config();
 
@@ -81,6 +81,13 @@ async function startServer() {
             },
             logLevel: 'debug',
             onProxyReq: fixRequestBody,
+            onProxyRes: (proxyRes, _req, _res) => {
+                if (_req.method.toLowerCase() == 'post' && _req.path.indexOf('/oauth/yandex') > -1) {
+                    proxyRes.headers['set-cookie']?.push(
+                        'isSSO=true; Domain=localhost; Path=/; HttpOnly; Secure; SameSite=None'
+                    );
+                }
+            },
         })
     );
 
