@@ -22,8 +22,8 @@ export default function IndexPage() {
                 <AppLink className={s.button} to={RouterPaths.game}>
                     Start
                 </AppLink>
-                <AppLink className={s.button} to={isAuth ? RouterPaths.profile : RouterPaths.registration}>
-                    {isAuth ? 'Profile' : 'Register'}
+                <AppLink className={s.button} to={isAuth ? RouterPaths.profile : RouterPaths.login}>
+                    {isAuth ? 'Profile' : 'Sign in'}
                 </AppLink>
                 <AppLink className={s.button} to={RouterPaths.forum}>
                     Forum
