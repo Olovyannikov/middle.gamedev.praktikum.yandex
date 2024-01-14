@@ -19,8 +19,6 @@
     "forceConsistentCasingInFileNames": true,
     "importsNotUsedAsValues": "error",
     "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "lib": [
       "DOM",
       "es2019",

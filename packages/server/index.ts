@@ -6,6 +6,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 import { router as apiRouter } from './routes/api';
+import { router as practicumRouter } from './routes/practicum';
 
 dotenv.config();
 
