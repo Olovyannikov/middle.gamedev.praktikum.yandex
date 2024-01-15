@@ -7,11 +7,11 @@ interface Topic {
 }
 export const topicModel: ModelAttributes<Model, Topic> = {
     title: {
-        type: DataType.STRING,
+        type: DataType.TEXT,
         allowNull: false,
     },
     text: {
-        type: DataType.STRING,
+        type: DataType.TEXT,
         allowNull: false,
     },
 };

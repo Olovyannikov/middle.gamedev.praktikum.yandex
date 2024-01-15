@@ -1,10 +1,11 @@
 import type { ModelAttributes } from 'sequelize/types';
 import { DataType, Model } from 'sequelize-typescript';
 
-interface User {
+export interface User {
     name: string;
     avatar: string;
     login: string;
+    isSSO: boolean;
 }
 export const userModel: ModelAttributes<Model, User> = {
     name: {
@@ -12,10 +13,13 @@ export const userModel: ModelAttributes<Model, User> = {
         allowNull: false,
     },
     avatar: {
-        type: DataType.STRING,
+        type: DataType.TEXT,
     },
     login: {
         type: DataType.STRING,
         allowNull: false,
+    },
+    isSSO: {
+        type: DataType.BOOLEAN,
     },
 };

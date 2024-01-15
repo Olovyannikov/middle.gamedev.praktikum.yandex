@@ -109,7 +109,7 @@ export default function ProfilePage() {
                     ) : null}
                 </Container>
 
-                <ChangePassword />
+                {!user?.isSSO ? <ChangePassword /> : ''}
             </Container>
         </RootLayout>
     );
