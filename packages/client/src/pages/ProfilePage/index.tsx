@@ -54,6 +54,7 @@ export default function ProfilePage() {
     return (
         <RootLayout>
             <Container className={cn(s.profile_container, isDarkMode && s.darkProfileContainer)}>
+                {/* TODO: Изображение конфликтует с тёмной темой, пока отключу. */}
                 {/* <img src={backgroundMain} alt='background' className={cn(s.main_background)} /> */}
 
                 <Form id='avatarForm' className={cn(s.form_avatar)} onSubmit={handleSubmitAvatar}>
