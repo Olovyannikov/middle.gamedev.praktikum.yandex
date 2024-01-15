@@ -82,9 +82,7 @@ router.get('/topic', (_req, _res) => {
         });
 });
 
-router.get('/topic/*', (_req, _res) => {
-    const pathArr = _req.path.split('/');
-    const id = pathArr[pathArr.length - 1];
+router.get('/topic/:topicId', (_req, _res) => {
     Topic.findOne({
         include: [
             {
@@ -93,7 +91,9 @@ router.get('/topic/*', (_req, _res) => {
                 as: 'author',
             },
         ],
-        where: { id },
+        where: {
+            id: _req.params.topicId,
+        },
     })
         .then((res) => {
             if (!res) _res.status(404).end(JSON.stringify({ reason: 'Not found' }));
@@ -120,12 +120,7 @@ router.post('/topic', async (_req, _res) => {
         });
 });
 
-router.get('/comment', function (_req, _res) {
-    const topic = _req.query.topic;
-    if (!topic) {
-        _res.status(400).end(JSON.stringify({ reason: 'topic field required' }));
-        return;
-    }
+router.get('/comment/:topicId', function (_req, _res) {
     Comment.findAll({
         include: {
             model: User,
@@ -134,7 +129,7 @@ router.get('/comment', function (_req, _res) {
         },
         order: [['createdAt', 'ASC']],
         where: {
-            topicId: topic,
+            topicId: _req.params.topicId,
         },
     })
         .then((res) => {
