@@ -2,6 +2,7 @@ import express from 'express';
 import * as https from 'https';
 
 import { Comment, Topic, User } from '../index';
+
 export const router = express.Router();
 
 interface AuthOptions {

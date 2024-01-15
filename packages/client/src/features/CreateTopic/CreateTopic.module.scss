@@ -1,0 +1,14 @@
+.form {
+  display: grid;
+  gap: var(--size-lg);
+}
+
+.actions {
+  display: flex;
+  gap: var(--size-md);
+
+  button {
+    display: block;
+    width: 100%;
+  }
+}

@@ -1,7 +1,14 @@
-import { AUTH_ENDPOINTS } from '@/shared/constants/api';
+import { baseLocalApi, basePracticumApi } from '@/services/settings';
 
 import { baseApi } from '../baseApi';
 import type { SigninRequest, SigninResponse, SignupRequest, SignupResponse, UserResponse } from './Auth.dto';
+
+export const AUTH_ENDPOINTS = {
+    signup: basePracticumApi + '/auth/signup',
+    signin: basePracticumApi + '/auth/signin',
+    user: baseLocalApi + '/user',
+    logout: basePracticumApi + '/auth/logout',
+} as const;
 
 export const AuthService = baseApi.injectEndpoints({
     endpoints: (builder) => ({

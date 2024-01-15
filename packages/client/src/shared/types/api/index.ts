@@ -8,11 +8,6 @@ export type avatarRequest = FormData;
 
 export type avatarResponse = UserModel;
 
-export interface PasswordRequest {
-    oldPassword: string;
-    newPassword: string;
-}
-
 export type passwordResponse = string;
 
 export interface YandexRequest {

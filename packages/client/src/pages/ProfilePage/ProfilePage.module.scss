@@ -1,0 +1,16 @@
+/* Стили для контейнера профиля */
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px auto;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 800px;
+  box-shadow: var(--shadow-2), var(--shadow-1);
+  background-image: url("/img/bg.jpg");
+  background-size: 100% 220px;
+  background-repeat: no-repeat;
+  background-color: var(--neutral-100);
+}

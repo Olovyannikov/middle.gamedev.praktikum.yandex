@@ -1,13 +1,15 @@
 import type { RouteProps } from 'react-router-dom';
-import { PrivateRoute } from './PrivateRoute';
-import ProfilePage from '@/pages/ProfilePage';
-import ForumPage from '@/pages/ForumPage';
-import IndexPage from '@/pages/IndexPage';
+
 import Error500 from '@/pages/Error500';
-import LoginPage from '@/pages/LoginPage';
-import RegistrationPage from '@/pages/RegistationPage';
+import ForumPage from '@/pages/ForumPage';
 import GamePage from '@/pages/GamePage';
+import IndexPage from '@/pages/IndexPage';
 import LeaderBoardPage from '@/pages/LeaderBoardPage';
+import LoginPage from '@/pages/LoginPage';
+import ProfilePage from '@/pages/ProfilePage';
+import RegistrationPage from '@/pages/RegistationPage';
+
+import { PrivateRoute } from './PrivateRoute';
 
 export const AppRoutes = {
     INDEX: 'index',

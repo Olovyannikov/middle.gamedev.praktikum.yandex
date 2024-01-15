@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { useSignInUpWithYandexMutation } from '@/services/oauthApi';
+import { useSignInUpWithYandexMutation } from '@/services/OAuthService/OAuth.service';
 
 import { redirectUri } from '../constants/api';
-import { YandexRequest } from '../types/api';
+import type { YandexRequest } from '../types/api';
 
 export const useOAuth = (isAuth: boolean): void => {
     const [signInUpWithYandex] = useSignInUpWithYandexMutation();

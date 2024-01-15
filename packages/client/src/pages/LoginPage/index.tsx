@@ -11,12 +11,12 @@ import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { RootLayout } from '@/layouts/RootLayout';
 import { useSignInMutation } from '@/services/AuthService/AuthService';
-import { useLazyGetServiceIdQuery } from '@/services/oauthApi';
+import { useLazyGetServiceIdQuery } from '@/services/OAuthService/OAuth.service';
 import { redirectUri } from '@/shared/constants/api';
 import { defaultValues } from '@/shared/constants/forms';
 import { useAuth } from '@/shared/context/AuthContext';
-import type { RequestError, ServiceIdResponse } from '@/shared/types/api';
-import { LoginSchema, LoginSchemaType } from '@/shared/validators/UserValidation';
+import type { RequestError } from '@/shared/types/api';
+import { LoginSchema, type LoginSchemaType } from '@/shared/validators/UserValidation';
 
 import s from './LoginPage.module.scss';
 

@@ -8,7 +8,7 @@ import { useToggle } from 'usehooks-ts';
 import { Form } from '@/components/Form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormStatusLine } from '@/components/FormStatusLine';
-import { useChangePasswordMutation } from '@/services/usersApi';
+import { useChangePasswordMutation } from '@/services/UserService/User.service';
 import type { RequestError } from '@/shared/types/api';
 import { Container } from '@/shared/ui';
 import { NewPasswordSchema, type NewPasswordSchemaType } from '@/shared/validators/UserValidation';
