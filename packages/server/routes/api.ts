@@ -40,7 +40,7 @@ router.use(function checkAuth(_req, _res, next) {
                     })
                         .then((res) => {
                             const [user] = res;
-                            _res.locals.userId = user;
+                            _res.locals.userId = user.id;
                             //TODO разобраться почему сюда не попадает тип userModel
                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                             // @ts-ignore
