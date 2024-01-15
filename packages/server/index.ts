@@ -1,13 +1,13 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 import { router as apiRouter } from './routes/api';
-import { router as practicumRouter } from './routes/practicum';
 
-dotenv.config();
+dotenv.config({ path: '../../.env' });
 
 import { configureStore } from '@reduxjs/toolkit';
 import express from 'express';
@@ -23,10 +23,10 @@ const isDev = () => process.env.NODE_ENV === 'development';
 
 const sequelizeOptions: SequelizeOptions = {
     host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
-    database: 'postgres',
+    port: process.env.POSTGRES_PORT ? Number(process.env.POSTGRES_PORT) : 3001,
+    username: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
     dialect: 'postgres',
 };
 
@@ -68,7 +68,32 @@ async function startServer() {
     }
 
     app.use('/api', apiRouter);
-    app.use('/practicum/*', practicumRouter);
+    app.use(
+        '/practicum/*',
+        createProxyMiddleware('/', {
+            changeOrigin: true,
+            cookieDomainRewrite: {
+                '*': '',
+            },
+            target: 'https://ya-praktikum.tech',
+            pathRewrite: function (path) {
+                return path.replace('/practicum', '/api/v2');
+            },
+            onProxyReq: fixRequestBody,
+            onProxyRes: (proxyRes, _req, _res) => {
+                if (_req.method.toLowerCase() == 'post' && _req.path.indexOf('/oauth/yandex') > -1) {
+                    proxyRes.headers['set-cookie']?.push(
+                        'isSSO=true; Domain=localhost; Path=/; HttpOnly; Secure; SameSite=None'
+                    );
+                }
+                if (_req.path.indexOf('/auth/logout') > -1) {
+                    proxyRes.headers['set-cookie']?.push(
+                        'isSSO=; max-age=0; Domain=localhost; Path=/; HttpOnly; Secure; SameSite=None'
+                    );
+                }
+            },
+        })
+    );
 
     if (!isDev()) {
         app.use('/assets', express.static(path.resolve(distPath, 'assets')));
