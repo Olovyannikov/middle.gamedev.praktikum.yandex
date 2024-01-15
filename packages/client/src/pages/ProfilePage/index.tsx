@@ -3,7 +3,7 @@ import { Button, Modal, Typography } from '@mui/material';
 import cn from 'clsx';
 
 import imgAvatar from '@/app/assets/img/avatar_default.svg';
-import backgroundMain from '@/app/assets/img/bg.svg';
+// import backgroundMain from '@/app/assets/img/bg.svg';
 import { Form } from '@/components/Form';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { ChangePassword } from '@/features';
@@ -12,12 +12,14 @@ import { useGetUserQuery } from '@/services/authApi';
 import { useChangeAvatarMutation } from '@/services/usersApi';
 import { resourcesBaseUrl } from '@/shared/constants/api';
 import { useAuth } from '@/shared/context/AuthContext';
+import { useIsDarkMode } from '@/shared/hooks/useIsDarkMode';
 import type { RequestError } from '@/shared/types/api';
 import { Container } from '@/shared/ui';
 
 import s from './profile.module.scss';
 
 export default function ProfilePage() {
+    const isDarkMode = useIsDarkMode();
     const { isAuth } = useAuth();
 
     const { data: user } = useGetUserQuery(undefined, {
@@ -51,8 +53,8 @@ export default function ProfilePage() {
 
     return (
         <RootLayout>
-            <Container className={cn(s.profile_container)}>
-                <img src={backgroundMain} alt='background' className={cn(s.main_background)} />
+            <Container className={cn(s.profile_container, isDarkMode && s.darkProfileContainer)}>
+                {/* <img src={backgroundMain} alt='background' className={cn(s.main_background)} /> */}
 
                 <Form id='avatarForm' className={cn(s.form_avatar)} onSubmit={handleSubmitAvatar}>
                     <label className={cn(s.avatar_position)}>

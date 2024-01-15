@@ -7,5 +7,5 @@ export const DESCRIPTION = `
 
 export const BASE_STACK_LAYOUT = {
     maxWidth: '275px',
-    margin: '95px auto 50px',
+    margin: '0 auto',
 };

@@ -20,7 +20,7 @@ export const usersOperations = {
     password: basePracticumApi + '/user/password',
 };
 
-export const redirectUri = 'http://localhost:3000';
+export const redirectUri = 'http://localhost:3000'; // нужно брать url, в зав. от режима (dev/ssr)
 
 export const oauthOperations = {
     yandex: basePracticumApi + '/oauth/yandex',

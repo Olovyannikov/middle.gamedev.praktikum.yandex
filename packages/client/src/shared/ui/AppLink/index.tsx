@@ -1,20 +1,17 @@
-import s from './AppLink.module.scss';
 import { NavLink, NavLinkProps } from 'react-router-dom';
+import cn from 'clsx';
 
-export const AppLink = ({
-    to,
-    children,
-    className,
-    ...props
-}: NavLinkProps) => {
+import { useIsDarkMode } from '@/shared/hooks/useIsDarkMode';
+
+import s from './AppLink.module.scss';
+
+export const AppLink = ({ to, children, className, ...props }: NavLinkProps) => {
+    const isDarkMode = useIsDarkMode();
+
+    const linkClassName = cn(isDarkMode && s.dark, className);
+
     return (
-        <NavLink
-            className={({ isActive }) =>
-                (isActive ? s.active : '') + ` ${className ?? ''}`
-            }
-            to={to}
-            {...props}
-        >
+        <NavLink className={({ isActive }) => (isActive ? s.active : '') + ` ${linkClassName}`} to={to} {...props}>
             {children}
         </NavLink>
     );

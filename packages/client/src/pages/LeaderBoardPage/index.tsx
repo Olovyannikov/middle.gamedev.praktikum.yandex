@@ -1,12 +1,14 @@
-import { RootLayout } from '@/layouts/RootLayout';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+
+import { RootLayout } from '@/layouts/RootLayout';
+
 import styles from './leaderboard.module.css';
 
 export default function LeaderBoardPage() {
@@ -14,32 +16,28 @@ export default function LeaderBoardPage() {
         <RootLayout>
             <Grid
                 container
-                direction="column"
-                alignItems="center"
-                justifyContent="flex-start"
+                direction='column'
+                alignItems='center'
+                justifyContent='flex-start'
                 style={{ minHeight: '90vh' }}
             >
-                <Grid
-                    container
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="center"
-                    gap={1}
-                >
-                    <h1>Leaderboard for</h1>
+                <Grid container direction='row' alignItems='center' justifyContent='center' gap={1}>
+                    <Typography variant='h4' component='h1' sx={{ padding: '20px 0' }}>
+                        Leaderboard for
+                    </Typography>
                     <div className={styles.textBadgeUI}>Today</div>
                 </Grid>
 
                 <Grid
                     container
-                    direction="column"
-                    alignItems="center"
-                    justifyContent="flex-start"
+                    direction='column'
+                    alignItems='center'
+                    justifyContent='flex-start'
                     style={{ minHeight: '90vh' }}
                     sx={{ width: '80vw' }}
                 >
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="leaderboard">
+                        <Table sx={{ minWidth: 650 }} aria-label='leaderboard'>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Place</TableCell>

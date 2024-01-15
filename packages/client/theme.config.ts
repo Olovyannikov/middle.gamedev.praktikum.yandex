@@ -1,7 +1,5 @@
-import { createTheme } from '@mui/material';
-
-export const theme = createTheme({
+export const themeOptions = {
     typography: {
         fontFamily: 'Roboto Mono, Arial',
     },
-});
+}
