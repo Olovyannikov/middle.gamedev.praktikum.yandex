@@ -1,5 +1,6 @@
 export const FORUM_TAGS = {
     TOPIC: 'TOPIC',
+    COMMENTS: 'COMMENTS',
 } as const;
 
 export interface ForumCreatePostRequest {
@@ -21,4 +22,12 @@ export interface TopicResponse extends ForumCreateTopicResponse {
         name: string;
         avatar: string;
     };
+}
+
+export type CommentRequest = TopicResponse;
+
+export interface CreateCommentRequest {
+    text: string;
+    parentComment: string | null;
+    topicId?: string;
 }

@@ -2,12 +2,14 @@ import { Navigate, useParams } from 'react-router-dom';
 import { Button, Divider, Grid, TextareaAutosize, Typography } from '@mui/material';
 import { skipToken } from '@reduxjs/toolkit/query';
 
+import { CreateComment } from '@/features';
 import { RootLayout } from '@/layouts/RootLayout';
-import { useGetPostByIdQuery } from '@/services/ForumService/Forum.service';
+import { useGetCommentsByPostIdQuery, useGetPostByIdQuery } from '@/services/ForumService/Forum.service';
 
 export default function ForumTopicPage() {
     const { topicId } = useParams();
     const { data } = useGetPostByIdQuery(topicId ?? skipToken);
+    const { data: comments } = useGetCommentsByPostIdQuery(topicId ?? skipToken);
 
     if (!topicId) {
         return <Navigate to='/forum' replace />;
@@ -29,39 +31,26 @@ export default function ForumTopicPage() {
                     <Divider sx={{ width: '100%' }} textAlign='left' component='li' light>
                         <Typography variant='h6'>Comments</Typography>
                     </Divider>
-
-                    <Grid direction='column' container alignItems='flex-start' justifyContent='flex-start' gap={2}>
-                        {['Jamssk11', 'dajq7'].map((el) => (
-                            <Grid
-                                direction='column'
-                                container
-                                alignItems='flex-start'
-                                justifyContent='flex-start'
-                                gap={1}
-                                key={el}
-                            >
-                                <Typography variant='h6'>{el}</Typography>
-                                <Typography variant='subtitle1'>
-                                    temporibus amet tempore, placeat perferendis saepe, voluptas architecto rerum aut
-                                    quidem. Vel quibusdam eos ullam esse, doloremque assumenda adipisci modi?
-                                </Typography>
-                            </Grid>
-                        ))}
-                    </Grid>
+                    {comments && comments?.length > 0 && (
+                        <Grid direction='column' container alignItems='flex-start' justifyContent='flex-start' gap={2}>
+                            {comments?.map((el) => (
+                                <Grid
+                                    direction='column'
+                                    container
+                                    alignItems='flex-start'
+                                    justifyContent='flex-start'
+                                    gap={1}
+                                    key={el.id}
+                                >
+                                    <Typography variant='h6'>{el.text}</Typography>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    )}
                     <Divider sx={{ width: '100%' }} textAlign='left' component='li' light>
                         <Typography variant='h6'>Leave comment</Typography>
                     </Divider>
-                    <Grid
-                        container
-                        sx={{ width: '100%' }}
-                        alignItems='flex-end'
-                        justifyContent='flex-end'
-                        gap={1}
-                        direction='column'
-                    >
-                        <TextareaAutosize style={{ width: '100%', minHeight: 150 }} />
-                        <Button type='button'>Send</Button>
-                    </Grid>
+                    <CreateComment />
                 </Grid>
             </Grid>
         </RootLayout>

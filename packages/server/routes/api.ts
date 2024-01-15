@@ -12,7 +12,7 @@ interface AuthOptions {
 }
 
 router.use(function checkAuth(_req, _res, next) {
-    if (_req.headers?.cookie || _req.originalUrl == '/api/auth') {
+    if ((_req.headers?.cookie && _req.headers?.cookie.indexOf('authCookie') > -1) || _req.originalUrl == '/api/auth') {
         const options: AuthOptions = {
             host: 'ya-praktikum.tech',
             path: '/api/v2/auth/user',
@@ -22,6 +22,7 @@ router.use(function checkAuth(_req, _res, next) {
                 cookie: _req.headers?.cookie,
             };
         }
+        const ssoCookie = _req.headers?.cookie?.indexOf('isSSO=true');
         https.get(options, (res) => {
             res.on('data', function (chunk) {
                 if (res.statusCode == 200) {
@@ -35,11 +36,14 @@ router.use(function checkAuth(_req, _res, next) {
                                 _res.locals.user.display_name ||
                                 _res.locals.user.first_name + ' ' + _res.locals.user.second_name,
                             avatar: '/practicum/resources' + _res.locals.user.avatar,
+                            isSSO: ssoCookie && ssoCookie > -1,
                         },
                     })
                         .then((res) => {
                             const [user] = res;
                             _res.locals.userId = user.id;
+                            // @ts-ignore unreasonable
+                            _res.locals.user.isSSO = user.isSSO;
                             next();
                         })
                         .catch((error) => {
@@ -49,6 +53,9 @@ router.use(function checkAuth(_req, _res, next) {
                 } else {
                     next();
                 }
+            });
+            res.on('error', function (err) {
+                _res.status(_res.statusCode).end(JSON.stringify({ reason: err }));
             });
         });
     } else {
@@ -76,17 +83,17 @@ router.get('/topic', (_req, _res) => {
 
 router.get('/topic/:topicId', (_req, _res) => {
     Topic.findOne({
-        include: {
-            model: User,
-            attributes: ['name', 'avatar'],
-            as: 'author',
-        },
-        where: {
-            id: _req.params.topicId,
-        },
-        order: [['createdAt', 'DESC']],
+        include: [
+            {
+                model: User,
+                attributes: ['name', 'avatar'],
+                as: 'author',
+            },
+        ],
+        where: { id: _req.params.topicId },
     })
         .then((res) => {
+            if (!res) _res.status(404).end(JSON.stringify({ reason: 'Not found' }));
             _res.send(res);
         })
         .catch((error) => {
@@ -110,8 +117,8 @@ router.post('/topic', async (_req, _res) => {
         });
 });
 
-router.get('/comment', function (_req, _res) {
-    const topic = _req.query.topic;
+router.get('/comment/:topicId', function (_req, _res) {
+    const topic = _req.params.topicId;
     if (!topic) {
         _res.status(400).end(JSON.stringify({ reason: 'topic field required' }));
         return;
@@ -124,7 +131,7 @@ router.get('/comment', function (_req, _res) {
         },
         order: [['createdAt', 'ASC']],
         where: {
-            topicId: topic,
+            id: topic,
         },
     })
         .then((res) => {
@@ -140,7 +147,7 @@ router.post('/comment', function (_req, _res) {
     Comment.create({
         text: _req.body.text || 'No text',
         parentComment: _req.body.parentComment || null,
-        topicId: _req.body.topic,
+        topicId: _req.body.topicId,
         authorId: _res.locals.userId,
     })
         .then((res) => {

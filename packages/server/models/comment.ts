@@ -6,7 +6,7 @@ interface Comment {
 }
 export const commentModel: ModelAttributes<Model, Comment> = {
     text: {
-        type: DataType.STRING,
+        type: DataType.TEXT,
         allowNull: false,
     },
 };

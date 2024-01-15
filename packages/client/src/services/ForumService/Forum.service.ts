@@ -1,5 +1,7 @@
 import { baseApi } from '@/services/baseApi';
 import {
+    CommentRequest,
+    CreateCommentRequest,
     FORUM_TAGS,
     ForumCreatePostRequest,
     ForumCreateTopicResponse,
@@ -10,6 +12,7 @@ import { baseLocalApi } from '@/services/settings';
 const FORUM_ENDPOINTS = {
     ALL_TOPICS: baseLocalApi + '/topic',
     CREATE_TOPIC: baseLocalApi + '/topic',
+    COMMENT: baseLocalApi + '/comment',
 } as const;
 
 export const ForumService = baseApi
@@ -31,6 +34,13 @@ export const ForumService = baseApi
                     credentials: 'include',
                 }),
             }),
+            getCommentsByPostId: builder.query<Array<CommentRequest>, string>({
+                query: (topicId) => ({
+                    url: `${FORUM_ENDPOINTS.COMMENT}/${topicId}`,
+                    credentials: 'include',
+                }),
+                providesTags: [FORUM_TAGS.COMMENTS],
+            }),
             createTopic: builder.mutation<ForumCreateTopicResponse, ForumCreatePostRequest>({
                 query: (body) => ({
                     url: FORUM_ENDPOINTS.CREATE_TOPIC,
@@ -40,7 +50,22 @@ export const ForumService = baseApi
                 }),
                 invalidatesTags: [FORUM_TAGS.TOPIC],
             }),
+            createComment: builder.mutation<void, CreateCommentRequest>({
+                query: (body) => ({
+                    url: FORUM_ENDPOINTS.COMMENT,
+                    method: 'POST',
+                    credentials: 'include',
+                    body,
+                }),
+                invalidatesTags: [FORUM_TAGS.COMMENTS],
+            }),
         }),
     });
 
-export const { useGetAllPostsQuery, useCreateTopicMutation, useGetPostByIdQuery } = ForumService;
+export const {
+    useCreateCommentMutation,
+    useGetAllPostsQuery,
+    useCreateTopicMutation,
+    useGetPostByIdQuery,
+    useGetCommentsByPostIdQuery,
+} = ForumService;
