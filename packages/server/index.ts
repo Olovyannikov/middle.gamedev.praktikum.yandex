@@ -36,7 +36,7 @@ export const User = sequelize.define('User', userModel, {});
 export const Topic = sequelize.define('Topic', topicModel, {});
 export const Comment = sequelize.define('Comment', commentModel, {});
 Comment.belongsTo(Comment, { foreignKey: 'parentComment' });
-Comment.belongsTo(Topic);
+Comment.belongsTo(Topic, { as: 'topic' });
 Topic.belongsTo(User, { as: 'author' });
 Comment.belongsTo(User, { as: 'author' });
 
