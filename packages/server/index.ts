@@ -36,7 +36,7 @@ export const User = sequelize.define('User', userModel, {});
 export const Topic = sequelize.define('Topic', topicModel, {});
 export const Comment = sequelize.define('Comment', commentModel, {});
 Comment.belongsTo(Comment, { foreignKey: 'parentComment' });
-Comment.belongsTo(Topic, { as: 'topic' });
+Comment.belongsTo(Topic);
 Topic.belongsTo(User, { as: 'author' });
 Comment.belongsTo(User, { as: 'author' });
 
@@ -151,7 +151,7 @@ async function startServer() {
         }
     });
 
-    sequelize.sync().then(() => {
+    sequelize.sync({ force: true }).then(() => {
         app.listen(port, () => {
             console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
         });

@@ -82,6 +82,29 @@ router.get('/topic', (_req, _res) => {
         });
 });
 
+router.get('/topic/*', (_req, _res) => {
+    const pathArr = _req.path.split('/');
+    const id = pathArr[pathArr.length - 1];
+    Topic.findOne({
+        include: [
+            {
+                model: User,
+                attributes: ['name', 'avatar'],
+                as: 'author',
+            },
+        ],
+        where: { id },
+    })
+        .then((res) => {
+            if (!res) _res.status(404).end(JSON.stringify({ reason: 'Not found' }));
+            _res.send(res);
+        })
+        .catch((error) => {
+            _res.status(400).end(JSON.stringify({ reason: error }));
+            console.error('Failed to retrieve data : ', error);
+        });
+});
+
 router.post('/topic', async (_req, _res) => {
     Topic.create({
         title: _req.body.title || 'No title',
