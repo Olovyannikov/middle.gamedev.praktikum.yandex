@@ -13,7 +13,7 @@ export const userModel: ModelAttributes<Model, User> = {
         allowNull: false,
     },
     avatar: {
-        type: DataType.STRING,
+        type: DataType.TEXT,
     },
     login: {
         type: DataType.STRING,

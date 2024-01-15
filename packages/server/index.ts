@@ -151,7 +151,7 @@ async function startServer() {
         }
     });
 
-    sequelize.sync({ force: true }).then(() => {
+    sequelize.sync().then(() => {
         app.listen(port, () => {
             console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
         });
