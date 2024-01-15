@@ -52,8 +52,6 @@ export const CreateTopic = ({ onAfterAction, onSubmit, isLoading }: CreateTopicP
                             minRows={4}
                             maxRows={20}
                             variant='outlined'
-                            error={field.value?.length > 99}
-                            helperText={`${field.value?.length}/99`}
                             {...field}
                         />
                     )}

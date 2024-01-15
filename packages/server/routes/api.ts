@@ -74,6 +74,27 @@ router.get('/topic', (_req, _res) => {
         });
 });
 
+router.get('/topic/:topicId', (_req, _res) => {
+    Topic.findOne({
+        include: {
+            model: User,
+            attributes: ['name', 'avatar'],
+            as: 'author',
+        },
+        where: {
+            id: _req.params.topicId,
+        },
+        order: [['createdAt', 'DESC']],
+    })
+        .then((res) => {
+            _res.send(res);
+        })
+        .catch((error) => {
+            _res.status(400).end(JSON.stringify({ reason: error }));
+            console.error('Failed to retrieve data : ', error);
+        });
+});
+
 router.post('/topic', async (_req, _res) => {
     Topic.create({
         title: _req.body.title || 'No title',

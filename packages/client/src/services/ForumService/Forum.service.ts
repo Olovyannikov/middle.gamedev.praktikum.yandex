@@ -25,6 +25,12 @@ export const ForumService = baseApi
                 }),
                 providesTags: [FORUM_TAGS.TOPIC],
             }),
+            getPostById: builder.query<TopicResponse, string>({
+                query: (topicId) => ({
+                    url: `${FORUM_ENDPOINTS.ALL_TOPICS}/${topicId}`,
+                    credentials: 'include',
+                }),
+            }),
             createTopic: builder.mutation<ForumCreateTopicResponse, ForumCreatePostRequest>({
                 query: (body) => ({
                     url: FORUM_ENDPOINTS.CREATE_TOPIC,
@@ -37,4 +43,4 @@ export const ForumService = baseApi
         }),
     });
 
-export const { useGetAllPostsQuery, useCreateTopicMutation } = ForumService;
+export const { useGetAllPostsQuery, useCreateTopicMutation, useGetPostByIdQuery } = ForumService;
