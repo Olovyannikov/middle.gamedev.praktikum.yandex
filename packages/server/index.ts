@@ -73,7 +73,7 @@ async function startServer() {
             appType: 'custom',
         });
 
-        app.use(vite.middlewares);
+        //app.use(vite.middlewares);
     }
 
     app.use('/api', apiRouter);

@@ -1,7 +1,6 @@
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
 import { useGetUserQuery } from '@/services/authApi';
-import { isErrorWithStatus } from '@/shared/types/guards/isError';
 interface AuthContextProps {
     isAuth: boolean;
     isLoading: boolean;
@@ -30,12 +29,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     const logoutHandler = () => setIsAuth(false);
 
     useEffect(() => {
-        if (!isLoading && data) {
-            setIsAuth(true);
-        }
-
-        if (isError && isErrorWithStatus(error) && error?.status === 401) {
+        if (isError) {
             setIsAuth(false);
+        } else if (!isLoading && data) {
+            setIsAuth(true);
         }
     }, [data, error]);
 
