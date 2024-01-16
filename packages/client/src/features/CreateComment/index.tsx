@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -12,11 +13,14 @@ interface CreateCommentProps {
 }
 
 export const CreateComment = ({ parent = null }: CreateCommentProps) => {
+    const textFieldRef = useRef<HTMLTextAreaElement | null>(null);
     const { topicId } = useParams();
-    const form = useForm<CreateCommentRequest>();
+    const form = useForm<CreateCommentRequest>({
+        defaultValues: {
+            text: '',
+        },
+    });
     const [createComment, { isLoading, isSuccess }] = useCreateCommentMutation();
-
-    console.log(topicId);
 
     const onSubmit = form.handleSubmit(async (data) => {
         if (topicId) {
@@ -25,12 +29,19 @@ export const CreateComment = ({ parent = null }: CreateCommentProps) => {
                     text: data.text,
                     parentComment: parent,
                     topicId,
-                });
+                }).unwrap();
             } catch (e: unknown) {
                 console.error(e);
             }
         }
     });
+
+    useEffect(() => {
+        if (isSuccess) {
+            form.reset();
+            textFieldRef.current?.focus();
+        }
+    }, [isSuccess]);
 
     return (
         <>
@@ -47,7 +58,12 @@ export const CreateComment = ({ parent = null }: CreateCommentProps) => {
                         <Controller
                             name='text'
                             render={({ field }) => (
-                                <TextareaAutosize {...field} style={{ width: '100%', minHeight: 150, padding: 16 }} />
+                                <TextareaAutosize
+                                    {...field}
+                                    ref={textFieldRef}
+                                    autoFocus
+                                    style={{ width: '100%', minHeight: 150, padding: 16 }}
+                                />
                             )}
                         />
                         <LoadingButton loading={isLoading} type='submit'>

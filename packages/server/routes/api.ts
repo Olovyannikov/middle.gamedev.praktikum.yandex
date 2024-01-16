@@ -42,7 +42,9 @@ router.use(function checkAuth(_req, _res, next) {
                         .then((res) => {
                             const [user] = res;
                             _res.locals.userId = user.id;
-                            // @ts-ignore unreasonable
+                            //TODO разобраться почему сюда не попадает тип userModel
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
                             _res.locals.user.isSSO = user.isSSO;
                             next();
                         })
@@ -90,7 +92,9 @@ router.get('/topic/:topicId', (_req, _res) => {
                 as: 'author',
             },
         ],
-        where: { id: _req.params.topicId },
+        where: {
+            id: _req.params.topicId,
+        },
     })
         .then((res) => {
             if (!res) _res.status(404).end(JSON.stringify({ reason: 'Not found' }));
@@ -118,11 +122,6 @@ router.post('/topic', async (_req, _res) => {
 });
 
 router.get('/comment/:topicId', function (_req, _res) {
-    const topic = _req.params.topicId;
-    if (!topic) {
-        _res.status(400).end(JSON.stringify({ reason: 'topic field required' }));
-        return;
-    }
     Comment.findAll({
         include: {
             model: User,
@@ -131,7 +130,7 @@ router.get('/comment/:topicId', function (_req, _res) {
         },
         order: [['createdAt', 'ASC']],
         where: {
-            id: topic,
+            topicId: _req.params.topicId,
         },
     })
         .then((res) => {
