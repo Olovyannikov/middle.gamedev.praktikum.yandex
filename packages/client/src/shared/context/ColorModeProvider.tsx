@@ -8,7 +8,7 @@ enum ColorModes {
     Dark = 'dark',
 }
 
-type ColorMode = ColorModes.Light | ColorModes.Dark;
+//type ColorMode = ColorModes.Light | ColorModes.Dark;
 
 type ColorModeProps = () => void;
 
@@ -24,8 +24,10 @@ export const useColorMode = () => {
 
 export const ColorModeProvider = ({ children }: PropsWithChildren) => {
     const [colorMode, setColorMode] = useState(() => {
-        const lsColorMode = localStorage.getItem('colorMode');
-        return (lsColorMode ?? ColorModes.Light) as ColorMode;
+        //localStorage ломает SSR сборку и вообще тут должны быть запросы на сервер
+        //const lsColorMode = localStorage.getItem('colorMode');
+        //return (lsColorMode ?? ColorModes.Light) as ColorMode;
+        return ColorModes.Light;
     });
 
     const toggleColorMode = useCallback(() => {
@@ -33,7 +35,7 @@ export const ColorModeProvider = ({ children }: PropsWithChildren) => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('colorMode', colorMode);
+        //localStorage.setItem('colorMode', colorMode);
     }, [colorMode]);
 
     const theme = useMemo(
