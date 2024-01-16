@@ -28,7 +28,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
     const { data, error, isError, isLoading } = useGetUserQuery();
 
-    const logoutHandler = () => setIsAuth(false);
+    const logoutHandler = async () => {
+        setIsAuth(false);
+    };
 
     useEffect(() => {
         if (!isLoading && !data) {

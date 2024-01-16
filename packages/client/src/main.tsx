@@ -12,11 +12,11 @@ ReactDOM.hydrateRoot(
     document.getElementById('root') as HTMLElement,
     <BrowserRouter>
         <Provider store={store}>
-            <AuthProvider>
-                <ThemeProvider>
+            <ThemeProvider>
+                <AuthProvider>
                     <App />
-                </ThemeProvider>
-            </AuthProvider>
+                </AuthProvider>
+            </ThemeProvider>
         </Provider>
     </BrowserRouter>
 );

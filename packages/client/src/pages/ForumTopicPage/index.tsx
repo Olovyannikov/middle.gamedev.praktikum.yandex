@@ -1,5 +1,5 @@
 import { Navigate, useParams } from 'react-router-dom';
-import { Button, Divider, Grid, TextareaAutosize, Typography } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { skipToken } from '@reduxjs/toolkit/query';
 
 import { CreateComment } from '@/features';

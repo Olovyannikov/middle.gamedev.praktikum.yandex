@@ -12,6 +12,8 @@ export const UserInfo = () => {
     const { isAuth } = useAuth();
     const { data: user } = useGetUserQuery(!isAuth ? skipToken : undefined);
 
+    console.log({ isAuth });
+
     return (
         <Container className={cn(s.info)}>
             <Typography variant='h4'>User information</Typography>
