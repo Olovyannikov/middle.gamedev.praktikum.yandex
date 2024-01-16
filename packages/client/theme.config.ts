@@ -1,5 +1,5 @@
 export const themeOptions = {
     typography: {
-        fontFamily: 'Roboto Mono, Arial',
+        fontFamily: 'Monofett, Roboto Mono, Arial',
     },
 }

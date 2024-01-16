@@ -7,7 +7,16 @@ import { createServer as createViteServer, type ViteDevServer } from 'vite';
 
 import { router as apiRouter } from './routes/api';
 
-dotenv.config({ path: '../../.env' });
+const isSSR = () => {
+    let isSSR = false;
+    process.argv.forEach((e) => {
+        if (e.indexOf('SSR') > -1) isSSR = true;
+    });
+    return isSSR;
+};
+
+if (isSSR()) dotenv.config();
+else dotenv.config({ path: '../../.env' });
 
 import { configureStore } from '@reduxjs/toolkit';
 import express from 'express';
@@ -23,7 +32,7 @@ const isDev = () => process.env.NODE_ENV === 'development';
 
 const sequelizeOptions: SequelizeOptions = {
     host: 'localhost',
-    port: process.env.POSTGRES_PORT ? Number(process.env.POSTGRES_PORT) : 3001,
+    port: Number(process.env.POSTGRES_PORT) || 3001,
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
@@ -57,7 +66,7 @@ async function startServer() {
     const srcPath = path.dirname(require.resolve('client/index.html'));
     const ssrClientPath = require.resolve('client/ssr-dist/ssr.cjs');
 
-    if (isDev() && vite) {
+    if (isDev()) {
         vite = await createViteServer({
             server: { middlewareMode: true },
             root: srcPath,
@@ -119,7 +128,6 @@ async function startServer() {
                 template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
             } else {
                 template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
-
                 template = (await vite?.transformIndexHtml(url, template)) ?? undefined;
             }
 
