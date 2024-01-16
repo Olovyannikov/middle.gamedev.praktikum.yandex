@@ -1,17 +1,30 @@
 .nav {
   display: flex;
-  align-items: center;
   padding: var(--size-lg);
   width: 100%;
   min-height: 60px;
   box-shadow: var(--shadow-2), var(--shadow-1);
   background-color: var(--neutral-100);
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.darkNav {
+  background-color: var(--black);
 }
 
 .list {
   display: flex;
+  align-items: center;
   margin-left: auto !important;
-  gap: var(--size-md);
+  gap: var(--size-lg);
+}
+
+.colorModeToggle {
+  display: flex;
+  align-items: center;
 }
 
 .logout {
@@ -32,11 +45,10 @@
   }
 }
 
-.hr {
-  margin: 0;
-  border: 0;
-  border-radius: var(--size-xs);
-  height: var(--size-xxs);
-  box-shadow: var(--shadow-1);
-  background: var(--neutral-100);
+.darkLogout {
+  color: var(--white);
+
+  &::before {
+    background-color: var(--white);
+  }
 }

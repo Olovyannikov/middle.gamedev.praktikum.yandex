@@ -15,8 +15,17 @@ body {
   font-size: var(--size-md);
   line-height: 1.1;
   font-family: var(--font-main);
-  color: var(--neutral-700);
+}
+
+.page-wrapper {
+  min-height: 100vh;
   background-color: var(--white);
+  color: var(--neutral-700);
+
+  &.dark-mode {
+    background-color: var(--black-pearl);
+    color: var(--white);
+  }
 }
 
 .btn-reset {

@@ -1,3 +1,8 @@
+.dark {
+  color: var(--white);
+}
+
 .active {
-    color: var(--purple-600);
+  color: var(--purple-600);
+  cursor: default;
 }

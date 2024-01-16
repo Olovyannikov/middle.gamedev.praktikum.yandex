@@ -11,6 +11,7 @@
     "test": "jest ."
   },
   "dependencies": {
+    "@mui/icons-material": "^5.15.4",
     "@types/node": "^20.10.4",
     "@types/sequelize": "^4.28.20",
     "body-parser": "^1.20.2",

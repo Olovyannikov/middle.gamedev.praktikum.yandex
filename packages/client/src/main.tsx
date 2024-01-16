@@ -1,12 +1,11 @@
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material';
 
 import { store } from '@/app/store';
 import { AuthProvider } from '@/shared/context/AuthContext';
+import { ColorModeProvider as ThemeProvider } from '@/shared/context/ColorModeProvider';
 
-import { theme } from '../theme.config';
 import { App } from './app/App';
 
 ReactDOM.hydrateRoot(
@@ -14,7 +13,7 @@ ReactDOM.hydrateRoot(
     <BrowserRouter>
         <Provider store={store}>
             <AuthProvider>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider>
                     <App />
                 </ThemeProvider>
             </AuthProvider>
