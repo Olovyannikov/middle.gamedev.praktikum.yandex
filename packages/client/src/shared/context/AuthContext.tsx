@@ -24,7 +24,7 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
-    const [isAuth, setIsAuth] = useState(true);
+    const [isAuth, setIsAuth] = useState(false);
 
     const { data, error, isError, isLoading } = useGetUserQuery();
 
