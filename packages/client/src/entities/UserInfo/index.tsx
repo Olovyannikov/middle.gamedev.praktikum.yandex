@@ -1,6 +1,5 @@
 import { Typography } from '@mui/material';
 import { skipToken } from '@reduxjs/toolkit/query';
-import cn from 'clsx';
 
 import { useGetUserQuery } from '@/services/AuthService/AuthService';
 import { useAuth } from '@/shared/context/AuthContext';
@@ -12,10 +11,8 @@ export const UserInfo = () => {
     const { isAuth } = useAuth();
     const { data: user } = useGetUserQuery(!isAuth ? skipToken : undefined);
 
-    console.log({ isAuth });
-
     return (
-        <Container className={cn(s.info)}>
+        <Container className={s.info}>
             <Typography variant='h4'>User information</Typography>
             {user ? (
                 <div>

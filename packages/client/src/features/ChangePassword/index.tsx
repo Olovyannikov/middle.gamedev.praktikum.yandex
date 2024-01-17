@@ -38,7 +38,7 @@ export const ChangePassword = memo(() => {
             <Button onClick={setShowChangePass}>Change password?</Button>
             <FormProvider {...methods}>
                 <Form hidden={!showChangePass} onSubmit={methods.handleSubmit(onSubmitPassword)}>
-                    <Container className={cn(s.password_section)}>
+                    <Container className={s.password_section}>
                         <FormInputText label='Пароль' name='oldPassword' type='password' />
                         <FormInputText label='Новый пароль' name='newPassword' type='password' />
                         <Button type='submit' variant='contained'>

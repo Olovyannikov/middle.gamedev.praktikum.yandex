@@ -31,7 +31,7 @@ export const UploadAvatar = () => {
         if (!file) return;
         setAvatarFile(file);
         setIsModalOpen();
-        file && setPreviewAvatar(URL.createObjectURL(file));
+        setPreviewAvatar(URL.createObjectURL(file));
     };
 
     const handleSubmitAvatar = async (e: FormEvent<HTMLFormElement>) => {
@@ -46,7 +46,7 @@ export const UploadAvatar = () => {
     };
 
     return (
-        <Form id='avatarForm' className={cn(s.root)} onSubmit={handleSubmitAvatar}>
+        <Form id='avatarForm' className={s.root} onSubmit={handleSubmitAvatar}>
             <label
                 className={cn(s.position, {
                     [s.baseAvatar]: !user || !user.avatar,
@@ -55,16 +55,16 @@ export const UploadAvatar = () => {
                 <img
                     src={user && user.avatar ? resourcesBaseUrl + user.avatar : imgAvatar}
                     alt='avatar'
-                    className={cn(s.avatar)}
+                    className={s.avatar}
                 />
-                <input type='file' accept='image/*' onChange={handleAvatarChange} className={cn(s.overlay)} hidden />
-                <span className={cn(s.overlay)}>Change avatar</span>
+                <input type='file' accept='image/*' onChange={handleAvatarChange} className={s.overlay} hidden />
+                <span className={s.overlay}>Change avatar</span>
             </label>
-            <Modal open={isModalOpen} onClose={setIsModalOpen} className={cn(s.modal)}>
-                <Container className={cn(s.modalContainer)}>
-                    <img src={previewAvatar} alt='avatar' className={cn(s.modalPreview)} />
+            <Modal open={isModalOpen} onClose={setIsModalOpen} className={s.modal}>
+                <Container className={s.modalContainer}>
+                    <img src={previewAvatar} alt='avatar' className={s.modalPreview} />
 
-                    <Container className={cn(s.modalButtons)}>
+                    <Container className={s.modalButtons}>
                         <Button variant='contained' color='secondary' onClick={setIsModalOpen}>
                             Cancel
                         </Button>
