@@ -34,6 +34,10 @@ export interface SignupResponse {
     id: number;
 }
 
+export interface ThemeResponse {
+    theme: string;
+}
+
 export type userResponse = User;
 
 export type avatarRequest = FormData;

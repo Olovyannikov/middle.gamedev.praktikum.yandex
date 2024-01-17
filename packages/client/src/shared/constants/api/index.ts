@@ -8,6 +8,10 @@ export const resourcesBaseUrl = 'http://' + basePracticumApi + '/resources';
 
 const baseLocalApi = baseUrl + '/api';
 
+export const serverOperations = {
+    themeChange: baseLocalApi + '/theme',
+};
+
 export const authOperations = {
     signup: basePracticumApi + '/auth/signup',
     signin: basePracticumApi + '/auth/signin',

@@ -2,6 +2,7 @@ import { createContext, type PropsWithChildren, useCallback, useContext, useEffe
 import { createTheme, ThemeProvider } from '@mui/material';
 
 import { themeOptions } from '@/../theme.config';
+import { useChangeThemeMutation } from '@/services/themeApi';
 
 enum ColorModes {
     Light = 'light',
@@ -30,12 +31,21 @@ export const ColorModeProvider = ({ children }: PropsWithChildren) => {
         return ColorModes.Light;
     });
 
+    const [changeTheme, themeRes] = useChangeThemeMutation();
+
+    const postTheme = async (theme: string) => {
+        const result = await changeTheme(theme);
+        console.log('SERVER', result);
+        console.log('WHAT', themeRes);
+    };
+
     const toggleColorMode = useCallback(() => {
         setColorMode((prevColorMode) => (prevColorMode === ColorModes.Light ? ColorModes.Dark : ColorModes.Light));
     }, []);
 
     useEffect(() => {
         //localStorage.setItem('colorMode', colorMode);
+        postTheme(colorMode);
     }, [colorMode]);
 
     const theme = useMemo(

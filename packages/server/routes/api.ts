@@ -45,6 +45,9 @@ router.use(function checkAuth(_req, _res, next) {
                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                             // @ts-ignore
                             _res.locals.user.isSSO = user.isSSO;
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
+                            _res.locals.user.theme = user.theme;
                             next();
                         })
                         .catch((error) => {
@@ -159,4 +162,25 @@ router.post('/comment', function (_req, _res) {
 
 router.get('/user', (_req, _res) => {
     _res.send(_res.locals.user);
+});
+
+router.post('/theme', function (_req, _res) {
+    console.log('WTF', _req.body.theme);
+    User.update(
+        {
+            theme: _req.body.theme,
+        },
+        {
+            where: {
+                id: _res.locals.userId,
+            },
+        }
+    )
+        .then(() => {
+            _res.send(JSON.stringify({ response: 'success' }));
+        })
+        .catch((error) => {
+            _res.status(400).end(JSON.stringify({ reason: error }));
+            console.error('Failed chacnge theme : ', error);
+        });
 });

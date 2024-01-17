@@ -6,6 +6,7 @@ export interface User {
     avatar: string;
     login: string;
     isSSO: boolean;
+    theme: string;
 }
 export const userModel: ModelAttributes<Model, User> = {
     name: {
@@ -21,5 +22,9 @@ export const userModel: ModelAttributes<Model, User> = {
     },
     isSSO: {
         type: DataType.BOOLEAN,
+    },
+    theme: {
+        type: DataType.STRING,
+        defaultValue: 'light',
     },
 };
