@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { toggleFullscreen } from '../utils/toggleFullScreen';
 
 export const useFullScreenAPI = () => {
@@ -11,11 +12,7 @@ export const useFullScreenAPI = () => {
 
         document.addEventListener('fullscreenchange', onFullscreenChange);
 
-        return () =>
-            document.removeEventListener(
-                'fullscreenchange',
-                onFullscreenChange
-            );
+        return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
     }, []);
 
     return { isFullscreen, toggleFullscreen };

@@ -1,4 +1,4 @@
-import { type KeyboardEvent, useEffect, useState } from 'react';
+import { type KeyboardEvent, useEffect, useMemo, useState } from 'react';
 import { useInterval, useLockedBody } from 'usehooks-ts';
 
 import { DIRECTIONS, GAME_STATE, SEGMENT_SIZE } from '@/widgets/Game/constants';
@@ -226,7 +226,7 @@ export const useGame = ({ width, height, onGameOver, gameState, setGameState }: 
         }
     }, [snakeBody?.length]);
 
-    const total = snakeBody && snakeBody.length > 1 ? snakeBody.length : 0;
+    const total = useMemo(() => (snakeBody && snakeBody.length > 1 ? snakeBody.length : 0), [snakeBody?.length]);
 
     return {
         score: total * 5,

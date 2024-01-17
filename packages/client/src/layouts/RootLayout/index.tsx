@@ -10,7 +10,7 @@ interface RootLayoutProps {
     hasHeader?: boolean;
 }
 
-export const RootLayout = ({ hasHeader = true, children }: PropsWithChildren<RootLayoutProps>) => {
+export function RootLayout({ hasHeader = true, children }: PropsWithChildren<RootLayoutProps>) {
     const isDarkMode = useIsDarkMode();
 
     return (
@@ -19,4 +19,4 @@ export const RootLayout = ({ hasHeader = true, children }: PropsWithChildren<Roo
             <Main>{children}</Main>
         </div>
     );
-};
+}

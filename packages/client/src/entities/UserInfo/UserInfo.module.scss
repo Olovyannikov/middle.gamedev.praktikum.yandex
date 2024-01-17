@@ -1,0 +1,14 @@
+.info {
+  z-index: 1;
+  margin-top: var(--size-lg);
+
+  h2 {
+    font-size: var(--size-lg);
+    color: var(--neutral-300);
+  }
+
+  p {
+    font-size: var(--size-md);
+    color: var(--neutral-400);
+  }
+}

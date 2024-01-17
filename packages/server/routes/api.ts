@@ -2,6 +2,7 @@ import express from 'express';
 import * as https from 'https';
 
 import { Comment, Topic, User } from '../index';
+
 export const router = express.Router();
 
 interface AuthOptions {
@@ -145,7 +146,7 @@ router.post('/comment', function (_req, _res) {
     Comment.create({
         text: _req.body.text || 'No text',
         parentComment: _req.body.parentComment || null,
-        topicId: _req.body.topic,
+        topicId: _req.body.topicId,
         authorId: _res.locals.userId,
     })
         .then((res) => {

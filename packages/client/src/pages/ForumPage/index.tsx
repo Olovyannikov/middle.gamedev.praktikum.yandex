@@ -1,55 +1,70 @@
 import { Link } from 'react-router-dom';
-import { Button, Grid, Typography } from '@mui/material';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import {
+    Button,
+    Grid,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+} from '@mui/material';
+import dayjs from 'dayjs';
 
+import { CreateForumTopic } from '@/entities';
 import { RootLayout } from '@/layouts/RootLayout';
+import { useGetAllPostsQuery } from '@/services/ForumService/Forum.service';
 
 export default function ForumPage() {
+    const { data } = useGetAllPostsQuery();
+
+    console.log(data);
+
     return (
         <RootLayout>
-            <Grid container alignItems='center' justifyContent='center' direction='column' sx={{ minWidth: '100%' }}>
-                <Typography variant='h4' component='h1' sx={{ padding: '20px 0' }}>
-                    Snake's forum page
+            <Grid
+                container
+                alignItems='center'
+                justifyContent='center'
+                direction='column'
+                sx={{ minWidth: '100%', padding: 1 }}
+            >
+                <Typography variant='h4' sx={{ padding: '20px 0' }}>
+                    The Snake. Forum.
                 </Typography>
                 <Grid alignItems='center' justifyContent='center' sx={{ width: '90%' }}>
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} sx={{ marginBottom: 2 }}>
                         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Название топика</TableCell>
                                     <TableCell>Автор</TableCell>
-                                    <TableCell>Дата создания</TableCell>
+                                    <TableCell>Дата публикации</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell>
-                                        <Link to='/topic/1'>Как не умереть за первые 10 секунд</Link>
-                                    </TableCell>
-                                    <TableCell>jxSolo</TableCell>
-                                    <TableCell>02.03.2023</TableCell>
-                                </TableRow>
+                                {data?.map((topic) => (
+                                    <TableRow
+                                        key={topic.id}
+                                        sx={{
+                                            '&:last-child td, &:last-child th': {
+                                                border: 0,
+                                            },
+                                        }}
+                                    >
+                                        <TableCell>
+                                            <Link to={`/topic/${topic.id}`}>{topic.title}</Link>
+                                        </TableCell>
+                                        <TableCell>{topic.author.name}</TableCell>
+                                        <TableCell>{dayjs(topic.createdAt).format('DD MMM HH:mm a')}</TableCell>
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
-
-                    <Grid container alignItems='flex-end' justifyContent='flex-end'>
-                        <Button component={Link} to='/create/topic'>
-                            Create topic
-                        </Button>
-                    </Grid>
+                    <CreateForumTopic />
                 </Grid>
             </Grid>
         </RootLayout>

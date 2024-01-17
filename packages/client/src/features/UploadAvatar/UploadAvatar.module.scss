@@ -1,0 +1,107 @@
+.root {
+  z-index: 111;
+  display: flex;
+  align-self: center;
+  width: 130px;
+  height: 130px;
+}
+
+.position {
+  position: relative;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+}
+
+.baseAvatar {
+  background-color: var(--neutral-100);
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  font-size: 13px;
+  line-height: 14px;
+  color: #efefef;
+  opacity: 0;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: rgb(77 90 142);
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+
+.modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.modalContainer {
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  width: 300px;
+  height: 300px;
+}
+
+.modalPreview {
+  margin-top: 15px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.modalButtons {
+  display: flex;
+  margin-top: 10px;
+  border: 3px solid var(--white);
+  padding: 10px;
+  background: var(--neutral-700);
+}
+
+.modalCancelButton {
+  margin-right: 10px;
+  border-color: var(--white);
+  color: var(--neutral-400);
+  transition: 0.4s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.modalConfirmButton {
+  background: var(--blue-300);
+  transition: 0.4s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

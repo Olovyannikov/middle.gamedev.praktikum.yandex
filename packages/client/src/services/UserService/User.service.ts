@@ -1,13 +1,15 @@
-import { baseApi } from './baseApi';
-import { usersOperations } from '@/shared/constants/api';
-import {
-    avatarRequest,
-    avatarResponse,
-    passwordResponse,
-} from '@/shared/types/api';
+import { basePracticumApi } from '@/services/settings';
+import { avatarRequest, avatarResponse, passwordResponse } from '@/shared/types/api';
 import { NewPasswordSchemaType } from '@/shared/validators/UserValidation';
 
-export const usersApi = baseApi.injectEndpoints({
+import { baseApi } from '../baseApi';
+
+const usersOperations = {
+    avatar: basePracticumApi + '/user/profile/avatar',
+    password: basePracticumApi + '/user/password',
+} as const;
+
+export const UserService = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         changeAvatar: builder.mutation<avatarResponse, avatarRequest>({
             query: (body) => ({
@@ -18,10 +20,7 @@ export const usersApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['User'],
         }),
-        changePassword: builder.mutation<
-            passwordResponse,
-            NewPasswordSchemaType
-        >({
+        changePassword: builder.mutation<passwordResponse, NewPasswordSchemaType>({
             query: (body) => ({
                 url: usersOperations.password,
                 method: 'PUT',
@@ -37,4 +36,4 @@ export const usersApi = baseApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useChangeAvatarMutation, useChangePasswordMutation } = usersApi;
+export const { useChangeAvatarMutation, useChangePasswordMutation } = UserService;

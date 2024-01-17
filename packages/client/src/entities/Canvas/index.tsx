@@ -1,20 +1,15 @@
-import { forwardRef, useEffect } from 'react';
-import type { DetailedHTMLProps, HTMLAttributes, RefObject } from 'react';
+import { type DetailedHTMLProps, forwardRef, type HTMLAttributes, memo, type RefObject, useEffect } from 'react';
 
 import { Card } from '@/shared/ui';
 
 import s from './Canvas.module.scss';
 
-interface CanvasProps
-    extends DetailedHTMLProps<
-        HTMLAttributes<HTMLCanvasElement>,
-        HTMLCanvasElement
-    > {
+interface CanvasProps extends DetailedHTMLProps<HTMLAttributes<HTMLCanvasElement>, HTMLCanvasElement> {
     draw: (ctx: CanvasRenderingContext2D) => void;
 }
 
-export const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(
-    ({ draw, ...props }, ref) => {
+export const Canvas = memo(
+    forwardRef<HTMLCanvasElement, CanvasProps>(({ draw, ...props }, ref) => {
         useEffect(() => {
             const canvas = (ref as RefObject<HTMLCanvasElement>)?.current;
             const ctx = canvas?.getContext('2d');
@@ -30,16 +25,10 @@ export const Canvas = forwardRef<HTMLCanvasElement, CanvasProps>(
 
         return (
             <Card>
-                <canvas
-                    ref={ref}
-                    className={s.root}
-                    width={400}
-                    height={200}
-                    {...props}
-                />
+                <canvas ref={ref} className={s.root} width={400} height={200} {...props} />
             </Card>
         );
-    }
+    })
 );
 
 Canvas.displayName = 'Canvas';

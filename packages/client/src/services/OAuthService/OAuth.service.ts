@@ -1,9 +1,14 @@
-import { oauthOperations, redirectUri } from '@/shared/constants/api';
+import { baseApi } from '@/services/baseApi';
+import { basePracticumApi } from '@/services/settings';
+import { redirectUri } from '@/shared/constants/api';
 import type { ServiceIdResponse, YandexRequest } from '@/shared/types/api';
 
-import { baseApi } from './baseApi';
+const oauthOperations = {
+    yandex: basePracticumApi + '/oauth/yandex',
+    serviceId: basePracticumApi + '/oauth/yandex/service-id',
+};
 
-export const oauthApi = baseApi.injectEndpoints({
+export const OAuthService = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         signInUpWithYandex: builder.mutation<void, YandexRequest>({
             query: (body) => ({
@@ -25,4 +30,4 @@ export const oauthApi = baseApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useSignInUpWithYandexMutation, useLazyGetServiceIdQuery } = oauthApi;
+export const { useSignInUpWithYandexMutation, useLazyGetServiceIdQuery } = OAuthService;
