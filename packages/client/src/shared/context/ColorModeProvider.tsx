@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 import { themeOptions } from '@/../theme.config';
 import { useChangeThemeMutation } from '@/services/themeApi';
+import { useGetUserQuery } from '@/services/authApi';
 
 enum ColorModes {
     Light = 'light',
@@ -24,6 +25,7 @@ export const useColorMode = () => {
 };
 
 export const ColorModeProvider = ({ children }: PropsWithChildren) => {
+    const [isInitializated, setIsInitializated] = useState(true);
     const [colorMode, setColorMode] = useState(() => {
         //localStorage ломает SSR сборку и вообще тут должны быть запросы на сервер
         //const lsColorMode = localStorage.getItem('colorMode');
@@ -32,11 +34,10 @@ export const ColorModeProvider = ({ children }: PropsWithChildren) => {
     });
 
     const [changeTheme, themeRes] = useChangeThemeMutation();
+    const { data, error, isError, isLoading } = useGetUserQuery();
 
     const postTheme = async (theme: string) => {
         const result = await changeTheme(theme);
-        console.log('SERVER', result);
-        console.log('WHAT', themeRes);
     };
 
     const toggleColorMode = useCallback(() => {
@@ -44,9 +45,12 @@ export const ColorModeProvider = ({ children }: PropsWithChildren) => {
     }, []);
 
     useEffect(() => {
-        //localStorage.setItem('colorMode', colorMode);
+        if (isInitializated && data) {
+            setIsInitializated(false);
+            setColorMode(data.theme === 'light' ? ColorModes.Light : ColorModes.Dark);
+        }
         postTheme(colorMode);
-    }, [colorMode]);
+    }, [colorMode, data]);
 
     const theme = useMemo(
         () =>

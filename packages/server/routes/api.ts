@@ -165,7 +165,6 @@ router.get('/user', (_req, _res) => {
 });
 
 router.post('/theme', function (_req, _res) {
-    console.log('WTF', _req.body.theme);
     User.update(
         {
             theme: _req.body.theme,

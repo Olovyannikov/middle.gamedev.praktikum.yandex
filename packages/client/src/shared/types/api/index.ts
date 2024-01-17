@@ -12,6 +12,7 @@ export interface User {
     avatar?: string;
     email: string;
     isSSO: boolean;
+    theme: string;
 }
 
 export interface SigninRequest {
