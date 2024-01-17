@@ -33,8 +33,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     };
 
     useEffect(() => {
-        if (!isLoading && !data) {
-            setIsAuth(false);
+        if (!isLoading && data) {
+            setIsAuth(true);
         }
 
         if (isError && isErrorWithStatus(error) && error?.status === 401) {
