@@ -1,106 +1,56 @@
+import { Navigate, useParams } from 'react-router-dom';
+import { Divider, Grid, Typography } from '@mui/material';
+import { skipToken } from '@reduxjs/toolkit/query';
+
+import { CreateComment } from '@/features';
 import { RootLayout } from '@/layouts/RootLayout';
-import { useParams, Navigate } from 'react-router-dom';
-import {
-    Grid,
-    Typography,
-    Divider,
-    TextareaAutosize,
-    Button,
-} from '@mui/material';
+import { useGetCommentsByPostIdQuery, useGetPostByIdQuery } from '@/services/ForumService/Forum.service';
 
 export default function ForumTopicPage() {
-    let { id } = useParams();
+    const { topicId } = useParams();
+    const { data } = useGetPostByIdQuery(topicId ?? skipToken);
+    const { data: comments } = useGetCommentsByPostIdQuery(topicId ?? skipToken);
+
+    if (!topicId) {
+        return <Navigate to='/forum' replace />;
+    }
 
     return (
         <RootLayout>
-            {!id && <Navigate to="/forum" replace={true} />}
             <Grid
                 container
-                alignItems="center"
-                justifyContent="center"
-                direction="column"
+                alignItems='center'
+                justifyContent='center'
+                direction='column'
                 sx={{ minWidth: '100%', padding: 1 }}
                 gap={2}
             >
-                <Typography variant="h3">Topic {id}</Typography>
-                <Grid
-                    container
-                    alignItems="center"
-                    justifyContent="center"
-                    sx={{ width: '90%' }}
-                    gap={2}
-                >
-                    {new Array(5).fill(1).map((_, id) => {
-                        return (
-                            <Typography key={id} variant="subtitle1">
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Voluptatum similique
-                                temporibus amet tempore, placeat perferendis
-                                saepe, voluptas architecto rerum aut quidem. Vel
-                                quibusdam eos ullam esse, doloremque assumenda
-                                adipisci modi?
-                            </Typography>
-                        );
-                    })}
-                    <Divider
-                        sx={{ width: '100%' }}
-                        textAlign="left"
-                        component="li"
-                        light
-                    >
-                        <Typography variant="h6">Comments</Typography>
+                <Typography variant='h3'>{data?.title}</Typography>
+                <Grid container alignItems='center' justifyContent='center' sx={{ width: '90%' }} gap={2}>
+                    <Typography variant='subtitle1'>{data?.text}</Typography>
+                    <Divider sx={{ width: '100%' }} textAlign='left' component='li' light>
+                        <Typography variant='h6'>Comments</Typography>
                     </Divider>
-
-                    <Grid
-                        direction="column"
-                        container
-                        alignItems="flex-start"
-                        justifyContent="flex-start"
-                        gap={2}
-                    >
-                        {['Jamssk11', 'dajq7'].map((el) => {
-                            return (
+                    {comments && comments?.length > 0 && (
+                        <Grid direction='column' container alignItems='flex-start' justifyContent='flex-start' gap={2}>
+                            {comments?.map((el) => (
                                 <Grid
-                                    direction="column"
+                                    direction='column'
                                     container
-                                    alignItems="flex-start"
-                                    justifyContent="flex-start"
+                                    alignItems='flex-start'
+                                    justifyContent='flex-start'
                                     gap={1}
-                                    key={el}
+                                    key={el.id}
                                 >
-                                    <Typography variant="h6">{el}</Typography>
-                                    <Typography variant="subtitle1">
-                                        temporibus amet tempore, placeat
-                                        perferendis saepe, voluptas architecto
-                                        rerum aut quidem. Vel quibusdam eos
-                                        ullam esse, doloremque assumenda
-                                        adipisci modi?
-                                    </Typography>
+                                    <Typography variant='h6'>{el.text}</Typography>
                                 </Grid>
-                            );
-                        })}
-                    </Grid>
-                    <Divider
-                        sx={{ width: '100%' }}
-                        textAlign="left"
-                        component="li"
-                        light
-                    >
-                        <Typography variant="h6">Leave comment</Typography>
+                            ))}
+                        </Grid>
+                    )}
+                    <Divider sx={{ width: '100%' }} textAlign='left' component='li' light>
+                        <Typography variant='h6'>Leave comment</Typography>
                     </Divider>
-                    <Grid
-                        container
-                        sx={{ width: '100%' }}
-                        alignItems="flex-end"
-                        justifyContent="flex-end"
-                        gap={1}
-                        direction="column"
-                    >
-                        <TextareaAutosize
-                            style={{ width: '100%', minHeight: 150 }}
-                        />
-                        <Button type="button">Send</Button>
-                    </Grid>
+                    <CreateComment />
                 </Grid>
             </Grid>
         </RootLayout>

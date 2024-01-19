@@ -1,17 +1,10 @@
 import { z } from 'zod';
+
 import { RegExps } from '@/shared/constants/validators';
 
 const loginFields = ['login', 'password'];
 
-const registrationFields = [
-    'login',
-    'password',
-    'confirmPassword',
-    'first_name',
-    'second_name',
-    'phone',
-    'email',
-];
+const registrationFields = ['login', 'password', 'confirmPassword', 'first_name', 'second_name', 'phone', 'email'];
 
 const newPasswordFields = ['oldPassword', 'newPassword'];
 
@@ -27,8 +20,7 @@ const passwordRules = z
     });
 
 const nameRules = z.string().regex(RegExps.capitalLetterHyphen, {
-    message:
-        'Начинать нужно с заглавной буквы, из спецсимволов допустим только дефис',
+    message: 'Начинать нужно с заглавной буквы, из спецсимволов допустим только дефис',
 });
 
 const loginRules = z
@@ -36,8 +28,7 @@ const loginRules = z
     .min(3, { message: 'Не менее 3 символов' })
     .max(20, { message: 'Не более 20 символов' })
     .regex(RegExps.latinHyphenUnderscore, {
-        message:
-            'Может содержать только латинские символы, цифры, дефис и нижнее подчеркивание',
+        message: 'Может содержать только латинские символы, цифры, дефис и нижнее подчеркивание',
     })
     .regex(RegExps.notOnlyNumbers, {
         message: 'Не может состоять только из цифр',
@@ -85,9 +76,7 @@ export const RegistrationSchema = z
         path: ['confirmPassword'],
     });
 
-export const NewPasswordSchema = z.object(
-    getValidatorsByFields(newPasswordFields)
-);
+export const NewPasswordSchema = z.object(getValidatorsByFields(newPasswordFields));
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 

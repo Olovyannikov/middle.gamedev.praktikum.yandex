@@ -8,7 +8,7 @@ import { useToggle } from 'usehooks-ts';
 import { Form } from '@/components/Form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormStatusLine } from '@/components/FormStatusLine';
-import { useChangePasswordMutation } from '@/services/usersApi';
+import { useChangePasswordMutation } from '@/services/UserService/User.service';
 import type { RequestError } from '@/shared/types/api';
 import { Container } from '@/shared/ui';
 import { NewPasswordSchema, type NewPasswordSchemaType } from '@/shared/validators/UserValidation';
@@ -38,7 +38,7 @@ export const ChangePassword = memo(() => {
             <Button onClick={setShowChangePass}>Change password?</Button>
             <FormProvider {...methods}>
                 <Form hidden={!showChangePass} onSubmit={methods.handleSubmit(onSubmitPassword)}>
-                    <Container className={cn(s.password_section)}>
+                    <Container className={s.password_section}>
                         <FormInputText label='Пароль' name='oldPassword' type='password' />
                         <FormInputText label='Новый пароль' name='newPassword' type='password' />
                         <Button type='submit' variant='contained'>

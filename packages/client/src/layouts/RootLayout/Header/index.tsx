@@ -1,6 +1,7 @@
 import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { SignOut, Spinner } from '@phosphor-icons/react';
 import cn from 'clsx';
@@ -15,7 +16,7 @@ import s from './Header.module.scss';
 
 type HeaderProps = DetailedHTMLProps<HTMLAttributes<HTMLUListElement>, HTMLUListElement>;
 
-export const Header = ({ className, ...props }: HeaderProps) => {
+export function Header({ className, ...props }: HeaderProps) {
     const { isAuth } = useAuth();
     const { logout, isLoading } = useLogout();
     const toggleColorMode = useColorMode();
@@ -24,6 +25,12 @@ export const Header = ({ className, ...props }: HeaderProps) => {
     return (
         <header>
             <nav className={cn(s.nav, isDarkMode && s.darkNav)}>
+                <div className={s.colorModeToggle}>
+                    <Button onClick={toggleColorMode} color='inherit' sx={{ gap: 1 }}>
+                        {isDarkMode ? <Brightness4Icon /> : <Brightness7Icon />}
+                        {isDarkMode ? 'Dark' : 'Light'} mode
+                    </Button>
+                </div>
                 <ul className={cn(s.list, 'list-reset', className)} {...props}>
                     <li>
                         <AppLink to='/'>Main</AppLink>
@@ -54,16 +61,6 @@ export const Header = ({ className, ...props }: HeaderProps) => {
                     <li>
                         <AppLink to='/me'>Profile</AppLink>
                     </li>
-
-                    <li>
-                        <div className={s.colorModeToggle}>
-                            {isDarkMode ? 'Dark' : 'Light'} mode
-                            <IconButton sx={{ ml: 0.5 }} onClick={toggleColorMode} color='inherit'>
-                                {isDarkMode ? <Brightness4Icon /> : <Brightness7Icon />}
-                            </IconButton>
-                        </div>
-                    </li>
-
                     {isAuth && (
                         <li>
                             <button className={cn(s.logout, isDarkMode && s.darkLogout)} onClick={logout}>
@@ -75,4 +72,4 @@ export const Header = ({ className, ...props }: HeaderProps) => {
             </nav>
         </header>
     );
-};
+}

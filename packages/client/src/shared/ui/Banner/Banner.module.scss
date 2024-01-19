@@ -2,6 +2,7 @@
   padding-top: 85px;
   padding-bottom: 110px;
   min-height: 512px;
+
   // TODO: Изображение конфликтует с тёмной темой, пока отключу.
   // background: url("/img/bg.jpg") center/cover no-repeat;
 
@@ -14,8 +15,8 @@
 
   .title {
     margin-bottom: 55px;
-    font-size: 96px;
     font-family: var(--font-heading);
+    font-size: 96px;
     color: var(--black);
   }
 

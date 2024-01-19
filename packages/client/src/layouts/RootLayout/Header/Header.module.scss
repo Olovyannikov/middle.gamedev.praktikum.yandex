@@ -18,8 +18,8 @@
 .list {
   display: flex;
   align-items: center;
-  gap: var(--size-lg);
   margin-left: auto !important;
+  gap: var(--size-lg);
 }
 
 .colorModeToggle {

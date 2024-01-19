@@ -1,14 +1,20 @@
-import { authOperations } from '@/shared/constants/api';
-import { SigninResponse, SignupResponse, userResponse } from '@/shared/types/api';
-import { LoginSchemaType, RegistrationSchemaType } from '@/shared/validators/UserValidation';
+import { baseLocalApi, basePracticumApi } from '@/services/settings';
 
-import { baseApi } from './baseApi';
+import { baseApi } from '../baseApi';
+import type { SigninRequest, SigninResponse, SignupRequest, SignupResponse, UserResponse } from './Auth.dto';
 
-export const authApi = baseApi.injectEndpoints({
+export const AUTH_ENDPOINTS = {
+    signup: basePracticumApi + '/auth/signup',
+    signin: basePracticumApi + '/auth/signin',
+    user: baseLocalApi + '/user',
+    logout: basePracticumApi + '/auth/logout',
+} as const;
+
+export const AuthService = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        signIn: builder.mutation<SigninResponse, LoginSchemaType>({
+        signIn: builder.mutation<SigninResponse, SigninRequest>({
             query: (body) => ({
-                url: authOperations.signin,
+                url: AUTH_ENDPOINTS.signin,
                 method: 'POST',
                 body,
                 credentials: 'include',
@@ -19,17 +25,17 @@ export const authApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['User'],
         }),
-        signUp: builder.mutation<SignupResponse, RegistrationSchemaType>({
+        signUp: builder.mutation<SignupResponse, SignupRequest>({
             query: (body) => ({
-                url: authOperations.signup,
+                url: AUTH_ENDPOINTS.signup,
                 method: 'POST',
                 body,
             }),
             invalidatesTags: ['User'],
         }),
-        getUser: builder.query<userResponse, void>({
+        getUser: builder.query<UserResponse, void>({
             query: () => ({
-                url: authOperations.user,
+                url: AUTH_ENDPOINTS.user,
                 credentials: 'include',
             }),
             transformErrorResponse: () => ({
@@ -39,7 +45,7 @@ export const authApi = baseApi.injectEndpoints({
         }),
         logOut: builder.mutation<void, void>({
             query: () => ({
-                url: authOperations.logout,
+                url: AUTH_ENDPOINTS.logout,
                 method: 'POST',
                 credentials: 'include',
             }),
@@ -49,4 +55,4 @@ export const authApi = baseApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useSignInMutation, useGetUserQuery, useSignUpMutation, useLogOutMutation } = authApi;
+export const { useSignInMutation, useGetUserQuery, useSignUpMutation, useLogOutMutation } = AuthService;

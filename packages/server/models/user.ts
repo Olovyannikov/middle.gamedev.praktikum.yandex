@@ -8,6 +8,7 @@ export interface User {
     isSSO: boolean;
     theme: string;
 }
+
 export const userModel: ModelAttributes<Model, User> = {
     name: {
         type: DataType.STRING,

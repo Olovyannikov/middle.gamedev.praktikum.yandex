@@ -3,9 +3,7 @@ interface FullScreenableElement {
     requestFullscreen?: () => Promise<void>;
     msRequestFullscreen?: () => Promise<void>;
     mozRequestFullScreen?: () => Promise<void>;
-    webkitRequestFullscreen?: (options?: {
-        navigationUI?: string;
-    }) => Promise<void>;
+    webkitRequestFullscreen?: (options?: { navigationUI?: string }) => Promise<void>;
 }
 
 // Определение интерфейса для документа с поддержкой FullScreen API
@@ -20,7 +18,7 @@ interface FullScreenableDocument {
     webkitExitFullscreen?: (() => Promise<void>) | undefined;
 }
 
-export function toggleFullscreen(elem?: FullScreenableElement): void {
+export async function toggleFullscreen(elem: FullScreenableElement = document.documentElement): Promise<void> {
     const documentTyped = document as FullScreenableDocument;
     const isFullscreenElement =
         !documentTyped.fullscreenElement &&
@@ -28,27 +26,25 @@ export function toggleFullscreen(elem?: FullScreenableElement): void {
         !documentTyped.webkitFullscreenElement &&
         !documentTyped.msFullscreenElement;
 
-    elem = elem || document.documentElement;
-
     if (isFullscreenElement) {
         if (elem.requestFullscreen) {
-            elem.requestFullscreen();
+            await elem.requestFullscreen();
         } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
+            await elem.msRequestFullscreen();
         } else if (elem.mozRequestFullScreen) {
-            elem.mozRequestFullScreen();
+            await elem.mozRequestFullScreen();
         } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen({ navigationUI: 'show' });
+            await elem.webkitRequestFullscreen({ navigationUI: 'show' });
         }
     } else {
         if (documentTyped.exitFullscreen) {
-            documentTyped.exitFullscreen();
+            await documentTyped.exitFullscreen();
         } else if (documentTyped.msExitFullscreen) {
-            documentTyped.msExitFullscreen();
+            await documentTyped.msExitFullscreen();
         } else if (documentTyped.mozCancelFullScreen) {
-            documentTyped.mozCancelFullScreen();
+            await documentTyped.mozCancelFullScreen();
         } else if (documentTyped.webkitExitFullscreen) {
-            documentTyped.webkitExitFullscreen();
+            await documentTyped.webkitExitFullscreen();
         }
     }
 }

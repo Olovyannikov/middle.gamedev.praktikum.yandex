@@ -4,23 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Container, Typography } from '@mui/material';
 import clsx from 'clsx';
+import { useIsClient } from 'usehooks-ts';
 
 import { Form } from '@/components/Form';
 import { FormInputText } from '@/components/FormInputText';
 import { FormPaperWrapper } from '@/components/FormPaperWrapper';
 import { FormStatusLine } from '@/components/FormStatusLine';
 import { RootLayout } from '@/layouts/RootLayout';
-import { useSignInMutation } from '@/services/authApi';
-import { useLazyGetServiceIdQuery } from '@/services/oauthApi';
+import { useSignInMutation } from '@/services/AuthService/AuthService';
+import { useLazyGetServiceIdQuery } from '@/services/OAuthService/OAuth.service';
 import { redirectUri } from '@/shared/constants/api';
 import { defaultValues } from '@/shared/constants/forms';
 import { useAuth } from '@/shared/context/AuthContext';
-import type { RequestError, ServiceIdResponse } from '@/shared/types/api';
-import { LoginSchema, LoginSchemaType } from '@/shared/validators/UserValidation';
+import type { RequestError } from '@/shared/types/api';
+import { LoginSchema, type LoginSchemaType } from '@/shared/validators/UserValidation';
 
 import s from './LoginPage.module.scss';
 
 export default function LoginPage() {
+    const isClient = useIsClient();
     const methods = useForm<LoginSchemaType>({
         defaultValues: defaultValues.login,
         mode: 'onChange',
@@ -51,7 +53,9 @@ export default function LoginPage() {
 
         if (isSuccess) {
             const { service_id } = data;
-            document.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${redirectUri}`;
+            document.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${
+                isClient ? window.location.origin : redirectUri
+            }`;
         }
     };
 
