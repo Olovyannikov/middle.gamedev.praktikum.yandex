@@ -47,7 +47,7 @@ export const ColorModeProvider = ({ children }: PropsWithChildren) => {
     useEffect(() => {
         if (isInitializated && data) {
             setIsInitializated(false);
-            setColorMode(data.theme === 'light' ? ColorModes.Light : ColorModes.Dark);
+            setColorMode(data.theme === ColorModes.Light ? ColorModes.Light : ColorModes.Dark);
         }
         postTheme(colorMode);
     }, [colorMode, data]);
