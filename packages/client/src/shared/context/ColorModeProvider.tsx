@@ -3,7 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 import { themeOptions } from '@/../theme.config';
 import { useChangeThemeMutation } from '@/services/themeApi';
-import { useGetUserQuery } from '@/services/authApi';
+import { useGetUserQuery } from '@/services/AuthService/AuthService';
 
 enum ColorModes {
     Light = 'light',
