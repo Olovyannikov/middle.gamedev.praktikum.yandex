@@ -7,4 +7,5 @@ export interface UserModel {
     login: string;
     avatar?: string;
     email: string;
+    theme?: string;
 }
