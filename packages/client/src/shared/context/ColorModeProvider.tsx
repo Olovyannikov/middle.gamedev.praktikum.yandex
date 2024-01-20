@@ -2,7 +2,7 @@ import { createContext, type PropsWithChildren, useCallback, useContext, useEffe
 import { createTheme, ThemeProvider } from '@mui/material';
 
 import { themeOptions } from '@/../theme.config';
-import { useChangeThemeMutation } from '@/services/themeApi';
+import { useChangeThemeMutation } from '@/services/ThemeService/themeService';
 import { useGetUserQuery } from '@/services/AuthService/AuthService';
 
 enum ColorModes {

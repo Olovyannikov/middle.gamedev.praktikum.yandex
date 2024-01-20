@@ -10,10 +10,6 @@ export type avatarResponse = UserModel;
 
 export type passwordResponse = string;
 
-export interface ThemeResponse {
-    theme: string;
-}
-
 export interface YandexRequest {
     code: string;
     redirect_uri: string;

@@ -1,12 +1,16 @@
-import { serverOperations } from '@/shared/constants/api';
-import { ThemeResponse } from '@/shared/types/api';
-import { baseApi } from './baseApi';
+import { baseApi } from '../baseApi';
+import { baseLocalApi } from '../settings';
+import { ThemeResponse } from './theme.dto';
+
+const THEME_ENDPOINTS = {
+    THEME: baseLocalApi + '/theme',
+} as const;
 
 export const themeApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         changeTheme: builder.mutation<ThemeResponse, string>({
             query: (body) => ({
-                url: serverOperations.themeChange,
+                url: THEME_ENDPOINTS.THEME,
                 method: 'POST',
                 body: {
                     theme: body,
