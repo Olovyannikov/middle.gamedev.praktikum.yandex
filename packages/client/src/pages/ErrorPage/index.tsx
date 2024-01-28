@@ -4,7 +4,7 @@ import { RootLayout } from '@/layouts/RootLayout';
 import ErrorVector from './ErrorVector.svg';
 
 interface IError {
-    error: number | undefined;
+    error?: number;
 }
 
 export default function Error({ error }: IError) {
