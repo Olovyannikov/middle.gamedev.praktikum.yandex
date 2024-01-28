@@ -1,6 +1,6 @@
 import type { RouteProps } from 'react-router-dom';
 
-import ErrorPage from '@/pages/ErrorPage';
+import Error from '@/pages/ErrorPage';
 import ForumPage from '@/pages/ForumPage';
 import ForumTopicPage from '@/pages/ForumTopicPage';
 import GamePage from '@/pages/GamePage';
@@ -78,7 +78,7 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     },
     [AppRoutes.Error]: {
         path: RouterPaths.Error,
-        element: <ErrorPage />,
+        element: <Error />,
     },
     [AppRoutes.TOPIC]: {
         path: RouterPaths.topic,

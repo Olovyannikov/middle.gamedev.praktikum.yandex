@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Error from '@/pages/Error';
+import Error from '@/pages/ErrorPage';
 import { router } from '@/shared/router';
 
 export const AppRouter = () => (
