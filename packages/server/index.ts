@@ -31,7 +31,7 @@ import { baseApi } from './store';
 const isDev = () => process.env.NODE_ENV === 'development';
 
 const sequelizeOptions: SequelizeOptions = {
-    host: 'localhost',
+    host: 'postgres',
     port: Number(process.env.POSTGRES_PORT) || 3001,
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
