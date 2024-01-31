@@ -9,6 +9,9 @@
 .prettierignore
 .stylelintignore
 .npmrc
+Dockerfile.client
+Dockerfile.server
+.dockerignore
 
 /build
 node_modules

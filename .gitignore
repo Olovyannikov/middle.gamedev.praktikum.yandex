@@ -2,6 +2,7 @@
 dist
 ssr-dist
 node_modules
+data
 .idea
 .vscode/*
 !.vscode/settings.json

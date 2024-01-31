@@ -1,27 +1,25 @@
-ARG NODE_VERSION=16
-ARG SERVER_PORT=3001
+ARG NODE_VERSION=18
 
 FROM node:$NODE_VERSION-buster as base
 
 WORKDIR /app
-
 FROM base as builder
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
-
 COPY . .
 
 RUN yarn lerna bootstrap
-RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
+RUN yarn lerna run build:ssr --scope=client
+RUN yarn lerna run build --scope=server
 
+# Устанавливаем dockerize
+RUN apt-get update && apt-get install -y wget
+RUN wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.1.tar.gz \
+    && rm dockerize-linux-amd64-v0.6.1.tar.gz
 
-FROM node:$NODE_VERSION-buster-slim as production
-WORKDIR /app
-
-COPY --from=builder /app/packages/server/dist/ /app/
-COPY --from=builder /app/packages/server/package.json /app/package.json
-RUN yarn install --production=true
-
+ENV POSTGRES_PORT=${POSTGRES_PORT}
+ENV SERVER_PORT=${SERVER_PORT}
 EXPOSE $SERVER_PORT
-CMD [ "node", "/app/index.js" ]
+CMD ["dockerize", "-wait", "tcp://postgres:5432", "-timeout", "1s", "node", "packages/server/dist/index.js", "SSR"]
