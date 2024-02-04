@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Error500 from '@/pages/Error500';
+import Error from '@/pages/ErrorPage';
 import { router } from '@/shared/router';
 
 export const AppRouter = () => (
@@ -8,6 +8,6 @@ export const AppRouter = () => (
         {Object.values(router).map((route) => (
             <Route key={route.path} {...route} />
         ))}
-        <Route path='*' element={<Error500 />} />
+        <Route path='*' element={<Error />} />
     </Routes>
 );
