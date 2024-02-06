@@ -4,7 +4,7 @@ export const baseApi = createApi({
     reducerPath: 'authApi',
     tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://',
+        baseUrl: '',
     }),
     endpoints: () => ({}),
 });
