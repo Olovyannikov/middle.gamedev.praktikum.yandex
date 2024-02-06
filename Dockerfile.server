@@ -10,7 +10,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 RUN yarn lerna bootstrap
-RUN yarn lerna run build:ssr --scope=client
+# RUN yarn lerna run build:ssr --scope=client
 RUN yarn lerna run build --scope=server
 
 # Устанавливаем dockerize
