@@ -1,6 +1,6 @@
 .nav {
   display: flex;
-  padding: var(--size-lg);
+  padding: var(--size-lg) var(--size-5xl);
   width: 100%;
   min-height: 60px;
   box-shadow: var(--shadow-2), var(--shadow-1);
@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   margin-left: auto !important;
-  gap: var(--size-lg);
+  gap: var(--size-2xl);
 }
 
 .colorModeToggle {

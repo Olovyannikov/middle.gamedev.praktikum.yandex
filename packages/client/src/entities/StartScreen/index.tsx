@@ -39,7 +39,9 @@ export const StartScreen = ({
                             {gameState === GAME_STATE.GAME_OVER && <GameEndScreen setGameState={setGameState} />}
                             {gameState === GAME_STATE.INIT && (
                                 <Stack alignItems='center' justifyContent='center'>
-                                    <Typography variant='h1'>The Snake</Typography>
+                                    <Typography mb={2} variant='h2' component='h1'>
+                                        The Snake
+                                    </Typography>
                                     <Typography variant='h2'>🐍</Typography>
 
                                     <Button onClick={() => setGameState(GAME_STATE.PREPARE)}>Play!</Button>

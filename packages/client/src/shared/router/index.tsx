@@ -5,7 +5,6 @@ import ForumPage from '@/pages/ForumPage';
 import ForumTopicPage from '@/pages/ForumTopicPage';
 import GamePage from '@/pages/GamePage';
 import IndexPage from '@/pages/IndexPage';
-import LeaderBoardPage from '@/pages/LeaderBoardPage';
 import LoginPage from '@/pages/LoginPage';
 import ProfilePage from '@/pages/ProfilePage';
 import RegistrationPage from '@/pages/RegistationPage';
@@ -18,7 +17,6 @@ export const AppRoutes = {
     REGISTRATION: 'registration',
     PROFILE: 'profile',
     GAME: 'game',
-    LEADERBOARD: 'leaderboard',
     FORUM: 'forum',
     TOPIC: 'topic',
     Error: 'Error',
@@ -33,7 +31,6 @@ export const RouterPaths: Record<AppRoutesValues, string> = {
     [AppRoutes.REGISTRATION]: '/sign-up',
     [AppRoutes.PROFILE]: '/me',
     [AppRoutes.GAME]: '/game',
-    [AppRoutes.LEADERBOARD]: '/leaderboard',
     [AppRoutes.FORUM]: '/forum',
     [AppRoutes.Error]: '/505',
     [AppRoutes.TOPIC]: '/topic/:topicId',
@@ -63,10 +60,6 @@ export const router: Record<AppRoutesValues, RouteProps> = {
     [AppRoutes.GAME]: {
         path: RouterPaths.game,
         element: <GamePage />,
-    },
-    [AppRoutes.LEADERBOARD]: {
-        path: RouterPaths.leaderboard,
-        element: <LeaderBoardPage />,
     },
     [AppRoutes.FORUM]: {
         path: RouterPaths.forum,
