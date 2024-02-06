@@ -14,12 +14,12 @@ RUN yarn lerna bootstrap
 RUN yarn lerna run build --scope=server
 
 # Устанавливаем dockerize
-RUN apt-get update && apt-get install -y wget
-RUN wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz \
-    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.1.tar.gz \
-    && rm dockerize-linux-amd64-v0.6.1.tar.gz
+# RUN apt-get update && apt-get install -y wget
+# RUN wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz \
+#     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.1.tar.gz \
+#     && rm dockerize-linux-amd64-v0.6.1.tar.gz
 
 ENV POSTGRES_PORT=${POSTGRES_PORT}
 ENV SERVER_PORT=${SERVER_PORT}
 EXPOSE $SERVER_PORT
-CMD ["dockerize", "-wait", "tcp://postgres:5432", "-timeout", "1s", "node", "packages/server/dist/index.js", "SSR"]
+CMD ["node", "packages/server/dist/index.js", "SSR"]
