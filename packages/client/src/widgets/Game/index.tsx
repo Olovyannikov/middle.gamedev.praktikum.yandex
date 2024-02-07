@@ -26,7 +26,7 @@ export const Game = memo(() => {
 
     return (
         <div className={s.root} tabIndex={0} onKeyDown={onSnakeMove}>
-            {gameState !== GAME_STATE.INIT && <Typography>Total score: {score}</Typography>}
+            {gameState !== GAME_STATE.INIT && <Typography mb={2}>Total score: {score}</Typography>}
             <StartScreen gameState={gameState} setGameState={setGameState} />
             {(gameState === GAME_STATE.RUNNING || gameState === GAME_STATE.PAUSED) && (
                 <>

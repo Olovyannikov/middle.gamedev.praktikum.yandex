@@ -32,9 +32,6 @@ export default function IndexPage() {
                 <AppLink className={btnClassName} to={RouterPaths.forum}>
                     Forum
                 </AppLink>
-                <AppLink className={btnClassName} to={RouterPaths.leaderboard}>
-                    Leaderboard
-                </AppLink>
             </Stack>
         </RootLayout>
     );
