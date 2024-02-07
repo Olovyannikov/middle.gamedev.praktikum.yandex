@@ -31,7 +31,7 @@ import { baseApi } from './store';
 const isDev = () => process.env.NODE_ENV === 'development';
 
 const sequelizeOptions: SequelizeOptions = {
-    host: 'localhost',
+    host: 'postgres',
     port: Number(process.env.POSTGRES_PORT) || 5432,
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
@@ -51,7 +51,7 @@ Comment.belongsTo(User, { as: 'author' });
 
 async function startServer() {
     const app = express();
-    app.use(cors({ credentials: true, origin: 'http://http://thesnake.ya-praktikum.tech/:80' }));
+    app.use(cors({ credentials: true, origin: 'http://thesnake.ya-praktikum.tech' }));
 
     app.use(bodyParser.json());
     app.use(
@@ -82,7 +82,7 @@ async function startServer() {
         createProxyMiddleware('/', {
             changeOrigin: true,
             cookieDomainRewrite: {
-                '*': 'http://thesnake.ya-praktikum.tech/',
+                '*': 'thesnake.ya-praktikum.tech',
             },
             target: 'https://ya-praktikum.tech',
             pathRewrite: function (path) {
@@ -92,12 +92,12 @@ async function startServer() {
             onProxyRes: (proxyRes, _req, _res) => {
                 if (_req.method.toLowerCase() == 'post' && _req.path.indexOf('/oauth/yandex') > -1) {
                     proxyRes.headers['set-cookie']?.push(
-                        'isSSO=true; Domain=http://thesnake.ya-praktikum.tech/; Path=/; HttpOnly; Secure; SameSite=None'
+                        'isSSO=true; Domain=thesnake.ya-praktikum.tech; Path=/; HttpOnly; Secure; SameSite=None'
                     );
                 }
                 if (_req.path.indexOf('/auth/logout') > -1) {
                     proxyRes.headers['set-cookie']?.push(
-                        'isSSO=; max-age=0; Domain=http://thesnake.ya-praktikum.tech/; Path=/; HttpOnly; Secure; SameSite=None'
+                        'isSSO=; max-age=0; Domain=thesnake.ya-praktikum.tech; Path=/; HttpOnly; Secure; SameSite=None'
                     );
                 }
             },
