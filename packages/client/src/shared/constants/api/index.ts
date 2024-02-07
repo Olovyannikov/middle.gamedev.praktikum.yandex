@@ -1,1 +1,1 @@
-export const redirectUri = 'localhost:3000';
+export const redirectUri = 'http://thesnake.ya-praktikum.tech/';

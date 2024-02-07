@@ -31,8 +31,8 @@ import { baseApi } from './store';
 const isDev = () => process.env.NODE_ENV === 'development';
 
 const sequelizeOptions: SequelizeOptions = {
-    host: 'postgres',
-    port: Number(process.env.POSTGRES_PORT) || 3001,
+    host: 'localhost',
+    port: Number(process.env.POSTGRES_PORT) || 5432,
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
@@ -51,7 +51,7 @@ Comment.belongsTo(User, { as: 'author' });
 
 async function startServer() {
     const app = express();
-    app.use(cors({ credentials: true, origin: 'http://51.250.110.78:3001' }));
+    app.use(cors({ credentials: true, origin: 'http://http://thesnake.ya-praktikum.tech/:80' }));
 
     app.use(bodyParser.json());
     app.use(
@@ -59,7 +59,7 @@ async function startServer() {
             extended: true,
         })
     );
-    const port = Number(process.env.SERVER_PORT) || 3001;
+    const port = Number(process.env.SERVER_PORT) || 80;
 
     let vite: ViteDevServer | undefined;
     const distPath = path.dirname(require.resolve('client/dist/index.html'));
@@ -82,7 +82,7 @@ async function startServer() {
         createProxyMiddleware('/', {
             changeOrigin: true,
             cookieDomainRewrite: {
-                '*': '51.250.110.78',
+                '*': 'http://thesnake.ya-praktikum.tech/',
             },
             target: 'https://ya-praktikum.tech',
             pathRewrite: function (path) {
@@ -92,12 +92,12 @@ async function startServer() {
             onProxyRes: (proxyRes, _req, _res) => {
                 if (_req.method.toLowerCase() == 'post' && _req.path.indexOf('/oauth/yandex') > -1) {
                     proxyRes.headers['set-cookie']?.push(
-                        'isSSO=true; Domain=51.250.110.78; Path=/; HttpOnly; Secure; SameSite=None'
+                        'isSSO=true; Domain=http://thesnake.ya-praktikum.tech/; Path=/; HttpOnly; Secure; SameSite=None'
                     );
                 }
                 if (_req.path.indexOf('/auth/logout') > -1) {
                     proxyRes.headers['set-cookie']?.push(
-                        'isSSO=; max-age=0; Domain=51.250.110.78; Path=/; HttpOnly; Secure; SameSite=None'
+                        'isSSO=; max-age=0; Domain=http://thesnake.ya-praktikum.tech/; Path=/; HttpOnly; Secure; SameSite=None'
                     );
                 }
             },
