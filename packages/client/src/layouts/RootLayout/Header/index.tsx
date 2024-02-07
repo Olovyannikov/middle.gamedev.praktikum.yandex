@@ -2,7 +2,6 @@ import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { Button } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
 import { SignOut, Spinner } from '@phosphor-icons/react';
 import cn from 'clsx';
 
@@ -52,10 +51,6 @@ export function Header({ className, ...props }: HeaderProps) {
                     )}
                     <li>
                         <AppLink to='/game'>Game</AppLink>
-                    </li>
-
-                    <li>
-                        <AppLink to='/leaderboard'>LeaderBoard</AppLink>
                     </li>
 
                     <li>
