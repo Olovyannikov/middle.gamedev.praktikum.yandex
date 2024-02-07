@@ -51,7 +51,7 @@ Comment.belongsTo(User, { as: 'author' });
 
 async function startServer() {
     const app = express();
-    app.use(cors({ credentials: true, origin: 'http://51.250.110.78:3000' }));
+    app.use(cors({ credentials: true, origin: 'http://51.250.110.78:3001' }));
 
     app.use(bodyParser.json());
     app.use(
@@ -82,7 +82,7 @@ async function startServer() {
         createProxyMiddleware('/', {
             changeOrigin: true,
             cookieDomainRewrite: {
-                '*': '',
+                '*': '51.250.110.78',
             },
             target: 'https://ya-praktikum.tech',
             pathRewrite: function (path) {
