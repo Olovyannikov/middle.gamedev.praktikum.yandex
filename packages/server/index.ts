@@ -51,7 +51,7 @@ Comment.belongsTo(User, { as: 'author' });
 
 async function startServer() {
     const app = express();
-    app.use(cors({ credentials: true, origin: 'http://thesnake.ya-praktikum.tech' }));
+    app.use(cors({ credentials: true, origin: 'http://51.250.110.78' }));
 
     app.use(bodyParser.json());
     app.use(
@@ -82,7 +82,7 @@ async function startServer() {
         createProxyMiddleware('/', {
             changeOrigin: true,
             cookieDomainRewrite: {
-                '*': 'thesnake.ya-praktikum.tech',
+                '*': '51.250.110.78',
             },
             target: 'https://ya-praktikum.tech',
             pathRewrite: function (path) {
@@ -92,12 +92,12 @@ async function startServer() {
             onProxyRes: (proxyRes, _req, _res) => {
                 if (_req.method.toLowerCase() == 'post' && _req.path.indexOf('/oauth/yandex') > -1) {
                     proxyRes.headers['set-cookie']?.push(
-                        'isSSO=true; Domain=thesnake.ya-praktikum.tech; Path=/; HttpOnly; Secure; SameSite=None'
+                        'isSSO=true; Domain=51.250.110.78; Path=/; HttpOnly; Secure; SameSite=None'
                     );
                 }
                 if (_req.path.indexOf('/auth/logout') > -1) {
                     proxyRes.headers['set-cookie']?.push(
-                        'isSSO=; max-age=0; Domain=thesnake.ya-praktikum.tech; Path=/; HttpOnly; Secure; SameSite=None'
+                        'isSSO=; max-age=0; Domain=51.250.110.78; Path=/; HttpOnly; Secure; SameSite=None'
                     );
                 }
             },
